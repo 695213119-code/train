@@ -18,7 +18,8 @@
     <!--子模块配置-->
     <modules>
         <module>eureka-service</module>
-
+        <module>gateway-service</module>
+        <module>common-service</module>
     </modules>
 
 

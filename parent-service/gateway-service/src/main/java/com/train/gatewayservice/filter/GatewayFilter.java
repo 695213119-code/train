@@ -30,11 +30,9 @@ public class GatewayFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         //此方法为网关拦截的具体实现方法
 
+        //TODO 获取进入网关的方法参数
+
         //TODO 校验接口是否需要验证token
-
-
-
-
 
         //TODO 验证token是否合法
 
