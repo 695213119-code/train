@@ -1,9 +1,9 @@
-package com.train.usercenterservice.user.service.impl;
+package com.train.usercenterservice.service.impl;
 
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.usercenterservice.user.entity.User;
-import com.train.usercenterservice.user.service.IUserCenterService;
+import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.user.service.IUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,6 @@ public class UserCenterServiceImpl implements IUserCenterService {
             userService.insert(user);
         } catch (Exception e) {
             e.printStackTrace();
-
         }
         return new RespRecurrence<String>().success("用户注册成功");
     }

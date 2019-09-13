@@ -3,7 +3,7 @@ package com.train.usercenterservice.api;
 
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.UserRegisterDTO;
-import com.train.usercenterservice.user.service.IUserCenterService;
+import com.train.usercenterservice.service.IUserCenterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 

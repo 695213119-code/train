@@ -1,4 +1,4 @@
-package com.train.usercenterservice.user.service;
+package com.train.usercenterservice.service;
 
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.UserRegisterDTO;
