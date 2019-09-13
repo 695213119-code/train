@@ -1,0 +1,20 @@
+server:
+  port: 9001
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9000/eureka/
+spring:
+  application:
+    name: api-gateway
+
+#路由配置
+zuul:
+  routes:
+    user-center-service: /apigateway/user-center/**
+  #统一入口为上面的配置，其他入口忽略
+  ignored-patterns: /*-service/**
+  #处理http请求头为空的问题
+  sensitive-headers:
+
