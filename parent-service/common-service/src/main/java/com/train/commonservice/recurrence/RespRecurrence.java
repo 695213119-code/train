@@ -37,6 +37,7 @@ public class RespRecurrence<T> implements Serializable {
         return this;
     }
 
+
     public RespRecurrence<T> success(T data) {
         this.data = data;
         this.code = CommonEnum.SUCCESS_CODE.getCode();

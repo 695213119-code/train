@@ -1,0 +1,163 @@
+package ${package.Controller};
+
+
+import ${package.Entity}.${entity};
+import ${package.Service}.I${entity}Service;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.context.annotation.Description;
+import springfox.documentation.annotations.ApiIgnore;
+import com.junteng.frameworkbaseclient.result.PageResult;
+import com.junteng.frameworkbaseclient.result.RespResult;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import java.util.List;
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("/api/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${table.convert})
+@Api(tags = "$!{table.comment}模块", hidden = true)
+#end
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+#else
+    #if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+    #else
+public class ${table.controllerName} {
+    #end
+    @Autowired
+    private  I${entity}Service ${table.entityPath}Service;
+    /**
+     * 批量查询数据
+     * @param page 页码
+     * @param pageSize  每页多少条
+     * @return PageResult
+     */
+    @PostMapping("/findList")
+    @Description("批量查询数据")
+    @ApiOperation(value = "查询,可分页,默认200条")
+    public PageResult<List<${entity}>>findList(@ApiParam(value = "页码") @RequestParam(required = false) Integer page,
+                                         @ApiParam(value = "查询条数") @RequestParam(required = false)Integer pageSize){
+        return ${table.entityPath}Service.findList(page,pageSize);
+    }
+
+    /**
+     * 根据Id查询
+     * @param id id
+     * @return RespResult
+     */
+    @PostMapping("/findById")
+    @Description("获取详细信息")
+    @ApiOperation(value = "根据id查询")
+    public RespResult<${entity}> findById(@ApiParam(value = "id", required = true) @RequestParam String id){
+        ${entity} entity=  ${table.entityPath}Service.find${entity}ById(id);
+        if(entity!=null){
+            return new RespResult().success(entity);
+        }else{
+            return new RespResult().failure("未找到对象");
+        }
+    }
+
+
+    /**
+     * 新增
+     * @param ${table.entityPath} ${entity}
+     * @return RespResult
+     */
+    @PostMapping("/add")
+    @Description("新增")
+    @ApiOperation(value = "新增")
+    public RespResult add(@ApiParam(value = "${table.comment}对象") @RequestBody(required = false)${entity} ${table.entityPath}){
+    ${entity} entity = ${table.entityPath}Service.selectOne(new EntityWrapper<${entity}>().eq("id", ${table.entityPath}.getId()));
+        if (entity != null) {
+        return new RespResult().failure("插入数据失败,数据已存在");
+        }
+        if(${table.entityPath}Service.insert(${table.entityPath})){
+            return new RespResult().success();
+        }else{
+            return new RespResult().failure("插入数据失败");
+        }
+    }
+    /**
+     * 批量新增
+     * @param ${table.entityPath} ${entity}
+     * @return RespResult
+     */
+    @PostMapping("/batchadd")
+    @Description("批量新增")
+    @ApiOperation(value = "批量新增")
+    public RespResult batchadd(@ApiParam(value = "${table.comment}对象") @RequestBody(required = false)List<${entity}> ${table.entityPath}){
+        if(${table.entityPath}Service.insert(${table.entityPath})){
+            return new RespResult().success();
+        }else{
+            return new RespResult().failure("插入数据失败");
+        }
+    }
+
+    /**
+     * 根据Id修改
+     * @param ${table.entityPath} ${entity}
+     * @return RespResult
+     */
+    @PostMapping("/update")
+    @Description("根据id修改")
+    @ApiOperation(value = "根据id修改")
+    public RespResult update(@ApiParam(value = "${table.comment}对象") @RequestBody(required = false)${entity} ${table.entityPath}){
+        if(${table.entityPath}Service.updateById(${table.entityPath})){
+            return new RespResult().success();
+        }else{
+            return new RespResult().failure();
+        }
+    }
+
+    /**
+     * 根据Id删除
+     * @param id id
+     * @return RespResult
+     */
+    @PostMapping("/delete")
+    @Description("根据id删除")
+    @ApiOperation(value = "根据id删除")
+    public RespResult delete(@ApiParam(value = "id", required = true) @RequestBody String id){
+        if(${table.entityPath}Service.deleteBy${entity}Id(id)){
+            return new RespResult().success();
+        }else{
+            return new RespResult().failure();
+        }
+    }
+    /**
+     * 根据Id批量删除
+     * @param ids id数组,json格式
+     * @return RespResult
+     */
+    @PostMapping("/batchdelete")
+    @Description("根据id批量删除")
+    @ApiOperation(value = "根据id删除")
+    public RespResult delete(@ApiParam(value = "id数组,json格式", required = true)@RequestBody List<String>  ids){
+        if(${table.entityPath}Service.batchdelete(ids)){
+            return new RespResult().success();
+        }else{
+            return new RespResult().failure();
+        }
+    }
+}
+#end

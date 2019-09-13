@@ -12,6 +12,7 @@ spring:
 #路由配置
 zuul:
   routes:
+    #用户服务
     user-center-service: /apigateway/user-center/**
   #统一入口为上面的配置，其他入口忽略
   ignored-patterns: /*-service/**
