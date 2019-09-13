@@ -32,6 +32,10 @@ public class GatewayFilter extends ZuulFilter {
 
         //TODO 校验接口是否需要验证token
 
+
+
+
+
         //TODO 验证token是否合法
 
         //TODO 用户鉴权
