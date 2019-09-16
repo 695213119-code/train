@@ -2,7 +2,7 @@ package com.train.usercenterservice.service.impl;
 
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.UserRegisterDTO;
-import com.train.usercenterservice.user.entity.User;
+import com.train.commonservice.entity.user.User;
 import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.user.mapper.UserMapper;
 import com.train.usercenterservice.user.service.IUserService;

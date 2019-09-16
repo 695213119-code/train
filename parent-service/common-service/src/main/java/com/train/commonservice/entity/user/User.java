@@ -1,4 +1,4 @@
-package com.train.usercenterservice.user.entity;
+package com.train.commonservice.entity.user;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
@@ -8,8 +8,6 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 

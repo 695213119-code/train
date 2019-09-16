@@ -2,8 +2,7 @@ package com.train.usercenterservice.user.service;
 
 
 import com.baomidou.mybatisplus.service.IService;
-import com.train.usercenterservice.user.entity.User;
-import org.springframework.stereotype.Service;
+import com.train.commonservice.entity.user.User;
 
 /**
  * <p>
