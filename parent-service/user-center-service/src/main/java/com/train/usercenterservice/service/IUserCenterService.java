@@ -4,7 +4,7 @@ import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 
 /**
- * 用户中心接口类
+ * 用户中心->用户模块接口类
  *
  * @author zhangLei
  * @serial 2019/09/13

@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 用户模块API
+ *
+ * @author zhangLei
+ * @serial 2019/09/16
+ */
 @RestController
 @RequestMapping("/api/user-center")
 @Api(tags = "用户中心api", hidden = true)

@@ -16,7 +16,12 @@ public enum CommonEnum {
     /**
      * 失败返回的状态码
      */
-    FAIL_CODE("500", "失败");
+    FAIL_CODE("500", "失败"),
+
+    /**
+     * token为空
+     */
+    TOKEN_ISNULL("401", "token不存在或已过期");
 
 
     private String code;

@@ -93,14 +93,13 @@
         </dependency>
         <!--endregion-->
 
-        <!--region  jackson依赖-->
+        <!--region fastjson依赖-->
         <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.13</version>
-
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.28</version>
         </dependency>
-        <!--endregion -->
+        <!--endregion-->
 
 
     </dependencies>

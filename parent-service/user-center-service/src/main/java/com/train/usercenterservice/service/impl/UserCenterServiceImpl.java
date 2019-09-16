@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 用户中心实现类
+ * 用户中心->用户模块实现类
  *
  * @author zhangLei
  * @serial 2019/09/13
@@ -20,12 +20,11 @@ import org.springframework.stereotype.Service;
 public class UserCenterServiceImpl implements IUserCenterService {
 
     private final IUserService userService;
-    private final UserMapper userMapper;
+
 
     @Autowired
-    public UserCenterServiceImpl(IUserService userService, UserMapper userMapper) {
+    public UserCenterServiceImpl(IUserService userService) {
         this.userService = userService;
-        this.userMapper = userMapper;
     }
 
     @Override
@@ -42,6 +41,7 @@ public class UserCenterServiceImpl implements IUserCenterService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return new RespRecurrence<String>().success("用户注册成功");
     }
 }
