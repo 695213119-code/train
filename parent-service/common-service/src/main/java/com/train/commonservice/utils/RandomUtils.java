@@ -1,7 +1,5 @@
 package com.train.commonservice.utils;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 /**
  * 随机数生成类
@@ -12,7 +10,7 @@ import java.security.SecureRandom;
 public class RandomUtils {
 
 
-    public static String test() {
+    public static String generateToken() {
 
         return "";
     }
