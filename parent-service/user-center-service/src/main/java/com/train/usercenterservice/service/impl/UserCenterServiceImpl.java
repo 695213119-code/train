@@ -1,16 +1,21 @@
 package com.train.usercenterservice.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.train.commonservice.recurrence.RespRecurrence;
+import com.train.commonservice.utils.RandomUtils;
 import com.train.usercenterservice.utils.RedisUtils;
 import com.train.usercenterservice.dto.UserLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.commonservice.entity.user.User;
 import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.user.service.IUserService;
+import com.train.usercenterservice.vo.UserInfoVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * 用户中心->用户模块实现类
@@ -50,7 +55,7 @@ public class UserCenterServiceImpl implements IUserCenterService {
     }
 
     @Override
-    public RespRecurrence userLogin(UserLoginDTO userLoginDTO) {
+    public RespRecurrence<UserInfoVO> userLogin(UserLoginDTO userLoginDTO) {
 
         String type = userLoginDTO.getType();
 
@@ -63,7 +68,7 @@ public class UserCenterServiceImpl implements IUserCenterService {
             case phoneCode:
                 return userLoginToPhoneCode(userLoginDTO.getPhone(), userLoginDTO.getCode());
             default:
-                return new RespRecurrence().failure("非法的登录类型");
+                return new RespRecurrence<UserInfoVO>().failure("非法的登录类型");
         }
     }
 
@@ -74,19 +79,22 @@ public class UserCenterServiceImpl implements IUserCenterService {
      * @param password 密码
      * @return RespRecurrence
      */
-    private RespRecurrence userLoginToAccountPassword(String phone, String password) {
-
+    private RespRecurrence<UserInfoVO> userLoginToAccountPassword(String phone, String password) {
         User user = userService.selectOne(new EntityWrapper<User>().eq("phone", phone));
         if (null == user) {
-            return new RespRecurrence().failure("用户不存在");
+            return new RespRecurrence<UserInfoVO>().failure("用户不存在");
         }
-        if (password.equals(user.getPassword())) {
-            return new RespRecurrence().failure("密码输入错误");
+        if (!password.equals(user.getPassword())) {
+            return new RespRecurrence<UserInfoVO>().failure("密码输入错误");
         }
-
-     //   redisUtils.set();
-
-        return new RespRecurrence().success();
+        String token = RandomUtils.generateToken();
+        String userJsonString = JSONObject.toJSONString(user);
+        redisUtils.set(token, userJsonString, 24, TimeUnit.HOURS);
+        UserInfoVO userInfoVO = new UserInfoVO();
+        BeanUtils.copyProperties(user, userInfoVO);
+        userInfoVO.setUserId(String.valueOf(user.getId()));
+        userInfoVO.setToken(token);
+        return new RespRecurrence<UserInfoVO>().success(userInfoVO);
     }
 
 
@@ -97,8 +105,8 @@ public class UserCenterServiceImpl implements IUserCenterService {
      * @param code  验证码
      * @return RespRecurrence
      */
-    private RespRecurrence userLoginToPhoneCode(String phone, String code) {
-        return new RespRecurrence().success();
+    private RespRecurrence<UserInfoVO> userLoginToPhoneCode(String phone, String code) {
+        return new RespRecurrence<UserInfoVO>().success();
     }
 
 }

@@ -3,6 +3,7 @@ package com.train.usercenterservice.service;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.UserLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
+import com.train.usercenterservice.vo.UserInfoVO;
 
 /**
  * 用户中心->用户模块接口类
@@ -26,5 +27,5 @@ public interface IUserCenterService {
      * @param userLoginDTO 用户登录参数类
      * @return RespRecurrence
      */
-    RespRecurrence userLogin(UserLoginDTO userLoginDTO);
+    RespRecurrence<UserInfoVO> userLogin(UserLoginDTO userLoginDTO);
 }

@@ -5,6 +5,7 @@ import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.UserLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.usercenterservice.service.IUserCenterService;
+import com.train.usercenterservice.vo.UserInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -41,7 +42,7 @@ public class UserCenterApiController {
 
     @PostMapping("/userLogin")
     @ApiOperation(value = "用户登录")
-    public RespRecurrence userLogin(@ApiParam(value = "用户登录参数类", required = true) @RequestBody UserLoginDTO userLoginDTO) {
+    public RespRecurrence<UserInfoVO> userLogin(@ApiParam(value = "用户登录参数类", required = true) @RequestBody UserLoginDTO userLoginDTO) {
         return userCenterService.userLogin(userLoginDTO);
     }
 

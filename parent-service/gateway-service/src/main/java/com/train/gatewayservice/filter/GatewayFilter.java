@@ -91,7 +91,6 @@ public class GatewayFilter extends ZuulFilter {
             }
 
 
-
         }
 
         return null;
