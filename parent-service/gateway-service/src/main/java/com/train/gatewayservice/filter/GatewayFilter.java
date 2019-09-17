@@ -6,9 +6,11 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.train.commonservice.enumeration.CommonEnum;
 import com.train.commonservice.recurrence.RespRecurrence;
+import com.train.gatewayservice.remote.core.RemoteCoreService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,13 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 public class GatewayFilter extends ZuulFilter {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(GatewayFilter.class);
+
+    private final RemoteCoreService remoteCoreService;
+
+    @Autowired
+    public GatewayFilter(RemoteCoreService remoteCoreService) {
+        this.remoteCoreService = remoteCoreService;
+    }
 
     /**
      * 过滤器类型，前置过滤器
@@ -44,7 +53,7 @@ public class GatewayFilter extends ZuulFilter {
      */
     @Override
     public int filterOrder() {
-        return 0;
+        return 4;
     }
 
     /**
@@ -71,11 +80,18 @@ public class GatewayFilter extends ZuulFilter {
 
         LOGGER.info("请求的URL====>>{}", requestUrl);
 
-        //用户鉴权
-        String token = getToken(request);
-        if (StringUtils.isEmpty(token)) {
-            failureRequest(currentContext);
-            return null;
+        //url拦截
+        boolean pathNeedsToken = remoteCoreService.checkPathNeedsToken(requestUrl);
+        if (pathNeedsToken) {
+            //用户鉴权
+            String token = getToken(request);
+            if (StringUtils.isEmpty(token)) {
+                failureRequest(currentContext);
+                return null;
+            }
+
+
+
         }
 
         return null;

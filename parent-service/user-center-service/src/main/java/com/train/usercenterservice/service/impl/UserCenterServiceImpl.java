@@ -1,10 +1,12 @@
 package com.train.usercenterservice.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.train.commonservice.recurrence.RespRecurrence;
+import com.train.usercenterservice.utils.RedisUtils;
+import com.train.usercenterservice.dto.UserLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.commonservice.entity.user.User;
 import com.train.usercenterservice.service.IUserCenterService;
-import com.train.usercenterservice.user.mapper.UserMapper;
 import com.train.usercenterservice.user.service.IUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,13 @@ import org.springframework.stereotype.Service;
 public class UserCenterServiceImpl implements IUserCenterService {
 
     private final IUserService userService;
+    private final RedisUtils redisUtils;
 
 
     @Autowired
-    public UserCenterServiceImpl(IUserService userService) {
+    public UserCenterServiceImpl(IUserService userService, RedisUtils redisUtils) {
         this.userService = userService;
+        this.redisUtils = redisUtils;
     }
 
     @Override
@@ -44,4 +48,57 @@ public class UserCenterServiceImpl implements IUserCenterService {
 
         return new RespRecurrence<String>().success("用户注册成功");
     }
+
+    @Override
+    public RespRecurrence userLogin(UserLoginDTO userLoginDTO) {
+
+        String type = userLoginDTO.getType();
+
+        final String accountPassword = "1";
+        final String phoneCode = "2";
+
+        switch (type) {
+            case accountPassword:
+                return userLoginToAccountPassword(userLoginDTO.getPhone(), userLoginDTO.getPassword());
+            case phoneCode:
+                return userLoginToPhoneCode(userLoginDTO.getPhone(), userLoginDTO.getCode());
+            default:
+                return new RespRecurrence().failure("非法的登录类型");
+        }
+    }
+
+    /**
+     * 账号密码登录
+     *
+     * @param phone    手机号
+     * @param password 密码
+     * @return RespRecurrence
+     */
+    private RespRecurrence userLoginToAccountPassword(String phone, String password) {
+
+        User user = userService.selectOne(new EntityWrapper<User>().eq("phone", phone));
+        if (null == user) {
+            return new RespRecurrence().failure("用户不存在");
+        }
+        if (password.equals(user.getPassword())) {
+            return new RespRecurrence().failure("密码输入错误");
+        }
+
+     //   redisUtils.set();
+
+        return new RespRecurrence().success();
+    }
+
+
+    /**
+     * 手机号验证码登录
+     *
+     * @param phone 手机号
+     * @param code  验证码
+     * @return RespRecurrence
+     */
+    private RespRecurrence userLoginToPhoneCode(String phone, String code) {
+        return new RespRecurrence().success();
+    }
+
 }

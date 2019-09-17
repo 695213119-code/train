@@ -2,6 +2,7 @@ package com.train.usercenterservice.api;
 
 
 import com.train.commonservice.recurrence.RespRecurrence;
+import com.train.usercenterservice.dto.UserLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.usercenterservice.service.IUserCenterService;
 import io.swagger.annotations.Api;
@@ -37,6 +38,14 @@ public class UserCenterApiController {
     public RespRecurrence userRegister(@ApiParam(value = "用户注册参数类", required = true) @RequestBody UserRegisterDTO userRegisterDTO) {
         return userCenterService.userRegister(userRegisterDTO);
     }
+
+    @PostMapping("/userLogin")
+    @ApiOperation(value = "用户登录")
+    public RespRecurrence userLogin(@ApiParam(value = "用户登录参数类", required = true) @RequestBody UserLoginDTO userLoginDTO) {
+        return userCenterService.userLogin(userLoginDTO);
+    }
+
+
 }
 
 

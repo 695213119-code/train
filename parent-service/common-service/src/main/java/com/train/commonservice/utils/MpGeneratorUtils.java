@@ -40,7 +40,7 @@ public class MpGeneratorUtils {
                 MpGeneratorUtils.getDataSourceConfig(
                         "localhost",
                         "3306",
-                        "train",
+                        "train_core",
                         "root",
                         "root"
                 ),
@@ -49,11 +49,11 @@ public class MpGeneratorUtils {
                         new String[]{"train_"},
                         null,
                         //设置需要生成代码的表
-                        new String[]{"train_user"}
+                        new String[]{"train_interface"}
                 ),
                 MpGeneratorUtils.getPackageConfig(
-                        "com.train.usercenterservice",
-                        "user"
+                        "com.train.coreservice",
+                        "core"
                 ),
                 MpGeneratorUtils.getTemplateConfig(),
                 MpGeneratorUtils.getInjectionConfig(null, null)

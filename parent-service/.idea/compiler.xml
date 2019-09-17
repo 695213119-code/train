@@ -12,12 +12,14 @@
         <module name="parent" />
         <module name="eureka-service" />
         <module name="user-center-service" />
+        <module name="core-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="common-service" options="-parameters" />
+      <module name="core-service" options="-parameters" />
       <module name="eureka-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="parent" options="-parameters" />

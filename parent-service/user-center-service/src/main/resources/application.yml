@@ -5,13 +5,15 @@ spring:
   application:
     name: user-center-service
   datasource:
-    url: jdbc:mysql://localhost:3306/train?characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://localhost:3306/train_core?characterEncoding=utf8&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-
-
+  redis:
+    host: localhost
+    database: 0
+    port: 6379
 
 
 eureka:
