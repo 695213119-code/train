@@ -1,7 +1,10 @@
 package com.train.usercenterservice.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * 用户信息返回类
@@ -34,6 +37,7 @@ public class UserInfoVO {
     private Integer age;
 
     @ApiModelProperty(value = "创建时间")
-    private String createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
 
 }
