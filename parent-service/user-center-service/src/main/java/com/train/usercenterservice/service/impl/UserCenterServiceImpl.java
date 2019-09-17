@@ -2,6 +2,7 @@ package com.train.usercenterservice.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.train.commonservice.constant.user.UserConstant;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.commonservice.utils.RandomUtils;
 import com.train.usercenterservice.utils.RedisUtils;
@@ -11,6 +12,7 @@ import com.train.commonservice.entity.user.User;
 import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.user.service.IUserService;
 import com.train.usercenterservice.vo.UserInfoVO;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,6 +74,20 @@ public class UserCenterServiceImpl implements IUserCenterService {
         }
     }
 
+    @Override
+    public boolean checkUserToken(String userToken) {
+        boolean sign = false;
+        String userJsonString = redisUtils.get(userToken);
+        if (StringUtils.isNotEmpty(userJsonString)) {
+            User user = (User) JSONObject.parse(userJsonString);
+            User userReal = userService.selectById(user.getId());
+            if (null != userReal) {
+                sign = true;
+            }
+        }
+        return sign;
+    }
+
     /**
      * 账号密码登录
      *
@@ -87,13 +103,7 @@ public class UserCenterServiceImpl implements IUserCenterService {
         if (!password.equals(user.getPassword())) {
             return new RespRecurrence<UserInfoVO>().failure("密码输入错误");
         }
-        String token = RandomUtils.generateToken();
-        String userJsonString = JSONObject.toJSONString(user);
-        redisUtils.set(token, userJsonString, 24, TimeUnit.HOURS);
-        UserInfoVO userInfoVO = new UserInfoVO();
-        BeanUtils.copyProperties(user, userInfoVO);
-        userInfoVO.setUserId(String.valueOf(user.getId()));
-        userInfoVO.setToken(token);
+        UserInfoVO userInfoVO = processingLoginResults(user);
         return new RespRecurrence<UserInfoVO>().success(userInfoVO);
     }
 
@@ -107,6 +117,41 @@ public class UserCenterServiceImpl implements IUserCenterService {
      */
     private RespRecurrence<UserInfoVO> userLoginToPhoneCode(String phone, String code) {
         return new RespRecurrence<UserInfoVO>().success();
+    }
+
+
+    /**
+     * 清空用户残留的redis缓存
+     *
+     * @param phone 用户手机号
+     */
+    private void clearUserResidualCache(String phone) {
+        String redisKey = UserConstant.USER_TOKEN_REDIS_KEY + phone;
+        String tokenKey = redisUtils.get(redisKey);
+        if (StringUtils.isNotEmpty(tokenKey)) {
+            redisUtils.delete(tokenKey);
+        }
+    }
+
+    /**
+     * 处理pc端登录结果
+     *
+     * @param user 用户对象
+     * @return UserInfoVO
+     */
+    private UserInfoVO processingLoginResults(User user) {
+        //清空用户的残留缓存
+        clearUserResidualCache(user.getPhone());
+        String token = RandomUtils.generateToken();
+        String userJsonString = JSONObject.toJSONString(user);
+        redisUtils.set(token, userJsonString, 24, TimeUnit.HOURS);
+        String tokenKey = UserConstant.USER_TOKEN_REDIS_KEY + user.getPhone();
+        redisUtils.set(tokenKey, token, 24, TimeUnit.HOURS);
+        UserInfoVO userInfoVO = new UserInfoVO();
+        BeanUtils.copyProperties(user, userInfoVO);
+        userInfoVO.setUserId(String.valueOf(user.getId()));
+        userInfoVO.setToken(token);
+        return userInfoVO;
     }
 
 }

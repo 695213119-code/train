@@ -10,10 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 用户模块API
@@ -40,10 +37,18 @@ public class UserCenterApiController {
         return userCenterService.userRegister(userRegisterDTO);
     }
 
+
     @PostMapping("/userLogin")
-    @ApiOperation(value = "用户登录")
+    @ApiOperation(value = "用户登录--pc")
     public RespRecurrence<UserInfoVO> userLogin(@ApiParam(value = "用户登录参数类", required = true) @RequestBody UserLoginDTO userLoginDTO) {
         return userCenterService.userLogin(userLoginDTO);
+    }
+
+
+    @GetMapping("/checkUserToken")
+    @ApiOperation(value = "校验用户token")
+    public boolean checkUserToken(@ApiParam(value = "用户token", required = true) @RequestParam String userToken) {
+        return userCenterService.checkUserToken(userToken);
     }
 
 

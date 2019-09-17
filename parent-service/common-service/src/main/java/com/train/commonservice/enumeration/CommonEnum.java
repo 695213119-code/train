@@ -21,7 +21,12 @@ public enum CommonEnum {
     /**
      * token为空
      */
-    TOKEN_ISNULL("401", "token不存在或已过期");
+    TOKEN_ISNULL("401", "token不存在或已过期"),
+
+    /**
+     * 非法的token
+     */
+    TOKEN_UNLAWFUL("402", "非法的token");
 
 
     private String code;

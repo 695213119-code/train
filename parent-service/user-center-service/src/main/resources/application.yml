@@ -14,7 +14,8 @@ spring:
     host: localhost
     database: 0
     port: 6379
-
+  aop:
+    proxy-target-class: true
 
 eureka:
   client:

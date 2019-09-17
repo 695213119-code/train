@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Service
 public interface RemoteCoreService {
 
-    String CORE_API = "";
+    String CORE_API = "/api/core";
 
     /**
      * 校验请求接口是否需要token
@@ -25,6 +25,6 @@ public interface RemoteCoreService {
      * @param path 接口路径
      * @return boolean
      */
-    @GetMapping("/api/core/checkPathNeedsToken")
+    @GetMapping(CORE_API + "/checkPathNeedsToken")
     boolean checkPathNeedsToken(@RequestParam(value = "path") String path);
 }

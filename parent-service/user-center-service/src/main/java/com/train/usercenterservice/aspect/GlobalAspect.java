@@ -13,12 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
-/**
- * 全局的切面类
- *
- * @author zhangLei
- * @serial 2019/09/13
- */
 
 @Aspect
 @Component
@@ -36,11 +30,11 @@ public class GlobalAspect {
         Method method = signature.getMethod();
         ApiOperation syslog = method.getAnnotation(ApiOperation.class);
         if (syslog != null) {
-            LOGGER.info("方法名称:" + syslog.value());
+            LOGGER.info(syslog.value());
         }
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = signature.getName();
-        System.out.println(className + "." + methodName + "()");
+        LOGGER.info(className + "." + methodName + "()");
         Object[] args = joinPoint.getArgs();
         if (args.length > 0) {
             for (int x = 0; x < args.length; x++) {

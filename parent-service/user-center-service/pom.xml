@@ -24,6 +24,12 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!--aop核心启动依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
         <!--region 服务注册客户端-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

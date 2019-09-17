@@ -28,4 +28,12 @@ public interface IUserCenterService {
      * @return RespRecurrence
      */
     RespRecurrence<UserInfoVO> userLogin(UserLoginDTO userLoginDTO);
+
+    /**
+     * 校验用户token
+     *
+     * @param userToken 用户token
+     * @return boolean
+     */
+    boolean checkUserToken(String userToken);
 }

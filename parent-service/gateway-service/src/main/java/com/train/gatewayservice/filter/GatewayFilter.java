@@ -7,6 +7,7 @@ import com.netflix.zuul.context.RequestContext;
 import com.train.commonservice.enumeration.CommonEnum;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.gatewayservice.remote.core.RemoteCoreService;
+import com.train.gatewayservice.remote.user.RemoteUserService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +30,12 @@ public class GatewayFilter extends ZuulFilter {
     private final static Logger LOGGER = LoggerFactory.getLogger(GatewayFilter.class);
 
     private final RemoteCoreService remoteCoreService;
+    private final RemoteUserService remoteUserService;
 
     @Autowired
-    public GatewayFilter(RemoteCoreService remoteCoreService) {
+    public GatewayFilter(RemoteCoreService remoteCoreService, RemoteUserService remoteUserService) {
         this.remoteCoreService = remoteCoreService;
+        this.remoteUserService = remoteUserService;
     }
 
     /**
@@ -83,16 +86,18 @@ public class GatewayFilter extends ZuulFilter {
         //url拦截
         boolean pathNeedsToken = remoteCoreService.checkPathNeedsToken(requestUrl);
         if (pathNeedsToken) {
-            //用户鉴权
+            //用户token鉴权
             String token = getToken(request);
             if (StringUtils.isEmpty(token)) {
-                failureRequest(currentContext);
+                failureRequest(currentContext, new RespRecurrence().failure(CommonEnum.TOKEN_ISNULL.getCode(), CommonEnum.TOKEN_ISNULL.getMessage()));
                 return null;
             }
-
-
+            boolean checkUserToken = remoteUserService.checkUserToken(token);
+            if (!checkUserToken) {
+                failureRequest(currentContext, new RespRecurrence().failure(CommonEnum.TOKEN_UNLAWFUL.getCode(), CommonEnum.TOKEN_UNLAWFUL.getMessage()));
+                return null;
+            }
         }
-
         return null;
     }
 
@@ -116,10 +121,10 @@ public class GatewayFilter extends ZuulFilter {
      *
      * @param currentContext currentContext对象
      */
-    private void failureRequest(RequestContext currentContext) {
+    private void failureRequest(RequestContext currentContext, RespRecurrence respRecurrence) {
         currentContext.set("isSuccess", false);
         currentContext.setSendZuulResponse(false);
-        currentContext.setResponseBody(JSONObject.toJSON(new RespRecurrence().failure(CommonEnum.TOKEN_ISNULL.getCode(), CommonEnum.TOKEN_ISNULL.getMessage())).toString());
+        currentContext.setResponseBody(JSONObject.toJSON(respRecurrence).toString());
         currentContext.getResponse().setContentType("application/json;charset=UTF-8");
     }
 

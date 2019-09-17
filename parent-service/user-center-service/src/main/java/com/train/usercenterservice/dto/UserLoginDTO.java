@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 用户登录DTO
+ * 用户登录DTO--PC
  *
  * @author zhangLei
  * @serial 219/09/17
