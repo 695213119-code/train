@@ -2,6 +2,7 @@ package com.train.coreservice.service;
 
 import com.train.commonservice.exception.BusinessException;
 import com.train.commonservice.recurrence.RespRecurrence;
+import com.train.coreservice.dto.DictionariesAddDTO;
 import com.train.coreservice.dto.FiltrateInterfaceDTO;
 
 /**
@@ -26,4 +27,12 @@ public interface ICoreService {
      * @return RespRecurrence
      */
     RespRecurrence addFiltrateInterface(FiltrateInterfaceDTO filtrateInterfaceDTO);
+
+    /**
+     * 添加字典
+     *
+     * @param dictionariesAddDTO 字典参数类
+     * @return RespRecurrence
+     */
+    RespRecurrence addDictionaries(DictionariesAddDTO dictionariesAddDTO);
 }

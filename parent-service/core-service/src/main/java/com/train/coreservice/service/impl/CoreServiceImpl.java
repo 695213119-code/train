@@ -1,10 +1,12 @@
 package com.train.coreservice.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.train.commonservice.entity.core.Dictionary;
 import com.train.commonservice.entity.core.Interface;
-import com.train.commonservice.exception.BusinessException;
 import com.train.commonservice.recurrence.RespRecurrence;
+import com.train.coreservice.core.service.IDictionaryService;
 import com.train.coreservice.core.service.IInterfaceService;
+import com.train.coreservice.dto.DictionariesAddDTO;
 import com.train.coreservice.dto.FiltrateInterfaceDTO;
 import com.train.coreservice.service.ICoreService;
 import org.slf4j.Logger;
@@ -25,10 +27,12 @@ public class CoreServiceImpl implements ICoreService {
     private final static Logger LOGGER = LoggerFactory.getLogger(CoreServiceImpl.class);
 
     private final IInterfaceService iInterfaceService;
+    private final IDictionaryService dictionaryService;
 
     @Autowired
-    public CoreServiceImpl(IInterfaceService iInterfaceService) {
+    public CoreServiceImpl(IInterfaceService iInterfaceService, IDictionaryService dictionaryService) {
         this.iInterfaceService = iInterfaceService;
+        this.dictionaryService = dictionaryService;
     }
 
 
@@ -52,6 +56,19 @@ public class CoreServiceImpl implements ICoreService {
             iInterfaceService.insert(inter);
         } catch (Exception e) {
             LOGGER.error("添加过滤接口失败 原因:{} 参数:{}", e.getMessage(), filtrateInterfaceDTO);
+            return new RespRecurrence<>().failure();
+        }
+        return new RespRecurrence<>().success();
+    }
+
+    @Override
+    public RespRecurrence addDictionaries(DictionariesAddDTO dictionariesAddDTO) {
+        Dictionary dictionary = new Dictionary();
+        BeanUtils.copyProperties(dictionariesAddDTO, dictionary);
+        try {
+            dictionaryService.insert(dictionary);
+        } catch (Exception e) {
+            LOGGER.error("添加字典失败 原因:{} 参数:{}", e.getMessage(), dictionariesAddDTO);
             return new RespRecurrence<>().failure();
         }
         return new RespRecurrence<>().success();

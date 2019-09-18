@@ -49,11 +49,11 @@ public class MpGeneratorUtils {
                         new String[]{"train_"},
                         null,
                         //设置需要生成代码的表
-                        new String[]{"train_login_log"}
+                        new String[]{"train_dictionary"}
                 ),
                 MpGeneratorUtils.getPackageConfig(
-                        "com.train.usercenterservice",
-                        "user"
+                        "com.train.coreservice",
+                        "core"
                 ),
                 MpGeneratorUtils.getTemplateConfig(),
                 MpGeneratorUtils.getInjectionConfig(null, null)

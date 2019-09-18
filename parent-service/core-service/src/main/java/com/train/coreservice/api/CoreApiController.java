@@ -1,6 +1,7 @@
 package com.train.coreservice.api;
 
 import com.train.commonservice.recurrence.RespRecurrence;
+import com.train.coreservice.dto.DictionariesAddDTO;
 import com.train.coreservice.dto.FiltrateInterfaceDTO;
 import com.train.coreservice.service.ICoreService;
 import io.swagger.annotations.Api;
@@ -18,12 +19,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/core")
 @Api(tags = "核心API", hidden = true)
-public class InterfaceApiController {
+public class CoreApiController {
 
     private final ICoreService coreService;
 
     @Autowired
-    public InterfaceApiController(ICoreService coreService) {
+    public CoreApiController(ICoreService coreService) {
         this.coreService = coreService;
     }
 
@@ -37,6 +38,12 @@ public class InterfaceApiController {
     @PutMapping("/addFiltrateInterface")
     public RespRecurrence addFiltrateInterface(@ApiParam(value = "过滤接口参数类", required = true) @RequestBody FiltrateInterfaceDTO filtrateInterfaceDTO) {
         return coreService.addFiltrateInterface(filtrateInterfaceDTO);
+    }
+
+    @ApiOperation("添加字典")
+    @PutMapping("/addDictionaries")
+    public RespRecurrence addDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody DictionariesAddDTO dictionariesAddDTO) {
+        return coreService.addDictionaries(dictionariesAddDTO);
     }
 
 }
