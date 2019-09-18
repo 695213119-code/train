@@ -1,7 +1,7 @@
 package com.train.usercenterservice.user.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.train.commonservice.entity.user.User;
+import com.train.entityservice.entity.user.User;
 import org.springframework.stereotype.Repository;
 
 /**

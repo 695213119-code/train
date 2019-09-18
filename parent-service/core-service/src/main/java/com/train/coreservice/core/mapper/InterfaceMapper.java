@@ -1,6 +1,6 @@
 package com.train.coreservice.core.mapper;
 
-import com.train.commonservice.entity.core.Interface;
+import com.train.entityservice.entity.core.Interface;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**

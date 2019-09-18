@@ -3,7 +3,7 @@ package com.train.usercenterservice.user.service.impl;
 //需要修改导包位置
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.train.commonservice.entity.user.User;
+import com.train.entityservice.entity.user.User;
 import com.train.usercenterservice.user.mapper.UserMapper;
 import com.train.usercenterservice.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

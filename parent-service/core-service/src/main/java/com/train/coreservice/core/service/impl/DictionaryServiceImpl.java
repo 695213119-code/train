@@ -3,7 +3,7 @@ package com.train.coreservice.core.service.impl;
 
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.train.commonservice.entity.core.Dictionary;
+import com.train.entityservice.entity.core.Dictionary;
 import com.train.coreservice.core.mapper.DictionaryMapper;
 import com.train.coreservice.core.service.IDictionaryService;
 import org.springframework.stereotype.Service;

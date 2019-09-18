@@ -2,7 +2,7 @@ package com.train.coreservice.core.service;
 
 
 import com.baomidou.mybatisplus.service.IService;
-import com.train.commonservice.entity.core.Dictionary;
+import com.train.entityservice.entity.core.Dictionary;
 
 /**
  * <p>

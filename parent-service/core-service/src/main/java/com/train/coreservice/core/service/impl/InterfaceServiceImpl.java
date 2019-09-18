@@ -1,9 +1,11 @@
 package com.train.coreservice.core.service.impl;
 
-import com.train.commonservice.entity.core.Interface;
+
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.train.coreservice.core.mapper.InterfaceMapper;
 import com.train.coreservice.core.service.IInterfaceService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+
+import com.train.entityservice.entity.core.Interface;
 import org.springframework.stereotype.Service;
 
 /**

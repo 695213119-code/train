@@ -8,7 +8,6 @@
         <groupId>com.train</groupId>
         <artifactId>parent</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
     <artifactId>core-service</artifactId>
@@ -21,6 +20,12 @@
         <dependency>
             <groupId>com.train</groupId>
             <artifactId>common-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.train</groupId>
+            <artifactId>entity-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -82,6 +87,7 @@
     </dependencies>
 
     <build>
+        <finalName>core-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

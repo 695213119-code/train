@@ -2,7 +2,7 @@ package com.train.usercenterservice.user.service;
 
 
 import com.baomidou.mybatisplus.service.IService;
-import com.train.commonservice.entity.user.User;
+import com.train.entityservice.entity.user.User;
 
 /**
  * <p>

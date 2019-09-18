@@ -1,7 +1,7 @@
 package com.train.usercenterservice.user.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.train.commonservice.entity.user.LoginLog;
+import com.train.entityservice.entity.user.LoginLog;
 import com.train.usercenterservice.user.mapper.LoginLogMapper;
 import com.train.usercenterservice.user.service.ILoginLogService;
 import org.springframework.stereotype.Service;

@@ -8,7 +8,6 @@
         <groupId>com.train</groupId>
         <artifactId>parent</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
     <artifactId>user-center-service</artifactId>
@@ -23,6 +22,13 @@
             <artifactId>common-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.train</groupId>
+            <artifactId>entity-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
 
         <!--aop核心启动依赖-->
         <dependency>
@@ -73,6 +79,7 @@
     </dependencies>
 
     <build>
+        <finalName>user-center-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

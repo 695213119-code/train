@@ -1,12 +1,8 @@
 package com.train.coreservice.core.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.baomidou.mybatisplus.plugins.pagination.Pagination;
-import com.train.commonservice.entity.core.Dictionary;
-import org.apache.ibatis.annotations.Param;
+import com.train.entityservice.entity.core.Dictionary;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * <p>

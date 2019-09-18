@@ -3,7 +3,7 @@
 <mapper namespace="com.train.coreservice.core.mapper.InterfaceMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.train.commonservice.entity.core.Interface">
+    <resultMap id="BaseResultMap" type="com.train.entityservice.entity.core.Interface">
         <id column="id" property="id"/>
         <result column="url" property="url"/>
         <result column="desc" property="desc"/>

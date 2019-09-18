@@ -1,6 +1,6 @@
 package com.train.coreservice.core.service;
 
-import com.train.commonservice.entity.core.Interface;
+import com.train.entityservice.entity.core.Interface;
 import com.baomidou.mybatisplus.service.IService;
 
 /**

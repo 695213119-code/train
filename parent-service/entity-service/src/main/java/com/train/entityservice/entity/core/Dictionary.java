@@ -1,4 +1,4 @@
-package com.train.commonservice.entity.user;
+package com.train.entityservice.entity.core;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
@@ -20,44 +20,34 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 /**
  * <p>
- * 用户表
+ * 字典表
  * </p>
  *
  * @author Administrator
- * @since 2019-09-14
+ * @since 2019-09-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("train_user")
-@ApiModel(value = "用户表")
-public class User extends Model<User> {
+@TableName("train_dictionary")
+@ApiModel(value = "字典表")
+public class Dictionary extends Model<Dictionary> {
 
     private static final long serialVersionUID = 1L;
 
 
-    @ApiModelProperty(value = "主键id")
+    @ApiModelProperty(value = "主键")
     @TableId(type = IdType.ID_WORKER)
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
-    @ApiModelProperty(value = "手机号")
-    private String phone;
+    @ApiModelProperty(value = "字典的key")
+    private String key;
 
-    @ApiModelProperty(value = "密码")
-    private String password;
+    @ApiModelProperty(value = "字典的val")
+    private String value;
 
-    @ApiModelProperty(value = "用户昵称")
-    @TableField("nick_name")
-    private String nickName;
-
-    @ApiModelProperty(value = "用户头像")
-    private String avatar;
-
-    @ApiModelProperty(value = "用户性别(1-男 2-女)")
-    private Integer gender;
-
-    @ApiModelProperty(value = "用户年龄")
-    private Integer age;
+    @ApiModelProperty(value = "备注")
+    private String remarks;
 
     @ApiModelProperty(value = "创建时间")
     @TableField("create_time")

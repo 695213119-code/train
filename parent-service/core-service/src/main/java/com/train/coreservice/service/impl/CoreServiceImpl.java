@@ -1,8 +1,8 @@
 package com.train.coreservice.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.train.commonservice.entity.core.Dictionary;
-import com.train.commonservice.entity.core.Interface;
+import com.train.entityservice.entity.core.Dictionary;
+import com.train.entityservice.entity.core.Interface;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.coreservice.core.service.IDictionaryService;
 import com.train.coreservice.core.service.IInterfaceService;

@@ -1,4 +1,4 @@
-package com.train.commonservice.utils;
+package com.train.entityservice.utils;
 
 
 import com.baomidou.mybatisplus.enums.IdType;

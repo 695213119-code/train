@@ -10,7 +10,7 @@ import com.train.commonservice.utils.RandomUtils;
 import com.train.usercenterservice.utils.RedisUtils;
 import com.train.usercenterservice.dto.UserLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
-import com.train.commonservice.entity.user.User;
+import com.train.entityservice.entity.user.User;
 import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.user.service.IUserService;
 import com.train.usercenterservice.vo.UserInfoVO;

@@ -3,7 +3,7 @@
 <mapper namespace="com.train.usercenterservice.user.mapper.LoginLogMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.train.commonservice.entity.user.LoginLog">
+    <resultMap id="BaseResultMap" type="com.train.entityservice.entity.user.LoginLog">
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="platform" property="platform"/>

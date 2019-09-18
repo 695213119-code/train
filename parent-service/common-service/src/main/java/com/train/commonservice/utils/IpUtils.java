@@ -103,7 +103,7 @@ public class IpUtils {
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println(getIpInfo("127.0.0.1"));
+        System.out.println(getIpInfo("192.168.43.63"));
 
     }
 }
