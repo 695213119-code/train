@@ -21,6 +21,7 @@
         <module>gateway-service</module>
         <module>common-service</module>
         <module>user-center-service</module>
+        <module>core-service</module>
     </modules>
 
 
@@ -100,7 +101,6 @@
             <version>1.2.28</version>
         </dependency>
         <!--endregion-->
-
 
     </dependencies>
 
