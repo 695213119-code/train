@@ -13,7 +13,12 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
-
+/**
+ * 全局切面类
+ *
+ * @author zhangLei
+ * @serial 2019/09/18
+ */
 @Aspect
 @Component
 public class GlobalAspect {

@@ -18,4 +18,11 @@ public class UserConstant {
      * 用户登录方法名称
      */
     public static final String USER_LOGIN_METHOD_NAME = "userLogin";
+
+    /**
+     * 登录平台-pc
+     */
+    public static final Integer PLATFORM_PC = 1;
+
+
 }

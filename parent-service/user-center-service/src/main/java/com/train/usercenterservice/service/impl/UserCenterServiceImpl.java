@@ -2,6 +2,8 @@ package com.train.usercenterservice.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.train.commonservice.constant.CommonConstant;
+import com.train.commonservice.constant.SqlConstant;
 import com.train.commonservice.constant.user.UserConstant;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.commonservice.utils.RandomUtils;
@@ -96,7 +98,8 @@ public class UserCenterServiceImpl implements IUserCenterService {
      * @return RespRecurrence
      */
     private RespRecurrence<UserInfoVO> userLoginToAccountPassword(String phone, String password) {
-        User user = userService.selectOne(new EntityWrapper<User>().eq("phone", phone));
+        User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_PHONE, phone).
+                eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
         if (null == user) {
             return new RespRecurrence<UserInfoVO>().failure("用户不存在");
         }

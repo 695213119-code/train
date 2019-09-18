@@ -4,6 +4,7 @@ package com.train.usercenterservice.api;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.UserLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
+import com.train.usercenterservice.inter.Intercept;
 import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.vo.UserInfoVO;
 import io.swagger.annotations.Api;
@@ -11,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用户模块API
@@ -40,10 +43,10 @@ public class UserCenterApiController {
 
     @PostMapping("/userLogin")
     @ApiOperation(value = "用户登录--pc")
+    @Intercept
     public RespRecurrence<UserInfoVO> userLogin(@ApiParam(value = "用户登录参数类", required = true) @RequestBody UserLoginDTO userLoginDTO) {
         return userCenterService.userLogin(userLoginDTO);
     }
-
 
     @GetMapping("/checkUserToken")
     @ApiOperation(value = "校验用户token")
