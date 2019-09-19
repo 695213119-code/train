@@ -15,10 +15,9 @@
     <name>common-service</name>
     <description>Demo project for Spring Boot</description>
 
+    <!--此服务作为公共API服务-->
     <dependencies>
-
+        
     </dependencies>
-
-
 
 </project>

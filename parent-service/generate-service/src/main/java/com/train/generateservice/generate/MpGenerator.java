@@ -1,4 +1,4 @@
-package com.train.entityservice.utils;
+package com.train.generateservice.generate;
 
 
 import com.baomidou.mybatisplus.enums.IdType;
@@ -22,9 +22,9 @@ import java.util.Map;
  * @author zhangLei
  * @serial 2019/09/13
  */
-public class MpGeneratorUtils {
+public class MpGenerator {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(MpGeneratorUtils.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(MpGenerator.class);
 
 
     public static void main(String[] args) {
@@ -35,28 +35,28 @@ public class MpGeneratorUtils {
      * 代码生成方法
      */
     private static void createTables() {
-        MpGeneratorUtils.createCode(
-                MpGeneratorUtils.getGlobalConfig(),
-                MpGeneratorUtils.getDataSourceConfig(
+        MpGenerator.createCode(
+                MpGenerator.getGlobalConfig(),
+                MpGenerator.getDataSourceConfig(
                         "localhost",
                         "3306",
                         "train_core",
                         "root",
                         "root"
                 ),
-                MpGeneratorUtils.getStrategyConfig(
+                MpGenerator.getStrategyConfig(
                         //忽略表前缀
                         new String[]{"train_"},
                         null,
                         //设置需要生成代码的表
                         new String[]{"train_dictionary"}
                 ),
-                MpGeneratorUtils.getPackageConfig(
+                MpGenerator.getPackageConfig(
                         "com.train.coreservice",
                         "core"
                 ),
-                MpGeneratorUtils.getTemplateConfig(),
-                MpGeneratorUtils.getInjectionConfig(null, null)
+                MpGenerator.getTemplateConfig(),
+                MpGenerator.getInjectionConfig(null, null)
         );
     }
 
@@ -220,7 +220,7 @@ public class MpGeneratorUtils {
     }
 
     private static String getModuleRootPath() {
-        String path = MpGeneratorUtils.class.getClassLoader().getResource("").getPath();
+        String path = MpGenerator.class.getClassLoader().getResource("").getPath();
         return new File(path).getParentFile().getParentFile().getAbsolutePath();
     }
 

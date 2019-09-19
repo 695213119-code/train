@@ -24,7 +24,7 @@ public class CommonConstant {
     public static final Integer SQL_DELETE_SIGN_ALREADY = 1;
 
     /**
-     * 常用切割符号 ,
+     * 常用切割符号 [,]
      */
     public static final String COMMA = ",";
 
