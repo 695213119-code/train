@@ -6,18 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="eureka-service" />
+        <module name="common-service" />
         <module name="gateway-service" />
         <module name="entity-service" />
+        <module name="parent-service" />
+        <module name="authority-service" />
+        <module name="eureka-service" />
         <module name="generate-service" />
         <module name="user-center-service" />
-        <module name="common-service" />
         <module name="core-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="authority-service" options="-parameters" />
       <module name="common-service" options="-parameters" />
       <module name="core-service" options="-parameters" />
       <module name="entity-service" options="-parameters" />

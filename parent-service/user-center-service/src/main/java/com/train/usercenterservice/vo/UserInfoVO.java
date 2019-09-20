@@ -1,10 +1,12 @@
 package com.train.usercenterservice.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.train.entityservice.entity.vo.UserAuthorityVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户信息返回类-VO
@@ -41,7 +43,7 @@ public class UserInfoVO {
     private String roleName;
 
     @ApiModelProperty(value = "用户权限数据类")
-    private UserAuthorityVO userAuthority;
+    private List<UserAuthorityVO> userAuthority;
 
 
 }

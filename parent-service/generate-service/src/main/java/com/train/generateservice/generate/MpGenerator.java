@@ -49,11 +49,12 @@ public class MpGenerator {
                         new String[]{"train_"},
                         null,
                         //设置需要生成代码的表
-                        new String[]{"train_dictionary"}
+                        new String[]{"train_jurisdiction","train_role"
+                        ,"train_role_jurisdiction"}
                 ),
                 MpGenerator.getPackageConfig(
-                        "com.train.coreservice",
-                        "core"
+                        "com.train.authorityservice",
+                        "authority"
                 ),
                 MpGenerator.getTemplateConfig(),
                 MpGenerator.getInjectionConfig(null, null)

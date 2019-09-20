@@ -17,31 +17,31 @@ import java.util.List;
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 #else
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
-    /**
-     * 自定义分页
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    PageResult<List<${entity}>> findList(Integer pageNum, Integer pageSize);
-
-    /**
-    * 根据id查询
-    */
-    ${entity} find${entity}ById(String id);
-
-    /**
-    * 批量新增
-    */
-    boolean insert(List<${entity}> list);
-    /**
-    * 根据ID删除
-    */
-    boolean deleteBy${entity}Id(String id);
-    /**
-    * 批量删除
-    */
-    boolean batchdelete(List<String> list);
+##    /**
+##     * 自定义分页
+##     * @param pageNum
+##     * @param pageSize
+##     * @return
+##     */
+##    PageResult<List<${entity}>> findList(Integer pageNum, Integer pageSize);
+##
+##    /**
+##    * 根据id查询
+##    */
+##    ${entity} find${entity}ById(String id);
+##
+##    /**
+##    * 批量新增
+##    */
+##    boolean insert(List<${entity}> list);
+##    /**
+##    * 根据ID删除
+##    */
+##    boolean deleteBy${entity}Id(String id);
+##    /**
+##    * 批量删除
+##    */
+##    boolean batchdelete(List<String> list);
 
 }
 #end

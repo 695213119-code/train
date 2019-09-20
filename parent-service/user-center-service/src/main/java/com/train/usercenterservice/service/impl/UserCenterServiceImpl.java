@@ -8,7 +8,9 @@ import com.train.commonservice.constant.user.UserConstant;
 import com.train.commonservice.enumeration.CommonEnum;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.commonservice.utils.RandomUtils;
+import com.train.entityservice.entity.vo.UserAuthorityVO;
 import com.train.usercenterservice.dto.UserManagementLoginDTO;
+import com.train.usercenterservice.remote.authority.RemoteAuthorityService;
 import com.train.usercenterservice.utils.RedisUtils;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.entityservice.entity.user.User;
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,13 +40,15 @@ public class UserCenterServiceImpl implements IUserCenterService {
     private final IUserService userService;
     private final RedisUtils redisUtils;
     private final UserInfoHolderUtils userInfoHolderUtils;
+    private final RemoteAuthorityService remoteAuthorityService;
 
 
     @Autowired
-    public UserCenterServiceImpl(IUserService userService, RedisUtils redisUtils, UserInfoHolderUtils userInfoHolderUtils) {
+    public UserCenterServiceImpl(IUserService userService, RedisUtils redisUtils, UserInfoHolderUtils userInfoHolderUtils, RemoteAuthorityService remoteAuthorityService) {
         this.userService = userService;
         this.redisUtils = redisUtils;
         this.userInfoHolderUtils = userInfoHolderUtils;
+        this.remoteAuthorityService = remoteAuthorityService;
     }
 
     @Override
@@ -115,15 +120,18 @@ public class UserCenterServiceImpl implements IUserCenterService {
             return new RespRecurrence().failure("不存在的用户");
         }
 
+        UserInfoVO userInfoVO = new UserInfoVO();
+        userInfoVO.setUserId(String.valueOf(user.getId()));
+
         //TODO 查询角色
-        //TODO 查询权限
+
+        //查询权限
+        List<UserAuthorityVO> userAuthority = remoteAuthorityService.getUserAuthority(user.getId());
+        userInfoVO.setUserAuthority(userAuthority);
 
         final String phone = "1";
         final String wechat = "2";
         final String qq = "3";
-
-        UserInfoVO userInfoVO = new UserInfoVO();
-        userInfoVO.setUserId(String.valueOf(user.getId()));
         if (phone.equals(key)) {
             BeanUtils.copyProperties(user, userInfoVO);
         } else if (wechat.equals(key)) {
@@ -131,7 +139,7 @@ public class UserCenterServiceImpl implements IUserCenterService {
         } else if (qq.equals(key)) {
 
         } else {
-            return new RespRecurrence().failure("非法的登录类型");
+            return new RespRecurrence().failure("非法的查询类型");
         }
         return new RespRecurrence<>().success(userInfoVO);
     }

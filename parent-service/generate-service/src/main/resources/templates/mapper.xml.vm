@@ -36,30 +36,30 @@
     </sql>
 
     #end
-    <select id="findList" resultMap="BaseResultMap" parameterType="java.util.Map">
-        select
-        <include refid="Base_Column_List"/>
-        from ${table.name}
-        <where>
-            AND is_deleted=2
-        </where>
-    </select>
-
-    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List"/>
-        from ${table.name}
-        <where>
-            AND is_deleted=2
-            AND id=#{id}
-        </where>
-    </select>
-   <select id="deleteById">
-        delete
-        from ${table.name}
-        <where>
-            AND id=#{id}
-        </where>
-    </select>
+##    <select id="findList" resultMap="BaseResultMap" parameterType="java.util.Map">
+##        select
+##        <include refid="Base_Column_List"/>
+##        from ${table.name}
+##        <where>
+##            AND is_deleted=2
+##        </where>
+##    </select>
+##
+##    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+##        select
+##        <include refid="Base_Column_List"/>
+##        from ${table.name}
+##        <where>
+##            AND is_deleted=2
+##            AND id=#{id}
+##        </where>
+##    </select>
+##   <select id="deleteById">
+##        delete
+##        from ${table.name}
+##        <where>
+##            AND id=#{id}
+##        </where>
+##    </select>
 
 </mapper>

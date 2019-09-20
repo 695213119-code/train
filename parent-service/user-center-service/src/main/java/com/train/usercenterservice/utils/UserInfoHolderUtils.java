@@ -49,7 +49,7 @@ public class UserInfoHolderUtils {
             try {
                 throw new BusinessException("获取用户信息失败");
             } catch (BusinessException e) {
-                LOGGER.error("根据token获取用户信息失败,原因{},参数:{}", e.getMessage(), token);
+                LOGGER.error("根据token获取用户信息失败,原因:{},参数:{}", e.getMessage(), token);
             }
         }
         return user;

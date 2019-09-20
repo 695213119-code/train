@@ -22,22 +22,22 @@ import java.util.Map;
 interface ${table.mapperName} : ${superMapperClass}<${entity}>
 #else
 public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
-   /**
-   * 分页查询列表
-   * @param page
-   * @return
-   */
-   List<${entity}> findList(Pagination page);
-
-
-   /**
-   * 根据id查询
-   */
-    ${entity} findById(@Param("id") String id);
-
-    /**
-    * 根据ID删除
-    */
-    void deleteById(@Param("id") String id);
+##   /**
+##   * 分页查询列表
+##   * @param page
+##   * @return
+##   */
+##   List<${entity}> findList(Pagination page);
+##
+##
+##   /**
+##   * 根据id查询
+##   */
+##    ${entity} findById(@Param("id") String id);
+##
+##    /**
+##    * 根据ID删除
+##    */
+##    void deleteById(@Param("id") String id);
 }
 #end

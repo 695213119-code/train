@@ -25,6 +25,7 @@
         <module>core-service</module>
         <module>user-center-service</module>
         <module>common-service</module>
+        <module>authority-service</module>
         <module>entity-service</module>
         <module>generate-service</module>
     </modules>

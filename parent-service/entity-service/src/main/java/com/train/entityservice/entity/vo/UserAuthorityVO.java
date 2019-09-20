@@ -1,10 +1,12 @@
-package com.train.usercenterservice.vo;
+package com.train.entityservice.entity.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
  * 用户的权限标识返回类-VO
+ * 由于此类共用性较大
+ * 所以放在公共类中
  *
  * @author zhangLei
  * @serial 2019/09/20
