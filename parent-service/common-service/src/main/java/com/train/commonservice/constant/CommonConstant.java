@@ -28,4 +28,9 @@ public class CommonConstant {
      */
     public static final String COMMA = ",";
 
+    /**
+     * 前端请求的token标识
+     */
+    public static final String ACCESS_TOKEN = "access_token";
+
 }

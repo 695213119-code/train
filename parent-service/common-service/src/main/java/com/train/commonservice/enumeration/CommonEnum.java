@@ -26,7 +26,12 @@ public enum CommonEnum {
     /**
      * 非法的token
      */
-    TOKEN_UNLAWFUL("402", "非法的token");
+    TOKEN_UNLAWFUL("402", "非法的token"),
+
+    /**
+     * 非法的参数
+     */
+    INVALID_PARAMETER("403", "非法的参数");
 
 
     private String code;

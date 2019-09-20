@@ -5,19 +5,23 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.train.commonservice.constant.CommonConstant;
 import com.train.commonservice.constant.SqlConstant;
 import com.train.commonservice.constant.user.UserConstant;
+import com.train.commonservice.enumeration.CommonEnum;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.commonservice.utils.RandomUtils;
+import com.train.usercenterservice.dto.UserManagementLoginDTO;
 import com.train.usercenterservice.utils.RedisUtils;
-import com.train.usercenterservice.dto.UserLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.entityservice.entity.user.User;
 import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.user.service.IUserService;
+import com.train.usercenterservice.utils.UserInfoHolderUtils;
+import com.train.usercenterservice.vo.TokenVO;
 import com.train.usercenterservice.vo.UserInfoVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,12 +36,14 @@ public class UserCenterServiceImpl implements IUserCenterService {
 
     private final IUserService userService;
     private final RedisUtils redisUtils;
+    private final UserInfoHolderUtils userInfoHolderUtils;
 
 
     @Autowired
-    public UserCenterServiceImpl(IUserService userService, RedisUtils redisUtils) {
+    public UserCenterServiceImpl(IUserService userService, RedisUtils redisUtils, UserInfoHolderUtils userInfoHolderUtils) {
         this.userService = userService;
         this.redisUtils = redisUtils;
+        this.userInfoHolderUtils = userInfoHolderUtils;
     }
 
     @Override
@@ -58,23 +64,6 @@ public class UserCenterServiceImpl implements IUserCenterService {
         return new RespRecurrence<String>().success("用户注册成功");
     }
 
-    @Override
-    public RespRecurrence<UserInfoVO> userLogin(UserLoginDTO userLoginDTO) {
-
-        String type = userLoginDTO.getType();
-
-        final String accountPassword = "1";
-        final String phoneCode = "2";
-
-        switch (type) {
-            case accountPassword:
-                return userLoginToAccountPassword(userLoginDTO.getPhone(), userLoginDTO.getPassword());
-            case phoneCode:
-                return userLoginToPhoneCode(userLoginDTO.getPhone(), userLoginDTO.getCode());
-            default:
-                return new RespRecurrence<UserInfoVO>().failure("非法的登录类型");
-        }
-    }
 
     @Override
     public boolean checkUserToken(String userToken) {
@@ -90,71 +79,75 @@ public class UserCenterServiceImpl implements IUserCenterService {
         return sign;
     }
 
-    /**
-     * 账号密码登录
-     *
-     * @param phone    手机号
-     * @param password 密码
-     * @return RespRecurrence
-     */
-    private RespRecurrence<UserInfoVO> userLoginToAccountPassword(String phone, String password) {
-        User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_PHONE, phone).
+    @Override
+    public RespRecurrence userManagementLogin(UserManagementLoginDTO userManagementLoginDTO, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_PHONE, userManagementLoginDTO.getPhone()).
                 eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
+
         if (null == user) {
             return new RespRecurrence<UserInfoVO>().failure("用户不存在");
         }
-        if (!password.equals(user.getPassword())) {
+
+        //TODO 密码加密待完成,目前先不处理
+        if (!user.getPassword().equals(userManagementLoginDTO.getPassword())) {
             return new RespRecurrence<UserInfoVO>().failure("密码输入错误");
         }
-        UserInfoVO userInfoVO = processingLoginResults(user);
-        return new RespRecurrence<UserInfoVO>().success(userInfoVO);
+
+        clearUserResidualCache(user.getPhone());
+        String token = RandomUtils.generateToken();
+        redisUtils.set(token, JSONObject.toJSONString(user), 24, TimeUnit.HOURS);
+        redisUtils.set(UserConstant.USER_TOKEN_REDIS_KEY + user.getPhone(), token, 24, TimeUnit.HOURS);
+        return new RespRecurrence<>().success(new TokenVO(token));
+    }
+
+    @Override
+    public RespRecurrence getUserDetails(String key) {
+        Long userId = userInfoHolderUtils.getUserId();
+        User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_ID, userId).
+                eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
+        //TODO 删除用户,必须同时删除redis的token信息
+        if (null == user) {
+            return new RespRecurrence().failure("不存在的用户");
+        }
+
+        //TODO 查询角色
+        //TODO 查询权限
+
+        final String phone = "1";
+        final String wechat = "2";
+        final String qq = "3";
+
+        UserInfoVO userInfoVO = new UserInfoVO();
+        userInfoVO.setUserId(String.valueOf(user.getId()));
+        if (phone.equals(key)) {
+            BeanUtils.copyProperties(user, userInfoVO);
+        } else if (wechat.equals(key)) {
+
+        } else if (qq.equals(key)) {
+
+        } else {
+            return new RespRecurrence().failure("非法的登录类型");
+        }
+        return new RespRecurrence<>().success(userInfoVO);
     }
 
 
     /**
-     * 手机号验证码登录
-     *
-     * @param phone 手机号
-     * @param code  验证码
-     * @return RespRecurrence
-     */
-    private RespRecurrence<UserInfoVO> userLoginToPhoneCode(String phone, String code) {
-        return new RespRecurrence<UserInfoVO>().success();
-    }
-
-
-    /**
-     * 清空用户残留的redis缓存
+     * 清空用户残留的token-redis缓存
      *
      * @param phone 用户手机号
      */
     private void clearUserResidualCache(String phone) {
-        String redisKey = UserConstant.USER_TOKEN_REDIS_KEY + phone;
-        String tokenKey = redisUtils.get(redisKey);
-        if (StringUtils.isNotEmpty(tokenKey)) {
-            redisUtils.delete(tokenKey);
+        String userTokenRedisKey = redisUtils.get(UserConstant.USER_TOKEN_REDIS_KEY + phone);
+        if (StringUtils.isNotEmpty(userTokenRedisKey)) {
+            redisUtils.delete(userTokenRedisKey);
         }
     }
 
-    /**
-     * 处理pc端登录结果
-     *
-     * @param user 用户对象
-     * @return UserInfoVO
-     */
-    private UserInfoVO processingLoginResults(User user) {
-        //清空用户的残留缓存
-        clearUserResidualCache(user.getPhone());
-        String token = RandomUtils.generateToken();
-        String userJsonString = JSONObject.toJSONString(user);
-        redisUtils.set(token, userJsonString, 24, TimeUnit.HOURS);
-        String tokenKey = UserConstant.USER_TOKEN_REDIS_KEY + user.getPhone();
-        redisUtils.set(tokenKey, token, 24, TimeUnit.HOURS);
-        UserInfoVO userInfoVO = new UserInfoVO();
-        BeanUtils.copyProperties(user, userInfoVO);
-        userInfoVO.setUserId(String.valueOf(user.getId()));
-        userInfoVO.setToken(token);
-        return userInfoVO;
-    }
 
 }

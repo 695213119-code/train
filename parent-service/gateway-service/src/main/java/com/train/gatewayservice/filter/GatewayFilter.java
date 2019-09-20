@@ -4,6 +4,7 @@ package com.train.gatewayservice.filter;
 import com.alibaba.fastjson.JSONObject;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import com.train.commonservice.constant.CommonConstant;
 import com.train.commonservice.enumeration.CommonEnum;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.gatewayservice.remote.core.RemoteCoreService;
@@ -109,9 +110,10 @@ public class GatewayFilter extends ZuulFilter {
      * @return String
      */
     private String getToken(HttpServletRequest request) {
-        String token = request.getHeader("access_token");
+        String accessToken = CommonConstant.ACCESS_TOKEN;
+        String token = request.getHeader(accessToken);
         if (StringUtils.isEmpty(token)) {
-            token = request.getParameter("access_token");
+            token = request.getParameter(accessToken);
         }
         return token;
     }

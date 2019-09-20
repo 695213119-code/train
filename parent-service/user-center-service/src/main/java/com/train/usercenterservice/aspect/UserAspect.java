@@ -8,6 +8,7 @@ import com.train.entityservice.entity.user.LoginLog;
 import com.train.entityservice.entity.user.User;
 import com.train.commonservice.utils.IpUtils;
 import com.train.usercenterservice.dto.UserLoginDTO;
+import com.train.usercenterservice.dto.UserManagementLoginDTO;
 import com.train.usercenterservice.user.service.ILoginLogService;
 import com.train.usercenterservice.user.service.IUserService;
 import org.aspectj.lang.JoinPoint;
@@ -52,21 +53,30 @@ public class UserAspect {
     public void before(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
-        if (UserConstant.USER_LOGIN_METHOD_NAME.equals(methodName)) {
-            UserLoginDTO userLoginDTO = (UserLoginDTO) args[0];
-            User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_PHONE, userLoginDTO.getPhone()).
-                    eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
-            if (null != user && null != user.getId()) {
-                LoginLog loginLog = new LoginLog();
-                String ipAddr = IpUtils.getIpAddr(httpServletRequest);
-                loginLog.setUserId(user.getId());
-                loginLog.setLoginTime(new Date());
-                loginLog.setIpAddress(ipAddr);
-                loginLog.setPlatform(UserConstant.PLATFORM_PC);
-                loginLogService.insert(loginLog);
-            }
+        //用户管理端登录
+        if (UserConstant.USER_MANAGEMANT_LOGIN_METHOD_NAME.equals(methodName)) {
+            UserManagementLoginDTO userManagementLoginDTO = (UserManagementLoginDTO) args[0];
+            addUserLoginLog(userManagementLoginDTO.getPhone(), UserConstant.PLATFORM_PC);
+        }
+    }
 
 
+    /**
+     * 添加用户登录日志
+     *
+     * @param userPhone 用户手机号
+     * @param platform  登录平台
+     */
+    private void addUserLoginLog(String userPhone, Integer platform) {
+        User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_PHONE, userPhone).
+                eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
+        if (null != user && null != user.getId()) {
+            LoginLog loginLog = new LoginLog();
+            loginLog.setUserId(user.getId());
+            loginLog.setLoginTime(new Date());
+            loginLog.setIpAddress(IpUtils.getIpAddr(httpServletRequest));
+            loginLog.setPlatform(platform);
+            loginLogService.insert(loginLog);
         }
     }
 

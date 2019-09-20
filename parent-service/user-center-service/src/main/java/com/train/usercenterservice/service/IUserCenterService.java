@@ -2,8 +2,10 @@ package com.train.usercenterservice.service;
 
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.UserLoginDTO;
+import com.train.usercenterservice.dto.UserManagementLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.usercenterservice.vo.UserInfoVO;
+import org.springframework.validation.BindingResult;
 
 /**
  * 用户中心->用户模块接口类
@@ -21,13 +23,6 @@ public interface IUserCenterService {
      */
     RespRecurrence userRegister(UserRegisterDTO userRegisterDTO);
 
-    /**
-     * 用户登录
-     *
-     * @param userLoginDTO 用户登录参数类
-     * @return RespRecurrence
-     */
-    RespRecurrence<UserInfoVO> userLogin(UserLoginDTO userLoginDTO);
 
     /**
      * 校验用户token
@@ -36,4 +31,21 @@ public interface IUserCenterService {
      * @return boolean
      */
     boolean checkUserToken(String userToken);
+
+    /**
+     * 用户管理端登录
+     *
+     * @param userManagementLoginDTO 用户管理端登录DTO
+     * @param bindingResult          校验api
+     * @return RespRecurrence
+     */
+    RespRecurrence userManagementLogin(UserManagementLoginDTO userManagementLoginDTO, BindingResult bindingResult);
+
+    /**
+     * 获取用户详情
+     *
+     * @param key 用户登录方式 1-手机号 2-微信 3-扣扣
+     * @return RespRecurrence
+     */
+    RespRecurrence getUserDetails(String key);
 }

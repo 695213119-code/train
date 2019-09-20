@@ -12,4 +12,9 @@ public class SqlConstant {
      * sql查询字段-phone
      */
     public static final String SQL_FIELD_PHONE = "phone";
+
+    /**
+     * sql查询字段-id
+     */
+    public static final String SQL_FIELD_ID = "id";
 }

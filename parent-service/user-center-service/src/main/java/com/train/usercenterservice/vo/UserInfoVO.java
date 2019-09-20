@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 用户信息返回类
+ * 用户信息返回类-VO
  *
  * @author zhangLei
  * @serial 2019/09/17
@@ -17,9 +17,6 @@ public class UserInfoVO {
 
     @ApiModelProperty("用户id")
     private String userId;
-
-    @ApiModelProperty(value = "token")
-    private String token;
 
     @ApiModelProperty(value = "手机号")
     private String phone;
@@ -39,5 +36,12 @@ public class UserInfoVO {
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
+
+    @ApiModelProperty(value = "用户角色名称")
+    private String roleName;
+
+    @ApiModelProperty(value = "用户权限数据类")
+    private UserAuthorityVO userAuthority;
+
 
 }
