@@ -53,16 +53,20 @@ public class UserAspect {
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
         if (UserConstant.USER_LOGIN_METHOD_NAME.equals(methodName)) {
-            LoginLog loginLog = new LoginLog();
             UserLoginDTO userLoginDTO = (UserLoginDTO) args[0];
             User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_PHONE, userLoginDTO.getPhone()).
                     eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
-            String ipAddr = IpUtils.getIpAddr(httpServletRequest);
-            loginLog.setUserId(user.getId());
-            loginLog.setLoginTime(new Date());
-            loginLog.setIpAddress(ipAddr);
-            loginLog.setPlatform(UserConstant.PLATFORM_PC);
-            loginLogService.insert(loginLog);
+            if (null != user && null != user.getId()) {
+                LoginLog loginLog = new LoginLog();
+                String ipAddr = IpUtils.getIpAddr(httpServletRequest);
+                loginLog.setUserId(user.getId());
+                loginLog.setLoginTime(new Date());
+                loginLog.setIpAddress(ipAddr);
+                loginLog.setPlatform(UserConstant.PLATFORM_PC);
+                loginLogService.insert(loginLog);
+            }
+
+
         }
     }
 
