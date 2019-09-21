@@ -19,6 +19,11 @@ public enum CommonEnum {
     FAIL_CODE("500", "失败"),
 
     /**
+     * 业务异常返回的状态码
+     */
+    BUSINESS_CODE("901", "业务异常"),
+
+    /**
      * token为空
      */
     TOKEN_ISNULL("401", "token不存在或已过期"),

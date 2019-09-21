@@ -1,5 +1,6 @@
 package com.train.usercenterservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class UserManagementLoginDTO {
 
     @ApiModelProperty("手机号")
     @NotBlank(message = "用户手机号码不能为空")
+    @JsonAlias("username")
     private String phone;
 
     @ApiModelProperty("密码")

@@ -42,6 +42,9 @@ public class UserInfoVO {
     @ApiModelProperty(value = "用户角色名称")
     private String roleName;
 
+    @ApiModelProperty(value = "用户生日(返回的是阳历的时间)")
+    private String birthday;
+
     @ApiModelProperty(value = "用户权限数据类")
     private List<UserAuthorityVO> userAuthority;
 

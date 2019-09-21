@@ -12,10 +12,10 @@ import lombok.Data;
 @Data
 public class TokenVO {
 
-    public TokenVO(String userToken) {
-        this.userToken = userToken;
+    public TokenVO(String token) {
+        this.token = token;
     }
 
     @ApiModelProperty("用户的token")
-    private String userToken;
+    private String token;
 }

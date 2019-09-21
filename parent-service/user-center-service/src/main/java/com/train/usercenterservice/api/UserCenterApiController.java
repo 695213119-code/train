@@ -32,10 +32,10 @@ public class UserCenterApiController {
         this.userCenterService = userCenterService;
     }
 
-    @GetMapping("/checkUserToken")
+    @GetMapping("/checkUserTokenServiceInvocation")
     @ApiOperation(value = "校验用户token[服务调用API]")
-    public boolean checkUserToken(@ApiParam(value = "用户token", required = true) @RequestParam String userToken) {
-        return userCenterService.checkUserToken(userToken);
+    public boolean checkUserTokenServiceInvocation(@ApiParam(value = "用户token", required = true) @RequestParam String userToken) {
+        return userCenterService.checkUserTokenServiceInvocation(userToken);
     }
 
     @PostMapping("/userManagementLogin")
@@ -46,16 +46,22 @@ public class UserCenterApiController {
         return userCenterService.userManagementLogin(userManagementLoginDTO, bindingResult);
     }
 
-    @PostMapping("/getUserDetails")
-    @ApiOperation(value = "获取用户详情",response = UserInfoVO.class)
-    @ApiImplicitParams({ @ApiImplicitParam(paramType = "header", dataType = "String", name = "access_token", value = "token标记", required = true) })
+    @GetMapping("/getUserDetails")
+    @ApiOperation(value = "获取用户详情", response = UserInfoVO.class)
+    @ApiImplicitParams({@ApiImplicitParam(paramType = "header", dataType = "String", name = "access_token", value = "token标记", required = true)})
     public RespRecurrence getUserDetails(@ApiParam(value = "用户登录方式 1-手机号 2-微信 3-扣扣", required = true) @RequestParam String key) {
         return userCenterService.getUserDetails(key);
     }
 
+    @GetMapping("/userLogOut")
+    @ApiOperation(value = "用户登出")
+    @ApiImplicitParams({@ApiImplicitParam(paramType = "header", dataType = "String", name = "access_token", value = "token标记", required = true)})
+    public RespRecurrence userLogOut() {
+        return userCenterService.userLogOut();
+    }
 
     @PostMapping("/userRegister")
-    @ApiOperation(value = "用户注册")
+    @ApiOperation(value = "用户注册-暂时接口")
     public RespRecurrence userRegister(@ApiParam(value = "用户注册参数类", required = true) @RequestBody UserRegisterDTO userRegisterDTO) {
         return userCenterService.userRegister(userRegisterDTO);
     }

@@ -2,6 +2,7 @@ package com.train.usercenterservice.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.train.commonservice.constant.CommonConstant;
+import com.train.commonservice.constant.user.UserConstant;
 import com.train.commonservice.exception.BusinessException;
 import com.train.entityservice.entity.user.User;
 import org.apache.commons.lang.StringUtils;
@@ -38,19 +39,10 @@ public class UserInfoHolderUtils {
      * @return User
      */
     public User getUser() {
-        String accessToken = CommonConstant.ACCESS_TOKEN;
-        String token = request.getHeader(accessToken);
-        if (StringUtils.isEmpty(token)) {
-            token = request.getParameter(accessToken);
-        }
-        String userJsonString = redisUtils.get(token);
+        String userJsonString = redisUtils.get(getAccessToke());
         User user = JSONObject.parseObject(userJsonString, User.class);
         if (null == user || null == user.getId()) {
-            try {
-                throw new BusinessException("获取用户信息失败");
-            } catch (BusinessException e) {
-                LOGGER.error("根据token获取用户信息失败,原因:{},参数:{}", e.getMessage(), token);
-            }
+            return null;
         }
         return user;
     }
@@ -62,8 +54,37 @@ public class UserInfoHolderUtils {
      * @return Long
      */
     public Long getUserId() {
-        return getUser().getId();
+        Long userId = 0L;
+        User user = getUser();
+        if (null != user) {
+            userId = user.getId();
+        }
+        return userId;
     }
 
+    /**
+     * 获取用户token
+     *
+     * @return String
+     */
+    private String getAccessToke() {
+        String accessToken = CommonConstant.ACCESS_TOKEN;
+        String token = request.getHeader(accessToken);
+        if (StringUtils.isEmpty(token)) {
+            token = request.getParameter(accessToken);
+        }
+        return token;
+    }
+
+
+    /**
+     * 删除用户token
+     *
+     * @param phone 用户手机号
+     */
+    public void deleteUserToken(String phone) {
+        redisUtils.delete(getAccessToke());
+        redisUtils.delete(UserConstant.USER_TOKEN_REDIS_KEY + phone);
+    }
 
 }

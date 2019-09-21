@@ -24,5 +24,14 @@ public class UserConstant {
      */
     public static final Integer PLATFORM_PC = 1;
 
+    /**
+     * 第三方平台类型-微信
+     */
+    public static final Integer THIRD_PLATFORM_TYPE_WECHAT = 2;
+
+    /**
+     * 第三方平台类型-qq
+     */
+    public static final Integer THIRD_PLATFORM_TYPE_QQ = 1;
 
 }

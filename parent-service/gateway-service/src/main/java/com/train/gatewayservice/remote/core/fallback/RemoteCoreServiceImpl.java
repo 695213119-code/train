@@ -17,7 +17,7 @@ public class RemoteCoreServiceImpl implements RemoteCoreService {
     private final static Logger LOGGER = LoggerFactory.getLogger(RemoteCoreServiceImpl.class);
 
     @Override
-    public boolean checkPathNeedsToken(String path) {
+    public boolean checkPathNeedsTokenServiceInvocation(String path) {
         LOGGER.error("调用服务[core-service]接口[checkPathNeedsToken]失败");
         return false;
     }

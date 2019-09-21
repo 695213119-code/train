@@ -18,7 +18,7 @@ public interface ICoreService {
      * @param path 接口路径
      * @return boolean
      */
-    boolean checkPathNeedsToken(String path);
+    boolean checkPathNeedsTokenServiceInvocation(String path);
 
     /**
      * 添加过滤接口

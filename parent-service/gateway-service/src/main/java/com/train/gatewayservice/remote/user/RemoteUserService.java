@@ -25,7 +25,7 @@ public interface RemoteUserService {
      * @param userToken 用户token
      * @return boolean
      */
-    @GetMapping(USER_API + "/checkUserToken")
-    boolean checkUserToken(@RequestParam(value = "userToken") String userToken);
+    @GetMapping(USER_API + "/checkUserTokenServiceInvocation")
+    boolean checkUserTokenServiceInvocation(@RequestParam(value = "userToken") String userToken);
 
 }

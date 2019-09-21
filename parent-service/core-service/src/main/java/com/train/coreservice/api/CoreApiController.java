@@ -28,10 +28,10 @@ public class CoreApiController {
         this.coreService = coreService;
     }
 
-    @ApiOperation("校验请求接口是否需要token")
-    @GetMapping("/checkPathNeedsToken")
-    public boolean checkPathNeedsToken(@ApiParam(value = "接口路径", required = true) @RequestParam String path) {
-        return coreService.checkPathNeedsToken(path);
+    @ApiOperation("校验请求接口是否需要token[服务调用]")
+    @GetMapping("/checkPathNeedsTokenServiceInvocation")
+    public boolean checkPathNeedsTokenServiceInvocation(@ApiParam(value = "接口路径", required = true) @RequestParam String path) {
+        return coreService.checkPathNeedsTokenServiceInvocation(path);
     }
 
     @ApiOperation("添加过滤接口")

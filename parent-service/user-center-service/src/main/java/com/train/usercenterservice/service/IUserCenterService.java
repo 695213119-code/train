@@ -1,10 +1,8 @@
 package com.train.usercenterservice.service;
 
 import com.train.commonservice.recurrence.RespRecurrence;
-import com.train.usercenterservice.dto.UserLoginDTO;
 import com.train.usercenterservice.dto.UserManagementLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
-import com.train.usercenterservice.vo.UserInfoVO;
 import org.springframework.validation.BindingResult;
 
 /**
@@ -30,7 +28,7 @@ public interface IUserCenterService {
      * @param userToken 用户token
      * @return boolean
      */
-    boolean checkUserToken(String userToken);
+    boolean checkUserTokenServiceInvocation(String userToken);
 
     /**
      * 用户管理端登录
@@ -48,4 +46,11 @@ public interface IUserCenterService {
      * @return RespRecurrence
      */
     RespRecurrence getUserDetails(String key);
+
+    /**
+     * 用户登出
+     *
+     * @return RespRecurrence
+     */
+    RespRecurrence userLogOut();
 }

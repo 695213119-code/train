@@ -1,5 +1,6 @@
 package com.train.usercenterservice.remote.authority.fallback;
 
+import com.train.entityservice.entity.authority.Role;
 import com.train.entityservice.entity.vo.UserAuthorityVO;
 import com.train.usercenterservice.remote.authority.RemoteAuthorityService;
 import org.slf4j.Logger;
@@ -22,8 +23,14 @@ public class RemoteAuthorityServiceImpl implements RemoteAuthorityService {
 
 
     @Override
-    public List<UserAuthorityVO> getUserAuthority(Long userId) {
-        LOGGER.error("调用服务[authority-service]接口[getUserAuthority]失败");
+    public List<UserAuthorityVO> getUserAuthorityServiceInvocation(Long userId) {
+        LOGGER.error("调用服务[authority-service]接口[getUserAuthorityServiceInvocation]失败");
         return Collections.emptyList();
+    }
+
+    @Override
+    public Role getRoleServiceInvocation(Long roleId) {
+        LOGGER.error("调用服务[authority-service]接口[getRoleServiceInvocation]失败");
+        return null;
     }
 }

@@ -25,6 +25,6 @@ public interface RemoteCoreService {
      * @param path 接口路径
      * @return boolean
      */
-    @GetMapping(CORE_API + "/checkPathNeedsToken")
-    boolean checkPathNeedsToken(@RequestParam(value = "path") String path);
+    @GetMapping(CORE_API + "/checkPathNeedsTokenServiceInvocation")
+    boolean checkPathNeedsTokenServiceInvocation(@RequestParam(value = "path") String path);
 }

@@ -37,7 +37,7 @@ public class CoreServiceImpl implements ICoreService {
 
 
     @Override
-    public boolean checkPathNeedsToken(String path) {
+    public boolean checkPathNeedsTokenServiceInvocation(String path) {
         Integer needsToken = 2;
         boolean sign = true;
         Interface anInterface = iInterfaceService.selectOne(new EntityWrapper<Interface>().eq("url", path));

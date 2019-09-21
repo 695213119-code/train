@@ -17,4 +17,19 @@ public class SqlConstant {
      * sql查询字段-id
      */
     public static final String SQL_FIELD_ID = "id";
+
+    /**
+     * sql查询字段-role_name
+     */
+    public static final String SQL_FIELD_ROLE_NAME = "role_name";
+
+    /**
+     * sql查询字段-user_id
+     */
+    public static final String SQL_FIELD_USER_ID = "user_id";
+
+    /**
+     * sql查询字段-platform
+     */
+    public static final String SQL_FIELD_PLATFORM = "platform";
 }

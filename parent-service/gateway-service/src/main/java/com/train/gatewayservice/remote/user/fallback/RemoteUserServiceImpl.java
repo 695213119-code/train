@@ -18,7 +18,7 @@ public class RemoteUserServiceImpl implements RemoteUserService {
     private final static Logger LOGGER = LoggerFactory.getLogger(RemoteUserServiceImpl.class);
 
     @Override
-    public boolean checkUserToken(String userToken) {
+    public boolean checkUserTokenServiceInvocation(String userToken) {
         LOGGER.error("调用服务[user-center-service]接口[checkUserToken]失败");
         return false;
     }

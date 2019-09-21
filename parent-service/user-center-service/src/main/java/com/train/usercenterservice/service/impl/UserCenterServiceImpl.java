@@ -1,5 +1,6 @@
 package com.train.usercenterservice.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.train.commonservice.constant.CommonConstant;
@@ -8,9 +9,14 @@ import com.train.commonservice.constant.user.UserConstant;
 import com.train.commonservice.enumeration.CommonEnum;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.commonservice.utils.RandomUtils;
+import com.train.entityservice.entity.authority.Role;
+import com.train.entityservice.entity.user.UserSubsidiary;
+import com.train.entityservice.entity.user.UserThirdparty;
 import com.train.entityservice.entity.vo.UserAuthorityVO;
 import com.train.usercenterservice.dto.UserManagementLoginDTO;
 import com.train.usercenterservice.remote.authority.RemoteAuthorityService;
+import com.train.usercenterservice.user.service.IUserSubsidiaryService;
+import com.train.usercenterservice.user.service.IUserThirdpartyService;
 import com.train.usercenterservice.utils.RedisUtils;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.entityservice.entity.user.User;
@@ -41,14 +47,18 @@ public class UserCenterServiceImpl implements IUserCenterService {
     private final RedisUtils redisUtils;
     private final UserInfoHolderUtils userInfoHolderUtils;
     private final RemoteAuthorityService remoteAuthorityService;
+    private final IUserSubsidiaryService userSubsidiaryService;
+    private final IUserThirdpartyService userThirdpartyService;
 
 
     @Autowired
-    public UserCenterServiceImpl(IUserService userService, RedisUtils redisUtils, UserInfoHolderUtils userInfoHolderUtils, RemoteAuthorityService remoteAuthorityService) {
+    public UserCenterServiceImpl(IUserService userService, RedisUtils redisUtils, UserInfoHolderUtils userInfoHolderUtils, RemoteAuthorityService remoteAuthorityService, IUserSubsidiaryService userSubsidiaryService, IUserThirdpartyService userThirdpartyService) {
         this.userService = userService;
         this.redisUtils = redisUtils;
         this.userInfoHolderUtils = userInfoHolderUtils;
         this.remoteAuthorityService = remoteAuthorityService;
+        this.userSubsidiaryService = userSubsidiaryService;
+        this.userThirdpartyService = userThirdpartyService;
     }
 
     @Override
@@ -71,11 +81,11 @@ public class UserCenterServiceImpl implements IUserCenterService {
 
 
     @Override
-    public boolean checkUserToken(String userToken) {
+    public boolean checkUserTokenServiceInvocation(String userToken) {
         boolean sign = false;
         String userJsonString = redisUtils.get(userToken);
         if (StringUtils.isNotEmpty(userJsonString)) {
-            User user = (User) JSONObject.parse(userJsonString);
+            User user = JSONObject.parseObject(userJsonString, User.class);
             User userReal = userService.selectById(user.getId());
             if (null != userReal) {
                 sign = true;
@@ -103,6 +113,9 @@ public class UserCenterServiceImpl implements IUserCenterService {
             return new RespRecurrence<UserInfoVO>().failure("密码输入错误");
         }
 
+        //TODO 判断权限
+
+
         clearUserResidualCache(user.getPhone());
         String token = RandomUtils.generateToken();
         redisUtils.set(token, JSONObject.toJSONString(user), 24, TimeUnit.HOURS);
@@ -115,33 +128,63 @@ public class UserCenterServiceImpl implements IUserCenterService {
         Long userId = userInfoHolderUtils.getUserId();
         User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_ID, userId).
                 eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
-        //TODO 删除用户,必须同时删除redis的token信息
         if (null == user) {
-            return new RespRecurrence().failure("不存在的用户");
+            return new RespRecurrence().failure(CommonEnum.BUSINESS_CODE.getCode(), "非法的用户");
         }
 
         UserInfoVO userInfoVO = new UserInfoVO();
         userInfoVO.setUserId(String.valueOf(user.getId()));
+        userInfoVO.setPhone(user.getPhone());
 
-        //TODO 查询角色
+        // 查询角色
+        UserSubsidiary userSubsidiary = userSubsidiaryService.selectOne(new EntityWrapper<UserSubsidiary>().eq(SqlConstant.SQL_FIELD_USER_ID, user.getId())
+                .eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
+        if (null == userSubsidiary) {
+            return new RespRecurrence().failure(CommonEnum.BUSINESS_CODE.getCode(), "非法的用户角色");
+        }
+        Role role = remoteAuthorityService.getRoleServiceInvocation(userSubsidiary.getRoleId());
+        if (null != role) userInfoVO.setRoleName(role.getRoleName());
+
+        //TODO 用户生日暂时不做处理
+        userInfoVO.setBirthday(userSubsidiary.getBirthday());
 
         //查询权限
-        List<UserAuthorityVO> userAuthority = remoteAuthorityService.getUserAuthority(user.getId());
-        userInfoVO.setUserAuthority(userAuthority);
+        List<UserAuthorityVO> userAuthority = remoteAuthorityService.getUserAuthorityServiceInvocation(user.getId());
+        if (CollUtil.isNotEmpty(userAuthority)) userInfoVO.setUserAuthority(userAuthority);
 
         final String phone = "1";
-        final String wechat = "2";
-        final String qq = "3";
         if (phone.equals(key)) {
-            BeanUtils.copyProperties(user, userInfoVO);
-        } else if (wechat.equals(key)) {
-
-        } else if (qq.equals(key)) {
-
+            userInfoVO.setAge(user.getAge());
+            userInfoVO.setAvatar(user.getAvatar());
+            userInfoVO.setGender(user.getGender());
+            userInfoVO.setNickName(user.getNickName());
+            userInfoVO.setCreateTime(user.getCreateTime());
         } else {
-            return new RespRecurrence().failure("非法的查询类型");
+            final String wechat = "2";
+            int platform = key.equals(wechat) ? UserConstant.THIRD_PLATFORM_TYPE_WECHAT : UserConstant.THIRD_PLATFORM_TYPE_QQ;
+            UserThirdparty userThirdparty = userThirdpartyService.selectOne(new EntityWrapper<UserThirdparty>().eq(SqlConstant.SQL_FIELD_USER_ID, user.getId())
+                    .eq(SqlConstant.SQL_FIELD_PLATFORM, platform)
+                    .eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
+            if (null != userThirdparty) {
+                userInfoVO.setAge(userThirdparty.getAge());
+                userInfoVO.setAvatar(userThirdparty.getAvatar());
+                userInfoVO.setGender(userThirdparty.getGender());
+                userInfoVO.setNickName(userThirdparty.getNickName());
+                userInfoVO.setCreateTime(userThirdparty.getCreateTime());
+            }
         }
         return new RespRecurrence<>().success(userInfoVO);
+    }
+
+    @Override
+    public RespRecurrence userLogOut() {
+        Long userId = userInfoHolderUtils.getUserId();
+        User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_ID, userId).
+                eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
+        if (null != user) {
+            userInfoHolderUtils.deleteUserToken(user.getPhone());
+        }
+        return new RespRecurrence().success();
     }
 
 

@@ -85,7 +85,7 @@ public class GatewayFilter extends ZuulFilter {
         LOGGER.info("请求的URL====>>{}", requestUrl);
 
         //url拦截
-        boolean pathNeedsToken = remoteCoreService.checkPathNeedsToken(requestUrl);
+        boolean pathNeedsToken = remoteCoreService.checkPathNeedsTokenServiceInvocation(requestUrl);
         if (pathNeedsToken) {
             //用户token鉴权
             String token = getToken(request);
@@ -93,7 +93,7 @@ public class GatewayFilter extends ZuulFilter {
                 failureRequest(currentContext, new RespRecurrence().failure(CommonEnum.TOKEN_ISNULL.getCode(), CommonEnum.TOKEN_ISNULL.getMessage()));
                 return null;
             }
-            boolean checkUserToken = remoteUserService.checkUserToken(token);
+            boolean checkUserToken = remoteUserService.checkUserTokenServiceInvocation(token);
             if (!checkUserToken) {
                 failureRequest(currentContext, new RespRecurrence().failure(CommonEnum.TOKEN_UNLAWFUL.getCode(), CommonEnum.TOKEN_UNLAWFUL.getMessage()));
                 return null;
