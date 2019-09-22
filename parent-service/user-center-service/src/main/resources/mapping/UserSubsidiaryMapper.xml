@@ -6,7 +6,10 @@
     <resultMap id="BaseResultMap" type="com.train.entityservice.entity.user.UserSubsidiary">
         <id column="id" property="id" />
         <result column="user_id" property="userId" />
-        <result column="role_id" property="roleId" />
+        <result column="nick_name" property="nickName" />
+        <result column="avatar" property="avatar" />
+        <result column="gender" property="gender" />
+        <result column="age" property="age" />
         <result column="birthday" property="birthday" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
@@ -15,7 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_id, role_id, birthday, create_time, update_time, is_deleted
+        id, user_id, nick_name, avatar, gender, age,  birthday, create_time, update_time, is_deleted
     </sql>
 
 

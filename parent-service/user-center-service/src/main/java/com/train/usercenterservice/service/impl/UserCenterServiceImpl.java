@@ -142,11 +142,8 @@ public class UserCenterServiceImpl implements IUserCenterService {
         if (null == userSubsidiary) {
             return new RespRecurrence().failure(CommonEnum.BUSINESS_CODE.getCode(), "非法的用户角色");
         }
-        Role role = remoteAuthorityService.getRoleServiceInvocation(userSubsidiary.getRoleId());
+        Role role = remoteAuthorityService.getRoleServiceInvocation(user.getRoleId());
         if (null != role) userInfoVO.setRoleName(role.getRoleName());
-
-        //TODO 用户生日暂时不做处理
-        userInfoVO.setBirthday(userSubsidiary.getBirthday());
 
         //查询权限
         List<UserAuthorityVO> userAuthority = remoteAuthorityService.getUserAuthorityServiceInvocation(user.getId());
@@ -154,10 +151,10 @@ public class UserCenterServiceImpl implements IUserCenterService {
 
         final String phone = "1";
         if (phone.equals(key)) {
-            userInfoVO.setAge(user.getAge());
-            userInfoVO.setAvatar(user.getAvatar());
-            userInfoVO.setGender(user.getGender());
-            userInfoVO.setNickName(user.getNickName());
+            userInfoVO.setAge(userSubsidiary.getAge());
+            userInfoVO.setAvatar(userSubsidiary.getAvatar());
+            userInfoVO.setGender(userSubsidiary.getGender());
+            userInfoVO.setNickName(userSubsidiary.getNickName());
             userInfoVO.setCreateTime(user.getCreateTime());
         } else {
             final String wechat = "2";

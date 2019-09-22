@@ -49,8 +49,8 @@ public class MpGenerator {
                         new String[]{"train_"},
                         null,
                         //设置需要生成代码的表
-                        new String[]{"train_user_subsidiary"
-                                , "train_user_thirdparty"}
+                        new String[]{"train_user"
+                                , "train_user_subsidiary"}
                 ),
                 MpGenerator.getPackageConfig(
                         "com.train.usercenterservice",

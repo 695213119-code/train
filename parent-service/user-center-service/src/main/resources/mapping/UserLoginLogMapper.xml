@@ -6,7 +6,7 @@
     <select id="queryUserLoginLog" resultType="com.train.usercenterservice.vo.UserLoginLogVO">
         SELECT
         trainLoginLog.id AS id,
-        trainUser.nick_name AS userName,
+        trainUser.user_name AS userName,
         trainUser.phone AS phone,
         trainLoginLog.platform AS platform,
         trainLoginLog.ip_address AS ipAddress,
@@ -19,13 +19,17 @@
                 AND trainLoginLog.platform=#{userLoginLogQueryDTO.platform}
             </if>
             <if test="userLoginLogQueryDTO.ipAddress != null and userLoginLogQueryDTO.ipAddress !=''">
-                AND trainLoginLog.ip_address=#{userLoginLogQueryDTO.ipAddress}
+                AND trainLoginLog.ip_address= LIKE CONCAT('%',#{userLoginLogQueryDTO.ipAddress},'%'))
             </if>
-            <if test="userLoginLogQueryDTO.userPhone != null and userLoginLogQueryDTO.userPhone !=''">
-                AND trainUser.phone LIKE CONCAT('%',#{userLoginLogQueryDTO.userPhone},'%')
+            <if test="userLoginLogQueryDTO.userKey != null and userLoginLogQueryDTO.userKey !=''">
+                AND (
+                (trainUser.phone LIKE CONCAT('%',#{userLoginLogQueryDTO.userKey},'%'))
+                OR
+                (trainUser.user_name LIKE CONCAT('%',#{userLoginLogQueryDTO.userKey},'%'))
+                )
             </if>
             <if test="userLoginLogQueryDTO.timeStart!= null and userLoginLogQueryDTO.timeStart!= '' and  userLoginLogQueryDTO.timeEnd!= null and userLoginLogQueryDTO.timeEnd!= ''">
-                AND trainLoginLog.login_time between #{userLoginLogQueryDTO.timeStart} and #{userLoginLogQueryDTO.timeEnd}
+                AND date_format(trainLoginLog.login_time,'%Y-%m-%d %H:%i:%S') between #{userLoginLogQueryDTO.timeStart} and #{userLoginLogQueryDTO.timeEnd}
             </if>
         </where>
         order by trainLoginLog.login_time desc

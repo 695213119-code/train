@@ -20,6 +20,12 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.train</groupId>
+            <artifactId>data-base-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!--region mybatis-plus代码生成器-->
         <dependency>
             <groupId>com.baomidou</groupId>

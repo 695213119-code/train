@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
  * </p>
  *
  * @author Administrator
- * @since 2019-09-21
+ * @since 2019-09-22
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -46,9 +46,18 @@ public class UserSubsidiary extends Model<UserSubsidiary> {
     @TableField("user_id")
     private Long userId;
 
-    @ApiModelProperty(value = "用户角色id")
-    @TableField("role_id")
-    private Long roleId;
+    @ApiModelProperty(value = "用户昵称")
+    @TableField("nick_name")
+    private String nickName;
+
+    @ApiModelProperty(value = "用户头像")
+    private String avatar;
+
+    @ApiModelProperty(value = "用户性别(1-男 2-女)")
+    private Integer gender;
+
+    @ApiModelProperty(value = "用户年龄")
+    private Integer age;
 
     @ApiModelProperty(value = "用户生日(农历)")
     private String birthday;

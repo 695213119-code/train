@@ -3,6 +3,7 @@ package com.train.usercenterservice.api;
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.usercenterservice.dto.UserLoginLogQueryDTO;
 import com.train.usercenterservice.service.IUserLoginLogService;
+import com.train.usercenterservice.vo.UserLoginLogVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,7 +35,7 @@ public class UserLoginLogApiController {
 
 
     @PostMapping("/queryUserLoginLog")
-    @ApiOperation(value = "获取用户登录日志")
+    @ApiOperation(value = "获取用户登录日志", response = UserLoginLogVO.class)
     public RespPageRecurrence queryUserLoginLog(@ApiParam(value = "条件参数", required = true) @RequestBody @Validated UserLoginLogQueryDTO userLoginLogQueryDTO,
                                                 BindingResult bindingResult) {
         return userLoginLogService.queryUserLoginLog(userLoginLogQueryDTO, bindingResult);

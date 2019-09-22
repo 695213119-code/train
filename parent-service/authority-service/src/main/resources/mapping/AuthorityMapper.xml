@@ -12,13 +12,10 @@
         INNER JOIN train_role_jurisdiction AS trainRoleJurisdiction ON trainRoleJurisdiction.jurisdiction_id =
         trainJurisdiction.id
         INNER JOIN train_role AS trainRole ON trainRole.id = trainRoleJurisdiction.role_id
-        INNER JOIN train_user_subsidiary AS trainUserSubsidiary ON trainUserSubsidiary.role_id = trainRole.id
-        INNER JOIN train_user AS trainUser ON trainUser.id = trainUserSubsidiary.user_id
+        INNER JOIN train_user AS trainUser ON trainUser.role_id = trainRole.id
         <where>
             AND trainUser.id = #{userId}
             AND trainUser.is_deleted =2
         </where>
-
-
     </select>
 </mapper>

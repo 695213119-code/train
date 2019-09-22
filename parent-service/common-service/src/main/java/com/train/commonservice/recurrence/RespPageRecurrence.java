@@ -42,8 +42,6 @@ public class RespPageRecurrence<T> implements Serializable {
     }
 
 
-
-
     public RespPageRecurrence<T> success(T data, Page page) {
         this.data = data;
         this.code = CommonEnum.SUCCESS_CODE.getCode();

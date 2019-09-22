@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -24,7 +26,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
  * </p>
  *
  * @author Administrator
- * @since 2019-09-14
+ * @since 2019-09-22
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -46,18 +48,21 @@ public class User extends Model<User> {
     @ApiModelProperty(value = "密码")
     private String password;
 
-    @ApiModelProperty(value = "用户昵称")
-    @TableField("nick_name")
-    private String nickName;
+    @ApiModelProperty(value = "用户角色id")
+    @TableField("role_id")
+    private Long roleId;
 
-    @ApiModelProperty(value = "用户头像")
-    private String avatar;
+    @ApiModelProperty(value = "用户名(实名制)")
+    @TableField("user_name")
+    private String userName;
 
-    @ApiModelProperty(value = "用户性别(1-男 2-女)")
-    private Integer gender;
+    @ApiModelProperty(value = "身份证号码(实名制)")
+    @TableField("id_card")
+    private String idCard;
 
-    @ApiModelProperty(value = "用户年龄")
-    private Integer age;
+    @ApiModelProperty(value = "用户身份证号码链接地址")
+    @TableField("card_url")
+    private String cardUrl;
 
     @ApiModelProperty(value = "创建时间")
     @TableField("create_time")

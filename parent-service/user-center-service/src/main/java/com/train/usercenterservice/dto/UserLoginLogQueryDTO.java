@@ -31,8 +31,8 @@ public class UserLoginLogQueryDTO {
     @ApiModelProperty("登录平台（1-pc 2-app 3-小程序）")
     private int platform;
 
-    @ApiModelProperty("用户手机号")
-    private String userPhone;
+    @ApiModelProperty("用户手机号/用户名")
+    private String userKey;
 
     @ApiModelProperty("IP地址")
     private String ipAddress;
