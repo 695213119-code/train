@@ -28,6 +28,7 @@
         <module>authority-service</module>
         <module>entity-service</module>
         <module>generate-service</module>
+        <module>data-base-service</module>
     </modules>
 
 
@@ -52,6 +53,12 @@
             <scope>test</scope>
         </dependency>
         <!--endregion-->
+
+        <!--aop核心启动依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
 
         <!--region feign依赖-->
         <dependency>

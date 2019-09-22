@@ -18,7 +18,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableEurekaClient
 @EnableAspectJAutoProxy
 @EnableFeignClients
-@MapperScan(value = {"com.train.usercenterservice.user.mapper"})
+@MapperScan(value = {"com.train.usercenterservice.user.mapper","com.train.usercenterservice.mapper"})
 public class UserCenterServiceApplication {
 
     public static void main(String[] args) {

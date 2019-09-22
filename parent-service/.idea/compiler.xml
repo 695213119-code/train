@@ -14,6 +14,7 @@
         <module name="eureka-service" />
         <module name="generate-service" />
         <module name="user-center-service" />
+        <module name="data-base-service" />
         <module name="core-service" />
       </profile>
     </annotationProcessing>
@@ -23,6 +24,7 @@
       <module name="authority-service" options="-parameters" />
       <module name="common-service" options="-parameters" />
       <module name="core-service" options="-parameters" />
+      <module name="data-base-service" options="-parameters" />
       <module name="entity-service" options="-parameters" />
       <module name="eureka-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />

@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 用户中心->用户模块实现类
+ * 用户模块实现类
  *
  * @author zhangLei
  * @serial 2019/09/13

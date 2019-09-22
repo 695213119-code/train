@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.usercenterservice.mapper.UserLoginLogMapper">
+
+
+    <select id="queryUserLoginLog" resultType="com.train.usercenterservice.vo.UserLoginLogVO">
+        SELECT
+        trainLoginLog.id AS id,
+        trainUser.nick_name AS userName,
+        trainUser.phone AS phone,
+        trainLoginLog.platform AS platform,
+        trainLoginLog.ip_address AS ipAddress,
+        trainLoginLog.login_time AS loginTime
+        FROM
+        `train_login_log` AS trainLoginLog
+        LEFT JOIN train_user AS trainUser ON trainUser.id = trainLoginLog.user_id
+        <where>
+            <if test="userLoginLogQueryDTO.platform != null and userLoginLogQueryDTO.platform !=''">
+                AND trainLoginLog.platform=#{userLoginLogQueryDTO.platform}
+            </if>
+            <if test="userLoginLogQueryDTO.ipAddress != null and userLoginLogQueryDTO.ipAddress !=''">
+                AND trainLoginLog.ip_address=#{userLoginLogQueryDTO.ipAddress}
+            </if>
+            <if test="userLoginLogQueryDTO.userPhone != null and userLoginLogQueryDTO.userPhone !=''">
+                AND trainUser.phone LIKE CONCAT('%',#{userLoginLogQueryDTO.userPhone},'%')
+            </if>
+            <if test="userLoginLogQueryDTO.timeStart!= null and userLoginLogQueryDTO.timeStart!= '' and  userLoginLogQueryDTO.timeEnd!= null and userLoginLogQueryDTO.timeEnd!= ''">
+                AND trainLoginLog.login_time between #{userLoginLogQueryDTO.timeStart} and #{userLoginLogQueryDTO.timeEnd}
+            </if>
+        </where>
+        order by trainLoginLog.login_time desc
+    </select>
+</mapper>

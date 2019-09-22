@@ -2,7 +2,6 @@ package com.train.usercenterservice.api;
 
 
 import com.train.commonservice.recurrence.RespRecurrence;
-import com.train.usercenterservice.dto.UserLoginDTO;
 import com.train.usercenterservice.dto.UserManagementLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.usercenterservice.inter.Intercept;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/user-center")
-@Api(tags = "用户中心api", hidden = true)
+@Api(tags = "用户中心API", hidden = true)
 public class UserCenterApiController {
 
     private final IUserCenterService userCenterService;
@@ -59,6 +58,7 @@ public class UserCenterApiController {
     public RespRecurrence userLogOut() {
         return userCenterService.userLogOut();
     }
+
 
     @PostMapping("/userRegister")
     @ApiOperation(value = "用户注册-暂时接口")

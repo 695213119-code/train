@@ -17,6 +17,7 @@ spring:
   aop:
     proxy-target-class: true
 
+
 eureka:
   client:
     serviceUrl:
@@ -26,3 +27,5 @@ eureka:
 mybatis-plus:
   mapper-locations: classpath*:mapping/*Mapper.xml
   type-aliases-package: com.train.entityservice.entity.user
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

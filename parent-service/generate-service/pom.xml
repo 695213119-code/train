@@ -20,30 +20,6 @@
 
     <dependencies>
 
-        <!--region 数据库-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <!--endregion -->
-
-        <!--region 数据库连接池-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.9</version>
-        </dependency>
-        <!--endregion -->
-
-        <!--region mybatis-plus-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>2.3</version>
-        </dependency>
-        <!--region-->
-
         <!--region mybatis-plus代码生成器-->
         <dependency>
             <groupId>com.baomidou</groupId>
