@@ -3,7 +3,6 @@ package com.train.usercenterservice.utils;
 import com.alibaba.fastjson.JSONObject;
 import com.train.commonservice.constant.CommonConstant;
 import com.train.commonservice.constant.user.UserConstant;
-import com.train.commonservice.exception.BusinessException;
 import com.train.entityservice.entity.user.User;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -80,11 +79,9 @@ public class UserInfoHolderUtils {
     /**
      * 删除用户token
      *
-     * @param phone 用户手机号
      */
-    public void deleteUserToken(String phone) {
+    public void deleteUserToken() {
         redisUtils.delete(getAccessToke());
-        redisUtils.delete(UserConstant.USER_TOKEN_REDIS_KEY + phone);
     }
 
 }

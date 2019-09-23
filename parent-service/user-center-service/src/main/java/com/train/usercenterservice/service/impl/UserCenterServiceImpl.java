@@ -175,12 +175,7 @@ public class UserCenterServiceImpl implements IUserCenterService {
 
     @Override
     public RespRecurrence userLogOut() {
-        Long userId = userInfoHolderUtils.getUserId();
-        User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_ID, userId).
-                eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
-        if (null != user) {
-            userInfoHolderUtils.deleteUserToken(user.getPhone());
-        }
+        userInfoHolderUtils.deleteUserToken();
         return new RespRecurrence().success();
     }
 
