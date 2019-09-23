@@ -13,7 +13,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  */
 @SpringBootApplication
 @EnableEurekaClient
-@MapperScan("com.train.coreservice.*.mapper")
+@MapperScan(value = {"com.train.coreservice.core.mapper","com.train.coreservice.mapper"})
 public class CoreServiceApplication {
 
     public static void main(String[] args) {

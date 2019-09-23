@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.coreservice.mapper.DataDictionaryMapper">
+
+
+    <select id="queryDictionaries" resultType="com.train.coreservice.vo.DataDictionariesVO">
+        SELECT
+        trainDictionary.id,
+        trainDictionary.`key`,
+        trainDictionary.`value`,
+        trainDictionary.remarks ,
+        trainDictionary.create_time AS createTime,
+        trainDictionary.update_time AS updateTime
+        FROM
+        `train_dictionary` AS trainDictionary
+        <where>
+            AND trainDictionary.is_deleted=2
+            <if test="key!= null and key!=''">
+                AND trainDictionary.`key` LIKE CONCAT('%',#{key},"%")
+            </if>
+            <if test="remarks!= null and remarks!=''">
+                AND trainDictionary.remarks LIKE CONCAT('%',#{remarks},"%")
+            </if>
+            ORDER BY trainDictionary.update_time DESC
+        </where>
+    </select>
+
+
+</mapper>

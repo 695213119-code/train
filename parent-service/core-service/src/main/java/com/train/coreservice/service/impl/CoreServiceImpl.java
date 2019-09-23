@@ -27,12 +27,11 @@ public class CoreServiceImpl implements ICoreService {
     private final static Logger LOGGER = LoggerFactory.getLogger(CoreServiceImpl.class);
 
     private final IInterfaceService iInterfaceService;
-    private final IDictionaryService dictionaryService;
+
 
     @Autowired
-    public CoreServiceImpl(IInterfaceService iInterfaceService, IDictionaryService dictionaryService) {
+    public CoreServiceImpl(IInterfaceService iInterfaceService) {
         this.iInterfaceService = iInterfaceService;
-        this.dictionaryService = dictionaryService;
     }
 
 
@@ -61,16 +60,5 @@ public class CoreServiceImpl implements ICoreService {
         return new RespRecurrence<>().success();
     }
 
-    @Override
-    public RespRecurrence addDictionaries(DictionariesAddDTO dictionariesAddDTO) {
-        Dictionary dictionary = new Dictionary();
-        BeanUtils.copyProperties(dictionariesAddDTO, dictionary);
-        try {
-            dictionaryService.insert(dictionary);
-        } catch (Exception e) {
-            LOGGER.error("添加字典失败 原因:{} 参数:{}", e.getMessage(), dictionariesAddDTO);
-            return new RespRecurrence<>().failure();
-        }
-        return new RespRecurrence<>().success();
-    }
+
 }

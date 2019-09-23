@@ -28,11 +28,4 @@ public interface ICoreService {
      */
     RespRecurrence addFiltrateInterface(FiltrateInterfaceDTO filtrateInterfaceDTO);
 
-    /**
-     * 添加字典
-     *
-     * @param dictionariesAddDTO 字典参数类
-     * @return RespRecurrence
-     */
-    RespRecurrence addDictionaries(DictionariesAddDTO dictionariesAddDTO);
 }

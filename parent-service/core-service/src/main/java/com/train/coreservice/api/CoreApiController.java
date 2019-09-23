@@ -40,10 +40,6 @@ public class CoreApiController {
         return coreService.addFiltrateInterface(filtrateInterfaceDTO);
     }
 
-    @ApiOperation("添加字典")
-    @PutMapping("/addDictionaries")
-    public RespRecurrence addDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody DictionariesAddDTO dictionariesAddDTO) {
-        return coreService.addDictionaries(dictionariesAddDTO);
-    }
+
 
 }

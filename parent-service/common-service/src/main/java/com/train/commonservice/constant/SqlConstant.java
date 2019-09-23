@@ -32,4 +32,15 @@ public class SqlConstant {
      * sql查询字段-platform
      */
     public static final String SQL_FIELD_PLATFORM = "platform";
+
+    /**
+     * sql查询字段-key
+     */
+    public static final String SQL_FIELD_KEY = "key";
+
+    /**
+     * sql查询字段-remarks
+     */
+    public static final String SQL_FIELD_REMARKS = "remarks";
+
 }
