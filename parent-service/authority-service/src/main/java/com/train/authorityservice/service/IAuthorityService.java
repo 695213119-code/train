@@ -2,8 +2,8 @@ package com.train.authorityservice.service;
 
 import com.train.authorityservice.dto.AddRoleDTO;
 import com.train.commonservice.recurrence.RespRecurrence;
+import com.train.entityservice.entity.authority.Jurisdiction;
 import com.train.entityservice.entity.authority.Role;
-import com.train.entityservice.entity.vo.UserAuthorityVO;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
@@ -23,22 +23,6 @@ public interface IAuthorityService {
      * @param userId 用户id
      * @return List
      */
-    List<UserAuthorityVO> getUserAuthorityServiceInvocation(Long userId);
+    List<Jurisdiction> getUserAuthorityServiceInvocation(Long userId);
 
-    /**
-     * 添加角色
-     *
-     * @param roleDTO       角色参数
-     * @param bindingResult BindingResult
-     * @return RespRecurrence
-     */
-    RespRecurrence addRole(AddRoleDTO roleDTO, BindingResult bindingResult);
-
-    /**
-     * 根据角色id查询角色
-     *
-     * @param roleId 角色id
-     * @return RoleVO
-     */
-    Role getRoleServiceInvocation(Long roleId);
 }

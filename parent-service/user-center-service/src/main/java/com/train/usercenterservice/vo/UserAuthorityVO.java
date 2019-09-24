@@ -1,4 +1,4 @@
-package com.train.entityservice.entity.vo;
+package com.train.usercenterservice.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,9 +15,9 @@ import lombok.Data;
 public class UserAuthorityVO {
 
     @ApiModelProperty("权限名名称")
-    private String authorityName;
+    private String jurName;
 
     @ApiModelProperty("权限标识")
-    private String authorityKey;
+    private String identification;
 
 }

@@ -22,12 +22,5 @@ public class AddRoleDTO {
     @ApiModelProperty(value = "角色职责")
     @NotBlank(message = "角色名称不能为空")
     private String roleDuty;
-
-    @Override
-    public String toString() {
-        return "AddRoleDTO{" +
-                "roleName='" + roleName + '\'' +
-                ", roleDuty='" + roleDuty + '\'' +
-                '}';
-    }
+    
 }

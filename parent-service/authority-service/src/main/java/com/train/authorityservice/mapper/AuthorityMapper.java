@@ -1,8 +1,7 @@
 package com.train.authorityservice.mapper;
 
 
-import com.train.entityservice.entity.vo.UserAuthorityVO;
-
+import com.train.entityservice.entity.authority.Jurisdiction;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +16,11 @@ import java.util.List;
 @Repository
 public interface AuthorityMapper {
 
-
-    List<UserAuthorityVO> getUserAuthority(@Param("userId") Long userId);
+    /**
+     * 根据用户id查询用户权限
+     *
+     * @param userId 用户id
+     * @return List
+     */
+    List<Jurisdiction> getUserAuthority(@Param("userId") Long userId);
 }

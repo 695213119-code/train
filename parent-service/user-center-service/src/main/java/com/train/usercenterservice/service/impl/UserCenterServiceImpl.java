@@ -9,10 +9,10 @@ import com.train.commonservice.constant.user.UserConstant;
 import com.train.commonservice.enumeration.CommonEnum;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.commonservice.utils.RandomUtils;
+import com.train.entityservice.entity.authority.Jurisdiction;
 import com.train.entityservice.entity.authority.Role;
 import com.train.entityservice.entity.user.UserSubsidiary;
 import com.train.entityservice.entity.user.UserThirdparty;
-import com.train.entityservice.entity.vo.UserAuthorityVO;
 import com.train.usercenterservice.dto.UserManagementLoginDTO;
 import com.train.usercenterservice.remote.authority.RemoteAuthorityService;
 import com.train.usercenterservice.user.service.IUserSubsidiaryService;
@@ -24,6 +24,7 @@ import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.user.service.IUserService;
 import com.train.usercenterservice.utils.UserInfoHolderUtils;
 import com.train.usercenterservice.vo.TokenVO;
+import com.train.usercenterservice.vo.UserAuthorityVO;
 import com.train.usercenterservice.vo.UserInfoVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -146,8 +148,16 @@ public class UserCenterServiceImpl implements IUserCenterService {
         if (null != role) userInfoVO.setRoleName(role.getRoleName());
 
         //查询权限
-        List<UserAuthorityVO> userAuthority = remoteAuthorityService.getUserAuthorityServiceInvocation(user.getId());
-        if (CollUtil.isNotEmpty(userAuthority)) userInfoVO.setUserAuthority(userAuthority);
+        List<Jurisdiction> jurisdictionList = remoteAuthorityService.getUserAuthorityServiceInvocation(user.getId());
+        if (CollUtil.isNotEmpty(jurisdictionList)) {
+            List<UserAuthorityVO> userAuthorityList = new ArrayList<>();
+            jurisdictionList.forEach(x -> {
+                UserAuthorityVO authority = new UserAuthorityVO();
+                BeanUtils.copyProperties(x, authority);
+                userAuthorityList.add(authority);
+            });
+            userInfoVO.setUserAuthority(userAuthorityList);
+        }
 
         final String phone = "1";
         if (phone.equals(key)) {

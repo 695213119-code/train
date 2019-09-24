@@ -3,10 +3,10 @@
 <mapper namespace="com.train.authorityservice.mapper.AuthorityMapper">
 
 
-    <select id="getUserAuthority" resultType="com.train.entityservice.entity.vo.UserAuthorityVO">
+    <select id="getUserAuthority" resultType="com.train.entityservice.entity.authority.Jurisdiction">
         SELECT
-        trainJurisdiction.jur_name AS authorityName,
-        trainJurisdiction.identification AS authorityKey
+        trainJurisdiction.jur_name AS jurName,
+        trainJurisdiction.identification AS identification
         FROM
         train_jurisdiction AS trainJurisdiction
         INNER JOIN train_role_jurisdiction AS trainRoleJurisdiction ON trainRoleJurisdiction.jurisdiction_id =

@@ -1,7 +1,7 @@
 package com.train.usercenterservice.remote.authority;
 
+import com.train.entityservice.entity.authority.Jurisdiction;
 import com.train.entityservice.entity.authority.Role;
-import com.train.entityservice.entity.vo.UserAuthorityVO;
 import com.train.usercenterservice.remote.authority.fallback.RemoteAuthorityServiceImpl;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,7 @@ import java.util.List;
 public interface RemoteAuthorityService {
 
     String API_AUTHORITY = "/api/authority";
+    String API_ROLE = "/api/role";
 
     /**
      * 查询用户权限
@@ -29,7 +30,7 @@ public interface RemoteAuthorityService {
      * @return List
      */
     @GetMapping(API_AUTHORITY + "/getUserAuthorityServiceInvocation")
-    List<UserAuthorityVO> getUserAuthorityServiceInvocation(@RequestParam(value = "userId") Long userId);
+    List<Jurisdiction> getUserAuthorityServiceInvocation(@RequestParam(value = "userId") Long userId);
 
     /**
      * 根据角色id查询角色信息
@@ -37,7 +38,7 @@ public interface RemoteAuthorityService {
      * @param roleId 角色id
      * @return Role
      */
-    @GetMapping(API_AUTHORITY + "/getRoleServiceInvocation")
+    @GetMapping(API_ROLE + "/getRoleServiceInvocation")
     Role getRoleServiceInvocation(@RequestParam(value = "roleId") Long roleId);
 
 }

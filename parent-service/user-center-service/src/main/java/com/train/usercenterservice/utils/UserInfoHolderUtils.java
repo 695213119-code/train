@@ -2,7 +2,6 @@ package com.train.usercenterservice.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.train.commonservice.constant.CommonConstant;
-import com.train.commonservice.constant.user.UserConstant;
 import com.train.entityservice.entity.user.User;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

@@ -1,7 +1,6 @@
 package com.train.usercenterservice.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.train.entityservice.entity.vo.UserAuthorityVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

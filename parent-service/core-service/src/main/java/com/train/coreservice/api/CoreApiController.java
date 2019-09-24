@@ -40,6 +40,4 @@ public class CoreApiController {
         return coreService.addFiltrateInterface(filtrateInterfaceDTO);
     }
 
-
-
 }
