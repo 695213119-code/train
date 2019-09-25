@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 本机mysql数据库
  Source Server Type    : MySQL
- Source Server Version : 50717
+ Source Server Version : 80015
  Source Host           : localhost:3306
  Source Schema         : train_core
 
  Target Server Type    : MySQL
- Target Server Version : 50717
+ Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 25/09/2019 18:40:42
+ Date: 26/09/2019 00:47:33
 */
 
 SET NAMES utf8mb4;
@@ -23,8 +23,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `train_dictionary`;
 CREATE TABLE `train_dictionary`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典的key',
-  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典的val',
+  `dic_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典的key',
+  `dic_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典的val',
   `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -35,17 +35,10 @@ CREATE TABLE `train_dictionary`  (
 -- ----------------------------
 -- Records of train_dictionary
 -- ----------------------------
-INSERT INTO `train_dictionary` VALUES (677, NULL, NULL, NULL, '2019-09-23 23:14:48', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (12313, '123123', '123', '123', '2019-09-23 23:14:08', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (14234, NULL, NULL, NULL, '2019-09-23 23:14:51', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (56546, NULL, NULL, NULL, '2019-09-23 23:14:46', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (123123, NULL, NULL, NULL, '2019-09-23 23:14:36', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (123131, '123123', '123', '123', '2019-09-23 23:14:08', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (1231231, NULL, NULL, NULL, '2019-09-23 23:14:31', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (5434255, NULL, NULL, NULL, '2019-09-23 23:14:43', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (12312312, NULL, NULL, NULL, '2019-09-23 23:14:34', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (1231234321, NULL, NULL, NULL, '2019-09-23 23:14:41', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (1174155790677913601, 'shortMessageVerificationCodeSwitch', '1', '短信验证码开关(1-开启 2-关闭)', '2019-09-18 10:58:49', NULL, 2);
+INSERT INTO `train_dictionary` VALUES (1174155790677913601, 'shortMessageVerificationCodeSwitch', '1', '短信验证码开关(1-开启 2-关闭)', '2019-09-25 21:29:28', '2019-09-25 21:29:28', 2);
+INSERT INTO `train_dictionary` VALUES (1176847631038001153, '预留key1', '预留val17', '预留字典字段', '2019-09-25 21:32:22', '2019-09-25 21:32:23', 2);
+INSERT INTO `train_dictionary` VALUES (1176847900555587586, '预留key2', '预留val34', '预留字典字段2', '2019-09-25 21:32:17', '2019-09-25 21:32:17', 2);
+INSERT INTO `train_dictionary` VALUES (1176851084082597889, '预留key4', '预留val4', '预留字段', '2019-09-25 21:28:57', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_interface
@@ -276,6 +269,11 @@ INSERT INTO `train_login_log` VALUES (1176125767038672898, 1173853273876299777, 
 INSERT INTO `train_login_log` VALUES (1176125886026883074, 1173853273876299777, 1, '127.0.0.1', '2019-09-23 21:27:17', '2019-09-23 21:27:17', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1176150781205028866, 1173853273876299777, 1, '127.0.0.1', '2019-09-23 23:06:13', '2019-09-23 23:06:12', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1176416994708348929, 1173853273876299777, 1, '127.0.0.1', '2019-09-24 16:44:03', '2019-09-24 16:44:03', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1176835431980208130, 1173853273876299777, 1, '127.0.0.1', '2019-09-25 20:26:46', '2019-09-25 20:26:46', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1176835432491913218, 1173853273876299777, 1, '127.0.0.1', '2019-09-25 20:26:46', '2019-09-25 20:26:46', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1176835435096576001, 1173853273876299777, 1, '127.0.0.1', '2019-09-25 20:26:47', '2019-09-25 20:26:46', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1176835719378112514, 1173853273876299777, 1, '127.0.0.1', '2019-09-25 20:27:55', '2019-09-25 20:27:54', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1176835905148030977, 1173853273876299777, 1, '127.0.0.1', '2019-09-25 20:28:39', '2019-09-25 20:28:39', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role
@@ -295,6 +293,7 @@ CREATE TABLE `train_role`  (
 -- Records of train_role
 -- ----------------------------
 INSERT INTO `train_role` VALUES (1176742281157488642, '超级管理员', '拥有系统级别的操作权限', '2019-09-25 14:16:37', NULL, 2);
+INSERT INTO `train_role` VALUES (1176877299136921601, '系统管理员', '拥有指定操作权限', '2019-09-25 23:13:08', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role_jurisdiction
@@ -353,7 +352,7 @@ CREATE TABLE `train_user`  (
 -- ----------------------------
 -- Records of train_user
 -- ----------------------------
-INSERT INTO `train_user` VALUES (1173853273876299777, '13163775346', 'zhanglei8552', '张磊', 1111, NULL, '', '2019-09-22 20:46:56', NULL, 2);
+INSERT INTO `train_user` VALUES (1173853273876299777, '13163775346', 'zhanglei8552', '张磊', 1176742281157488642, NULL, '', '2019-09-25 20:20:34', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_user_subsidiary
