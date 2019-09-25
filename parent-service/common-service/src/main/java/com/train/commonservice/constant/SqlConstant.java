@@ -39,9 +39,9 @@ public class SqlConstant {
     public static final String SQL_FIELD_PLATFORM = "platform";
 
     /**
-     * sql查询字段-key
+     * sql查询字段-dic_key
      */
-    public static final String SQL_FIELD_KEY = "key";
+    public static final String SQL_FIELD_KEY = "dic_key";
 
     /**
      * sql查询字段-remarks

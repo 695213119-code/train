@@ -51,7 +51,7 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
             return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
         }
 
-        Dictionary check = dictionaryService.selectOne(new EntityWrapper<Dictionary>().eq(SqlConstant.SQL_FIELD_KEY, dictionariesAddDTO.getKey()));
+        Dictionary check = dictionaryService.selectOne(new EntityWrapper<Dictionary>().eq(SqlConstant.SQL_FIELD_KEY, dictionariesAddDTO.getDicKey()));
         if (null != check) {
             return new RespRecurrence<>().failure(CommonEnum.BUSINESS_CODE.getCode(), "数据字典的key重复啦");
         }
@@ -86,8 +86,8 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
         }
 
         Dictionary dictionary = new Dictionary();
-        BeanUtils.copyProperties(dictionariesEditDTO, dictionary);
         dictionary.setUpdateTime(new Date());
+        BeanUtils.copyProperties(dictionariesEditDTO, dictionary);
 
         try {
             dictionaryService.updateById(dictionary);

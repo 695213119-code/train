@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * 数据字典API
  *
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @serial 2019/09/13
  */
 @RestController
-@RequestMapping("/api/dataDictionary")
+@RequestMapping("/api/data-dictionary")
 @Api(tags = "数据字典API", hidden = true)
 public class DataDictionaryApiController {
 
@@ -33,19 +35,19 @@ public class DataDictionaryApiController {
 
     @ApiOperation("添加字典")
     @PostMapping("/addDictionaries")
-    public RespRecurrence addDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody DictionariesAddDTO dictionariesAddDTO,
+    public RespRecurrence addDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody @Valid DictionariesAddDTO dictionariesAddDTO,
                                           BindingResult bindingResult) {
         return dataDictionaryService.addDictionaries(dictionariesAddDTO, bindingResult);
     }
 
     @ApiOperation("操作字典")
     @PutMapping("/editDictionaries")
-    public RespRecurrence editDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody DictionariesEditDTO dictionariesEditDTO,
+    public RespRecurrence editDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody @Valid DictionariesEditDTO dictionariesEditDTO,
                                            BindingResult bindingResult) {
         return dataDictionaryService.editDictionaries(dictionariesEditDTO, bindingResult);
     }
 
-    @ApiOperation(value = "获取字典列表",response = DataDictionariesVO.class)
+    @ApiOperation(value = "获取字典列表", response = DataDictionariesVO.class)
     @GetMapping("/queryDictionaries")
     public RespPageRecurrence queryDictionaries(
             @ApiParam(value = "页码", required = true, example = "1") @RequestParam Integer page,

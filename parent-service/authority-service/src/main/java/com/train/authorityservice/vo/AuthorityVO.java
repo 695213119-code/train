@@ -14,7 +14,7 @@ import java.util.List;
  * @serial 2019/9/25
  */
 @Data
-public class AuthorityVO {
+public class AuthorityVO implements Cloneable {
 
     @ApiModelProperty(value = "主键")
     private Long id;
@@ -31,9 +31,18 @@ public class AuthorityVO {
     private Long parentId;
 
     @ApiModelProperty(value = "角色是否存在该权限(1-不存在 2-存在) 默认1")
-    private Integer itExist;
+    private Integer itExist = 1;
 
     @ApiModelProperty(value = "子级权限")
     private List<AuthorityVO> roleAuthorityChildren;
+
+    /**
+     * 重写clone方法
+     */
+    @Override
+    public AuthorityVO clone() throws CloneNotSupportedException {
+        return (AuthorityVO) super.clone();
+    }
+
 
 }

@@ -22,10 +22,10 @@ public class DataDictionariesVO {
     private Long id;
 
     @ApiModelProperty(value = "字典的key")
-    private String key;
+    private String dicKey;
 
     @ApiModelProperty(value = "字典的val")
-    private String value;
+    private String dicValue;
 
     @ApiModelProperty(value = "备注")
     private String remarks;

@@ -1,7 +1,6 @@
 package com.train.authorityservice.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.alibaba.druid.sql.visitor.functions.If;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.train.authorityservice.authority.service.IJurisdictionService;
@@ -27,7 +26,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import sun.rmi.runtime.Log;
 
 import java.util.*;
 
@@ -93,60 +91,69 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
         Page<RoleTabulationVO> pages = new Page<>(page, limit);
         List<RoleTabulationVO> roleTabulations = systemRoleMapper.queryRoleTabulation(pages, roleName);
 
-        if (CollUtil.isNotEmpty(roleTabulations)) {
+        //获取所有权限值,并且递归分类
+        List<AuthorityVO> authorityCategorizationList = categorizationAuthority();
 
-            //获取所有权限值,并且递归分类
-            List<AuthorityVO> authorityCategorizationList = categorizationAuthority();
-
-            //获取所有的角色当前权限
-            Long[] jurisdictionArray = new Long[roleTabulations.size()];
-            for (int a = 0; a < jurisdictionArray.length; a++) {
-                jurisdictionArray[a] = roleTabulations.get(a).getId();
-            }
-            List<RoleJurisdiction> roleJurisdictions = roleJurisdictionService.selectList(new EntityWrapper<RoleJurisdiction>()
-                    .in(SqlConstant.SQL_FIELD_ROLE_ID, jurisdictionArray));
-
-            //保存权限至角色数据中
-            roleTabulations.forEach(x -> {
-                x.setRoleAuthority(authorityCategorizationList);
-            });
-
-            //将权限根据角色分类
-            Map<String, List<Long>> map = new HashMap<>(32);
-            roleJurisdictions.forEach(x -> {
-                String roleId = String.valueOf(x.getRoleId());
-                List<Long> list = map.get(roleId);
-                if (CollUtil.isNotEmpty(list)) {
-                    list.add(x.getJurisdictionId());
-                    map.put(roleId, list);
-                } else {
-                    List<Long> newList = new ArrayList<>();
-                    newList.add(x.getJurisdictionId());
-                    map.put(roleId, newList);
-                }
-            });
-
-            //角色对应的权限赋值
-            roleTabulations.forEach(x -> {
-                List<Long> authorityIdList = map.get(String.valueOf(x.getId()));
-                x.setRoleAuthority(assignment(x.getRoleAuthority(), authorityIdList));
-            });
+        //获取所有的角色当前权限
+        Long[] jurisdictionArray = new Long[roleTabulations.size()];
+        for (int a = 0; a < jurisdictionArray.length; a++) {
+            jurisdictionArray[a] = roleTabulations.get(a).getId();
         }
+        List<RoleJurisdiction> roleJurisdictions = roleJurisdictionService.selectList(new EntityWrapper<RoleJurisdiction>()
+                .in(SqlConstant.SQL_FIELD_ROLE_ID, jurisdictionArray));
+
+        //保存权限至角色数据中
+        roleTabulations.forEach(x -> {
+            List<AuthorityVO> authorityList = new ArrayList<>();
+            x.setRoleAuthority(authorityCategorizationList);
+        });
+
+        //将权限根据角色分类
+        Map<String, List<Long>> map = new HashMap<>(32);
+        roleJurisdictions.forEach(x -> {
+            String roleId = String.valueOf(x.getRoleId());
+            List<Long> list = map.get(roleId);
+            if (CollUtil.isNotEmpty(list)) {
+                list.add(x.getJurisdictionId());
+                map.put(roleId, list);
+            } else {
+                List<Long> newList = new ArrayList<>();
+                newList.add(x.getJurisdictionId());
+                map.put(roleId, newList);
+            }
+        });
+
+        //角色对应的权限赋值
+        roleTabulations.forEach(x -> {
+            List<Long> authorityIdList = map.get(String.valueOf(x.getId()));
+            if (CollUtil.isNotEmpty(authorityIdList)) {
+                x.setRoleAuthority(assignment(x.getRoleAuthority(), authorityIdList));
+            }
+        });
 
         return new RespPageRecurrence<>().success(roleTabulations, MybatisPageConvertRespPageUtils.convert(pages));
     }
 
+//    private List<AuthorityVO> recursionClone(List<AuthorityVO> authorityCategorizationList) {
+//        List<AuthorityVO> authorityListEnd = new ArrayList<>(authorityCategorizationList);
+//        authorityListEnd.forEach(x -> {
+//
+//            x.setRoleAuthorityChildren();
+//        });
+//    }
+
+
+
     /**
      * 角色对应权限递归赋值
      *
-     * @param roleAuthority   所有的权限
+     * @param roleAuthority   当前角色的[所有的权限]
      * @param authorityIdList 当前角色拥有的权限
      * @return List<AuthorityVO>
      */
     private List<AuthorityVO> assignment(List<AuthorityVO> roleAuthority, List<Long> authorityIdList) {
         if (CollUtil.isNotEmpty(roleAuthority)) {
             roleAuthority.forEach(x -> {
-                x.setItExist(1);
                 if (authorityIdList.contains(x.getId())) {
                     x.setItExist(2);
                 }

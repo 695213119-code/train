@@ -3,7 +3,7 @@ package com.train.coreservice.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * 添加字典DTO
@@ -15,15 +15,15 @@ import javax.validation.constraints.NotBlank;
 public class DictionariesAddDTO {
 
     @ApiModelProperty(value = "字典的key")
-    @NotBlank(message = "字典的key不能为空")
-    private String key;
+    @NotNull(message = "字典的key不能为空")
+    private String dicKey;
 
     @ApiModelProperty(value = "字典的val")
-    @NotBlank(message = "字典的val不能为空")
-    private String value;
+    @NotNull(message = "字典的val不能为空")
+    private String dicValue;
 
     @ApiModelProperty(value = "备注")
-    @NotBlank(message = "备注不能为空")
+    @NotNull(message = "备注不能为空")
     private String remarks;
 
 }
