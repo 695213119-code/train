@@ -16,6 +16,8 @@ zuul:
     user-center-service: /apigateway/user-center/**
     #核心基础服务
     core-service: /apigateway/core-service/**
+    #权限服务
+    authority-service: /apigateway/authority-service/**
   ignored-patterns: /*-service/**
   sensitive-headers:
 

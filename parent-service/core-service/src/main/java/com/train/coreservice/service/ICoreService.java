@@ -20,12 +20,6 @@ public interface ICoreService {
      */
     boolean checkPathNeedsTokenServiceInvocation(String path);
 
-    /**
-     * 添加过滤接口
-     *
-     * @param filtrateInterfaceDTO 过滤接口参数类
-     * @return RespRecurrence
-     */
-    RespRecurrence addFiltrateInterface(FiltrateInterfaceDTO filtrateInterfaceDTO);
+
 
 }

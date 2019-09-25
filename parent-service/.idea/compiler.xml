@@ -8,13 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eureka-service" />
         <module name="gateway-service" />
-        <module name="core-service" />
+        <module name="entity-service" />
         <module name="authority-service" />
         <module name="generate-service" />
         <module name="user-center-service" />
         <module name="common-service" />
         <module name="data-base-service" />
-        <module name="entity-service" />
+        <module name="core-service" />
       </profile>
     </annotationProcessing>
   </component>

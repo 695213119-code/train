@@ -34,10 +34,4 @@ public class CoreApiController {
         return coreService.checkPathNeedsTokenServiceInvocation(path);
     }
 
-    @ApiOperation("添加过滤接口")
-    @PutMapping("/addFiltrateInterface")
-    public RespRecurrence addFiltrateInterface(@ApiParam(value = "过滤接口参数类", required = true) @RequestBody FiltrateInterfaceDTO filtrateInterfaceDTO) {
-        return coreService.addFiltrateInterface(filtrateInterfaceDTO);
-    }
-
 }

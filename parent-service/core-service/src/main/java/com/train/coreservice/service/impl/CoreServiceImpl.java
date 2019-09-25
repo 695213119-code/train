@@ -47,18 +47,7 @@ public class CoreServiceImpl implements ICoreService {
     }
 
 
-    @Override
-    public RespRecurrence addFiltrateInterface(FiltrateInterfaceDTO filtrateInterfaceDTO) {
-        Interface inter = new Interface();
-        BeanUtils.copyProperties(filtrateInterfaceDTO, inter);
-        try {
-            iInterfaceService.insert(inter);
-        } catch (Exception e) {
-            LOGGER.error("添加过滤接口失败 原因:{} 参数:{}", e.getMessage(), filtrateInterfaceDTO);
-            return new RespRecurrence<>().failure();
-        }
-        return new RespRecurrence<>().success();
-    }
+
 
 
 }
