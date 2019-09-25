@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.authorityservice.mapper.SystemRoleMapper">
+
+
+    <select id="queryRoleTabulation" resultType="com.train.authorityservice.vo.RoleTabulationVO">
+        SELECT
+        trainRole.id AS id,
+        trainRole.role_name AS roleName,
+        trainRole.role_duty AS roleDuty,
+        trainRole.create_time AS createTime,
+        trainRole.update_time AS updateTime
+        FROM
+        `train_role` AS trainRole
+        <where>
+            AND trainRole.is_deleted=2
+            <if test="roleName!= null and roleName!=''">
+                AND trainRole.role_name LIKE CONCAT('%',#{roleName},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

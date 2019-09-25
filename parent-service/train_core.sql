@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本机mysql数据库
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80015
+ Source Server Version : 50717
  Source Host           : localhost:3306
  Source Schema         : train_core
 
  Target Server Type    : MySQL
- Target Server Version : 80015
+ Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 24/09/2019 00:29:44
+ Date: 25/09/2019 18:40:42
 */
 
 SET NAMES utf8mb4;
@@ -66,6 +66,9 @@ CREATE TABLE `train_interface`  (
 -- Records of train_interface
 -- ----------------------------
 INSERT INTO `train_interface` VALUES (1175378280778760193, '/apigateway/user-center/api/user-center/userManagementLogin', '用户服务-->用户管理端登录', 2, '2019-09-21 19:56:34', NULL, 2);
+INSERT INTO `train_interface` VALUES (1176685900077428737, '/apigateway/user-center/v2/api-docs', 'Swagger->用户中心服务', 2, '2019-09-25 10:32:35', NULL, 2);
+INSERT INTO `train_interface` VALUES (1176691091220688897, '/apigateway/core-service/v2/api-docs', 'Swagger->核心基础服务', 2, '2019-09-25 10:53:12', NULL, 2);
+INSERT INTO `train_interface` VALUES (1176691158207918081, '/apigateway/authority-service/v2/api-docs', 'Swagger->权限服务', 2, '2019-09-25 10:53:28', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_jurisdiction
@@ -73,19 +76,21 @@ INSERT INTO `train_interface` VALUES (1175378280778760193, '/apigateway/user-cen
 DROP TABLE IF EXISTS `train_jurisdiction`;
 CREATE TABLE `train_jurisdiction`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
-  `jur_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '权限名称',
-  `identification` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '权限唯一标识',
+  `jur_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限名称',
+  `identification` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限唯一标识',
   `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父级id（默认0为顶级）',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of train_jurisdiction
 -- ----------------------------
-INSERT INTO `train_jurisdiction` VALUES (123456, '管理端登录', 'aaaaaaaaaaaaa', NULL, '2019-09-21 02:11:43', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1176736926071468033, '系统登录', 'system_login_restrictions', 0, '2019-09-25 13:55:20', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1176741547665993730, '管理端登录', 'system_login_restrictions_management_system', 1176736926071468033, '2019-09-25 14:13:42', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1176741800507027457, '小程序登录', 'system_login_small_program', 1176736926071468033, '2019-09-25 14:14:42', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_login_log
@@ -270,6 +275,7 @@ INSERT INTO `train_login_log` VALUES (1176125766317252610, 1173853273876299777, 
 INSERT INTO `train_login_log` VALUES (1176125767038672898, 1173853273876299777, 1, '127.0.0.1', '2019-09-23 21:26:49', '2019-09-23 21:26:48', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1176125886026883074, 1173853273876299777, 1, '127.0.0.1', '2019-09-23 21:27:17', '2019-09-23 21:27:17', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1176150781205028866, 1173853273876299777, 1, '127.0.0.1', '2019-09-23 23:06:13', '2019-09-23 23:06:12', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1176416994708348929, 1173853273876299777, 1, '127.0.0.1', '2019-09-24 16:44:03', '2019-09-24 16:44:03', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role
@@ -277,18 +283,18 @@ INSERT INTO `train_login_log` VALUES (1176150781205028866, 1173853273876299777, 
 DROP TABLE IF EXISTS `train_role`;
 CREATE TABLE `train_role`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
-  `role_name` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '角色名称',
-  `role_duty` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '角色职责',
+  `role_name` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色名称',
+  `role_duty` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色职责',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of train_role
 -- ----------------------------
-INSERT INTO `train_role` VALUES (1111, '超级管理员', '很吊的角色', '2019-09-21 02:12:10', NULL, 2);
+INSERT INTO `train_role` VALUES (1176742281157488642, '超级管理员', '拥有系统级别的操作权限', '2019-09-25 14:16:37', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role_jurisdiction
@@ -302,12 +308,14 @@ CREATE TABLE `train_role_jurisdiction`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of train_role_jurisdiction
 -- ----------------------------
-INSERT INTO `train_role_jurisdiction` VALUES (12321, 123456, 1111, '2019-09-21 02:12:30', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (123, 1176741547665993730, 1176742281157488642, '2019-09-25 15:32:40', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (555, 1176741800507027457, 1176742281157488642, '2019-09-25 15:32:40', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (12321, 1176736926071468033, 1176742281157488642, '2019-09-25 17:13:58', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_sms_model

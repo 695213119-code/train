@@ -1,6 +1,7 @@
 package com.train.authorityservice.service;
 
 import com.train.authorityservice.dto.AddRoleDTO;
+import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.entityservice.entity.authority.Role;
 import org.springframework.validation.BindingResult;
@@ -30,4 +31,14 @@ public interface ISystemRoleService {
      * @return RoleVO
      */
     Role getRoleServiceInvocation(Long roleId);
+
+    /**
+     * 获取角色列表
+     *
+     * @param page     page
+     * @param limit    limit
+     * @param roleName 角色名称
+     * @return RespPageRecurrence
+     */
+    RespPageRecurrence queryRoleTabulation(Integer page, Integer limit, String roleName);
 }

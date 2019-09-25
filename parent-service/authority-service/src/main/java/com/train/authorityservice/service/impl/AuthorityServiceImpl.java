@@ -1,8 +1,8 @@
 package com.train.authorityservice.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.train.authorityservice.authority.service.IRoleService;
-import com.train.authorityservice.dto.AddRoleDTO;
+import com.train.authorityservice.authority.service.IJurisdictionService;
+import com.train.authorityservice.dto.AuthorityAddDTO;
 import com.train.authorityservice.mapper.AuthorityMapper;
 import com.train.authorityservice.service.IAuthorityService;
 import com.train.commonservice.constant.CommonConstant;
@@ -10,7 +10,6 @@ import com.train.commonservice.constant.SqlConstant;
 import com.train.commonservice.enumeration.CommonEnum;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.entityservice.entity.authority.Jurisdiction;
-import com.train.entityservice.entity.authority.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -34,12 +33,13 @@ public class AuthorityServiceImpl implements IAuthorityService {
 
 
     private final AuthorityMapper authorityMapper;
-    private final IRoleService roleService;
+    private final IJurisdictionService jurisdictionService;
+
 
     @Autowired
-    public AuthorityServiceImpl(AuthorityMapper authorityMapper, IRoleService roleService) {
+    public AuthorityServiceImpl(AuthorityMapper authorityMapper, IJurisdictionService jurisdictionService) {
         this.authorityMapper = authorityMapper;
-        this.roleService = roleService;
+        this.jurisdictionService = jurisdictionService;
     }
 
     @Override
@@ -47,6 +47,32 @@ public class AuthorityServiceImpl implements IAuthorityService {
         return authorityMapper.getUserAuthority(userId);
     }
 
+    @Override
+    public RespRecurrence addAuthority(AuthorityAddDTO authorityAddDTO, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        Jurisdiction jurisdictionCheck = jurisdictionService.selectOne(new EntityWrapper<Jurisdiction>().eq(SqlConstant.SQL_FIELD_IDENTIFICATION, authorityAddDTO.getIdentification())
+                .eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
+
+        if (null != jurisdictionCheck) {
+            return new RespRecurrence().failure(CommonEnum.BUSINESS_CODE.getCode(), "权限标识重复啦");
+        }
+
+        Jurisdiction jurisdiction = new Jurisdiction();
+        BeanUtils.copyProperties(authorityAddDTO, jurisdiction);
+
+        try {
+            jurisdictionService.insert(jurisdiction);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("添加权限失败,,参数:{}", authorityAddDTO);
+        }
+
+        return new RespRecurrence().success();
+    }
 
 
 }

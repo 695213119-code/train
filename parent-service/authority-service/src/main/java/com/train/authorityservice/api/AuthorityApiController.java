@@ -1,6 +1,7 @@
 package com.train.authorityservice.api;
 
 import com.train.authorityservice.dto.AddRoleDTO;
+import com.train.authorityservice.dto.AuthorityAddDTO;
 import com.train.authorityservice.service.IAuthorityService;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.entityservice.entity.authority.Jurisdiction;
@@ -35,9 +36,15 @@ public class AuthorityApiController {
 
     @GetMapping("/getUserAuthorityServiceInvocation")
     @ApiOperation(value = "查询用户权限[服务调用API]")
-    public List<Jurisdiction> getUserAuthorityServiceInvocation(@ApiParam(name = "用户id", value = "用户id", required = true) @RequestParam Long userId) {
+    public List<Jurisdiction> getUserAuthorityServiceInvocation(@ApiParam(value = "用户id", required = true) @RequestParam Long userId) {
         return authorityService.getUserAuthorityServiceInvocation(userId);
     }
 
+    @PostMapping("/addAuthority")
+    @ApiOperation(value = "添加权限")
+    public RespRecurrence addAuthority(@ApiParam(value = "权限DTO", required = true) @RequestBody AuthorityAddDTO authorityAddDTO,
+                                       BindingResult bindingResult) {
+        return authorityService.addAuthority(authorityAddDTO, bindingResult);
+    }
 
 }

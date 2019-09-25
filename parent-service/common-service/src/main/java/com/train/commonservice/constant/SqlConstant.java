@@ -24,6 +24,11 @@ public class SqlConstant {
     public static final String SQL_FIELD_ROLE_NAME = "role_name";
 
     /**
+     * sql查询字段-role_id
+     */
+    public static final String SQL_FIELD_ROLE_ID = "role_id";
+
+    /**
      * sql查询字段-user_id
      */
     public static final String SQL_FIELD_USER_ID = "user_id";
@@ -42,5 +47,12 @@ public class SqlConstant {
      * sql查询字段-remarks
      */
     public static final String SQL_FIELD_REMARKS = "remarks";
+
+
+    /**
+     * sql查询字段-identification
+     */
+    public static final String SQL_FIELD_IDENTIFICATION = "identification";
+
 
 }

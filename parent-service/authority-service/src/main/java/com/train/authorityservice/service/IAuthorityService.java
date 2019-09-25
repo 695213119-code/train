@@ -1,6 +1,7 @@
 package com.train.authorityservice.service;
 
 import com.train.authorityservice.dto.AddRoleDTO;
+import com.train.authorityservice.dto.AuthorityAddDTO;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.entityservice.entity.authority.Jurisdiction;
 import com.train.entityservice.entity.authority.Role;
@@ -25,4 +26,12 @@ public interface IAuthorityService {
      */
     List<Jurisdiction> getUserAuthorityServiceInvocation(Long userId);
 
+    /**
+     * 添加权限
+     *
+     * @param authorityAddDTO 权限DTO
+     * @param bindingResult   BindingResult
+     * @return RespRecurrence
+     */
+    RespRecurrence addAuthority(AuthorityAddDTO authorityAddDTO, BindingResult bindingResult);
 }
