@@ -5,7 +5,7 @@
 
     <select id="queryDictionaries" resultType="com.train.coreservice.vo.DataDictionariesVO">
         SELECT
-        trainDictionary.id,
+        trainDictionary.id as id,
         trainDictionary.dic_key as dicKey,
         trainDictionary.dic_value as dicValue,
         trainDictionary.remarks  as remarks,
@@ -16,7 +16,7 @@
         <where>
             AND trainDictionary.is_deleted=2
             <if test="key!= null and key!=''">
-                AND   trainDictionary.dic_key LIKE CONCAT('%',#{key},"%")
+                AND  trainDictionary.dic_key LIKE CONCAT('%',#{key},"%")
             </if>
             <if test="remarks!= null and remarks!=''">
                 AND trainDictionary.remarks LIKE CONCAT('%',#{remarks},"%")

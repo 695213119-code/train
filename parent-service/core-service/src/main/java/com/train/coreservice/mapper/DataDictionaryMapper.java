@@ -16,6 +16,14 @@ import java.util.List;
 @Repository
 public interface DataDictionaryMapper {
 
+    /**
+     * 根据条件分页查询字典列表
+     *
+     * @param pages   分页插件
+     * @param key     字典key
+     * @param remarks 字典备注
+     * @return List<DataDictionariesVO>
+     */
     List<DataDictionariesVO> queryDictionaries(Page<DataDictionariesVO> pages,
                                                @Param("key") String key,
                                                @Param("remarks") String remarks);

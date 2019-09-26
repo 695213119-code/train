@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本机mysql数据库
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80015
+ Source Server Version : 50717
  Source Host           : localhost:3306
  Source Schema         : train_core
 
  Target Server Type    : MySQL
- Target Server Version : 80015
+ Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 26/09/2019 00:47:33
+ Date: 26/09/2019 18:27:54
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `train_dictionary`  (
   `dic_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典的key',
   `dic_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典的val',
   `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
@@ -39,6 +39,8 @@ INSERT INTO `train_dictionary` VALUES (1174155790677913601, 'shortMessageVerific
 INSERT INTO `train_dictionary` VALUES (1176847631038001153, '预留key1', '预留val17', '预留字典字段', '2019-09-25 21:32:22', '2019-09-25 21:32:23', 2);
 INSERT INTO `train_dictionary` VALUES (1176847900555587586, '预留key2', '预留val34', '预留字典字段2', '2019-09-25 21:32:17', '2019-09-25 21:32:17', 2);
 INSERT INTO `train_dictionary` VALUES (1176851084082597889, '预留key4', '预留val4', '预留字段', '2019-09-25 21:28:57', NULL, 2);
+INSERT INTO `train_dictionary` VALUES (1177078533593485314, '预留key5', '预留val5', '预留字典字段5', '2019-09-26 14:33:48', '2019-09-26 14:33:48', 2);
+INSERT INTO `train_dictionary` VALUES (1177109377750126593, '预留key6', '预留val6', '预留字典字段6', '2019-09-26 14:35:20', '2019-09-26 14:36:16', 2);
 
 -- ----------------------------
 -- Table structure for train_interface
@@ -49,7 +51,7 @@ CREATE TABLE `train_interface`  (
   `url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '接口路径',
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '接口描述',
   `iden` int(1) NULL DEFAULT 2 COMMENT '权限标识(1-需要token 2-任意访问)',
-  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
@@ -72,7 +74,7 @@ CREATE TABLE `train_jurisdiction`  (
   `jur_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限名称',
   `identification` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限唯一标识',
   `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父级id（默认0为顶级）',
-  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
@@ -84,6 +86,10 @@ CREATE TABLE `train_jurisdiction`  (
 INSERT INTO `train_jurisdiction` VALUES (1176736926071468033, '系统登录', 'system_login_restrictions', 0, '2019-09-25 13:55:20', NULL, 2);
 INSERT INTO `train_jurisdiction` VALUES (1176741547665993730, '管理端登录', 'system_login_restrictions_management_system', 1176736926071468033, '2019-09-25 14:13:42', NULL, 2);
 INSERT INTO `train_jurisdiction` VALUES (1176741800507027457, '小程序登录', 'system_login_small_program', 1176736926071468033, '2019-09-25 14:14:42', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1177055881940111362, '系统设置', 'system_setup', 0, '2019-09-26 11:02:45', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1177055962932121602, '数据字典', 'system_setup_data_dictionary', 1177055881940111362, '2019-09-26 11:03:04', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1177056137490665474, '添加数据字典', 'system_setup_data_dictionary_add_a_new_dictionary', 1177055962932121602, '2019-09-26 11:03:46', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1177056412733476865, '操作数据字典', 'system_setup_data_dictionary_operational_data_dictionary', 1177055962932121602, '2019-09-26 11:04:52', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_login_log
@@ -95,7 +101,7 @@ CREATE TABLE `train_login_log`  (
   `platform` int(1) NULL DEFAULT NULL COMMENT '登录平台（1-pc 2-app 3-小程序）',
   `ip_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登录IP地址',
   `login_time` datetime(0) NULL DEFAULT NULL COMMENT '登录时间',
-  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
@@ -274,6 +280,33 @@ INSERT INTO `train_login_log` VALUES (1176835432491913218, 1173853273876299777, 
 INSERT INTO `train_login_log` VALUES (1176835435096576001, 1173853273876299777, 1, '127.0.0.1', '2019-09-25 20:26:47', '2019-09-25 20:26:46', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1176835719378112514, 1173853273876299777, 1, '127.0.0.1', '2019-09-25 20:27:55', '2019-09-25 20:27:54', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1176835905148030977, 1173853273876299777, 1, '127.0.0.1', '2019-09-25 20:28:39', '2019-09-25 20:28:39', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177027946625556482, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 09:11:42', '2019-09-26 09:11:45', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177027962240950273, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 09:11:49', '2019-09-26 09:11:48', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177027963323080706, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 09:11:49', '2019-09-26 09:11:49', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177027966875656194, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 09:11:50', '2019-09-26 09:11:50', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177027969862000641, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 09:11:51', '2019-09-26 09:11:50', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177027971652968450, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 09:11:51', '2019-09-26 09:11:51', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177065875481747457, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 11:42:28', '2019-09-26 11:42:28', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107400546770946, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:28', '2019-09-26 14:27:28', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107400546770947, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:28', '2019-09-26 14:27:28', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107400680988673, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:28', '2019-09-26 14:27:28', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107431232299009, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:36', '2019-09-26 14:27:35', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107446017220610, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:39', '2019-09-26 14:27:39', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107456347791361, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:42', '2019-09-26 14:27:41', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107461678751746, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:43', '2019-09-26 14:27:43', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107480465039361, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:48', '2019-09-26 14:27:47', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107488161587201, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:49', '2019-09-26 14:27:49', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107490627837953, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:50', '2019-09-26 14:27:50', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107494645981185, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:51', '2019-09-26 14:27:51', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107500333457410, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:52', '2019-09-26 14:27:52', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107503189778434, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:53', '2019-09-26 14:27:53', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107506914320385, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:27:54', '2019-09-26 14:27:53', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107539982213122, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:28:02', '2019-09-26 14:28:01', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177107657028460546, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:28:30', '2019-09-26 14:28:29', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177114364349702146, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 14:55:09', '2019-09-26 14:55:08', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177119288429043713, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 15:14:43', '2019-09-26 15:14:42', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177130448989642753, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 15:59:04', '2019-09-26 15:59:03', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177155466746322945, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 17:38:27', '2019-09-26 17:38:28', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role
@@ -283,7 +316,7 @@ CREATE TABLE `train_role`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
   `role_name` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色名称',
   `role_duty` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色职责',
-  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
@@ -294,6 +327,10 @@ CREATE TABLE `train_role`  (
 -- ----------------------------
 INSERT INTO `train_role` VALUES (1176742281157488642, '超级管理员', '拥有系统级别的操作权限', '2019-09-25 14:16:37', NULL, 2);
 INSERT INTO `train_role` VALUES (1176877299136921601, '系统管理员', '拥有指定操作权限', '2019-09-25 23:13:08', NULL, 2);
+INSERT INTO `train_role` VALUES (1177153074667655169, '游客', '简单角色', '2019-09-26 17:28:58', NULL, 2);
+INSERT INTO `train_role` VALUES (1177154476076896258, '123', '123', '2019-09-26 17:34:32', NULL, 2);
+INSERT INTO `train_role` VALUES (1177155932884504577, '1234', '123', '2019-09-26 17:40:19', NULL, 2);
+INSERT INTO `train_role` VALUES (1177159663080378370, '12345', '12354', '2019-09-26 17:55:08', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role_jurisdiction
@@ -343,7 +380,7 @@ CREATE TABLE `train_user`  (
   `role_id` bigint(20) NULL DEFAULT NULL COMMENT '角色id',
   `id_card` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '身份证号码(实名制)',
   `card_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '用户身份证号码链接地址',
-  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
@@ -366,7 +403,7 @@ CREATE TABLE `train_user_subsidiary`  (
   `gender` int(1) NULL DEFAULT 1 COMMENT '用户性别(1-男 2-女)',
   `age` int(8) NULL DEFAULT NULL COMMENT '用户年龄',
   `birthday` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户生日(农历)',
-  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
@@ -390,7 +427,7 @@ CREATE TABLE `train_user_thirdparty`  (
   `nick_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '第三方用户昵称',
   `age` int(8) NULL DEFAULT NULL COMMENT '第三方用户年龄',
   `avatar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '第三方用户头像',
-  `create_time` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE

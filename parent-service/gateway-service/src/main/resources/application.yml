@@ -9,7 +9,6 @@ spring:
   application:
     name: api-gateway
 
-
 zuul:
   routes:
     #用户服务
@@ -21,3 +20,15 @@ zuul:
   ignored-patterns: /*-service/**
   sensitive-headers:
 
+#配置zuul的连接超时时间
+#看起来没有生效,但是作用还是有的
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
