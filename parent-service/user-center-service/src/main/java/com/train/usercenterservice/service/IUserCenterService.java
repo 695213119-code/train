@@ -1,6 +1,8 @@
 package com.train.usercenterservice.service;
 
+import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
+import com.train.usercenterservice.dto.QueryUserTabulationDTO;
 import com.train.usercenterservice.dto.UserManagementLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import org.springframework.validation.BindingResult;
@@ -53,4 +55,13 @@ public interface IUserCenterService {
      * @return RespRecurrence
      */
     RespRecurrence userLogOut();
+
+    /**
+     * 获取用户列表
+     *
+     * @param queryUserTabulationDTO 列表查询条件DTO
+     * @param bindingResult          BindingResult
+     * @return RespPageRecurrence
+     */
+    RespPageRecurrence queryUserTabulation(QueryUserTabulationDTO queryUserTabulationDTO, BindingResult bindingResult);
 }

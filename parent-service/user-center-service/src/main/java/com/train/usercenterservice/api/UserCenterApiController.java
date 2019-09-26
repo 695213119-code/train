@@ -1,7 +1,9 @@
 package com.train.usercenterservice.api;
 
 
+import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
+import com.train.usercenterservice.dto.QueryUserTabulationDTO;
 import com.train.usercenterservice.dto.UserManagementLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.usercenterservice.inter.Intercept;
@@ -46,7 +48,7 @@ public class UserCenterApiController {
     }
 
     @GetMapping("/getUserDetails")
-    @ApiOperation(value = "获取用户详情", response = UserInfoVO.class)
+    @ApiOperation(value = "获取用户详情[用于登录后]", response = UserInfoVO.class)
     @ApiImplicitParams({@ApiImplicitParam(paramType = "header", dataType = "String", name = "access_token", value = "token标记", required = true)})
     public RespRecurrence getUserDetails(@ApiParam(value = "用户登录方式 1-手机号 2-微信 3-扣扣", required = true) @RequestParam String key) {
         return userCenterService.getUserDetails(key);
@@ -57,6 +59,14 @@ public class UserCenterApiController {
     @ApiImplicitParams({@ApiImplicitParam(paramType = "header", dataType = "String", name = "access_token", value = "token标记", required = true)})
     public RespRecurrence userLogOut() {
         return userCenterService.userLogOut();
+    }
+
+
+    @PostMapping("/queryUserTabulation")
+    @ApiOperation(value = "获取用户列表")
+    public RespPageRecurrence queryUserTabulation(@ApiParam(value = "列表查询条件DTO", required = true) @RequestBody @Validated QueryUserTabulationDTO queryUserTabulationDTO,
+                                                  BindingResult bindingResult) {
+        return userCenterService.queryUserTabulation(queryUserTabulationDTO, bindingResult);
     }
 
 

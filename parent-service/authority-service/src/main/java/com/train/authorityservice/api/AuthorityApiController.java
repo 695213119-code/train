@@ -1,11 +1,9 @@
 package com.train.authorityservice.api;
 
-import com.train.authorityservice.dto.AddRoleDTO;
 import com.train.authorityservice.dto.AuthorityAddDTO;
 import com.train.authorityservice.service.IAuthorityService;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.entityservice.entity.authority.Jurisdiction;
-import com.train.entityservice.entity.authority.Role;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

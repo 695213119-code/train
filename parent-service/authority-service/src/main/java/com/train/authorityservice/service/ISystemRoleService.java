@@ -1,6 +1,7 @@
 package com.train.authorityservice.service;
 
 import com.train.authorityservice.dto.AddRoleDTO;
+import com.train.authorityservice.dto.EditRoleDTO;
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.entityservice.entity.authority.Role;
@@ -41,4 +42,13 @@ public interface ISystemRoleService {
      * @return RespPageRecurrence
      */
     RespPageRecurrence queryRoleTabulation(Integer page, Integer limit, String roleName);
+
+    /**
+     * 修改角色
+     *
+     * @param editRoleDTO   角色参数
+     * @param bindingResult BindingResult
+     * @return RespRecurrence
+     */
+    RespRecurrence editRole(EditRoleDTO editRoleDTO, BindingResult bindingResult);
 }

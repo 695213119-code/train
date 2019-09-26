@@ -3,29 +3,35 @@ package com.train.usercenterservice.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.train.commonservice.constant.CommonConstant;
 import com.train.commonservice.constant.SqlConstant;
 import com.train.commonservice.constant.user.UserConstant;
 import com.train.commonservice.enumeration.CommonEnum;
+import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.commonservice.utils.RandomUtils;
 import com.train.entityservice.entity.authority.Jurisdiction;
 import com.train.entityservice.entity.authority.Role;
+import com.train.entityservice.entity.user.User;
 import com.train.entityservice.entity.user.UserSubsidiary;
 import com.train.entityservice.entity.user.UserThirdparty;
+import com.train.usercenterservice.dto.QueryUserTabulationDTO;
 import com.train.usercenterservice.dto.UserManagementLoginDTO;
-import com.train.usercenterservice.remote.authority.RemoteAuthorityService;
-import com.train.usercenterservice.user.service.IUserSubsidiaryService;
-import com.train.usercenterservice.user.service.IUserThirdpartyService;
-import com.train.usercenterservice.utils.RedisUtils;
 import com.train.usercenterservice.dto.UserRegisterDTO;
-import com.train.entityservice.entity.user.User;
+import com.train.usercenterservice.mapper.UserCenterMapper;
+import com.train.usercenterservice.remote.authority.RemoteAuthorityService;
 import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.user.service.IUserService;
+import com.train.usercenterservice.user.service.IUserSubsidiaryService;
+import com.train.usercenterservice.user.service.IUserThirdpartyService;
+import com.train.usercenterservice.utils.MybatisPageConvertRespPageUtils;
+import com.train.usercenterservice.utils.RedisUtils;
 import com.train.usercenterservice.utils.UserInfoHolderUtils;
 import com.train.usercenterservice.vo.TokenVO;
 import com.train.usercenterservice.vo.UserAuthorityVO;
 import com.train.usercenterservice.vo.UserInfoVO;
+import com.train.usercenterservice.vo.UserTabulationVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,16 +57,18 @@ public class UserCenterServiceImpl implements IUserCenterService {
     private final RemoteAuthorityService remoteAuthorityService;
     private final IUserSubsidiaryService userSubsidiaryService;
     private final IUserThirdpartyService userThirdpartyService;
+    private final UserCenterMapper userCenterMapper;
 
 
     @Autowired
-    public UserCenterServiceImpl(IUserService userService, RedisUtils redisUtils, UserInfoHolderUtils userInfoHolderUtils, RemoteAuthorityService remoteAuthorityService, IUserSubsidiaryService userSubsidiaryService, IUserThirdpartyService userThirdpartyService) {
+    public UserCenterServiceImpl(IUserService userService, RedisUtils redisUtils, UserInfoHolderUtils userInfoHolderUtils, RemoteAuthorityService remoteAuthorityService, IUserSubsidiaryService userSubsidiaryService, IUserThirdpartyService userThirdpartyService, UserCenterMapper userCenterMapper) {
         this.userService = userService;
         this.redisUtils = redisUtils;
         this.userInfoHolderUtils = userInfoHolderUtils;
         this.remoteAuthorityService = remoteAuthorityService;
         this.userSubsidiaryService = userSubsidiaryService;
         this.userThirdpartyService = userThirdpartyService;
+        this.userCenterMapper = userCenterMapper;
     }
 
     @Override
@@ -187,6 +195,16 @@ public class UserCenterServiceImpl implements IUserCenterService {
     public RespRecurrence userLogOut() {
         userInfoHolderUtils.deleteUserToken();
         return new RespRecurrence().success();
+    }
+
+    @Override
+    public RespPageRecurrence queryUserTabulation(QueryUserTabulationDTO queryUserTabulationDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new RespPageRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
+        }
+        Page<UserTabulationVO> page = new Page<>(queryUserTabulationDTO.getPage(), queryUserTabulationDTO.getLimit());
+        List<UserTabulationVO> userTabulations = userCenterMapper.queryUserTabulation(page, queryUserTabulationDTO);
+        return new RespPageRecurrence<>().success(userTabulations, MybatisPageConvertRespPageUtils.convert(page));
     }
 
 

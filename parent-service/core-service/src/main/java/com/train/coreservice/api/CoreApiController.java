@@ -1,14 +1,14 @@
 package com.train.coreservice.api;
 
-import com.train.commonservice.recurrence.RespRecurrence;
-import com.train.coreservice.dto.DictionariesAddDTO;
-import com.train.coreservice.dto.FiltrateInterfaceDTO;
 import com.train.coreservice.service.ICoreService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 核心API

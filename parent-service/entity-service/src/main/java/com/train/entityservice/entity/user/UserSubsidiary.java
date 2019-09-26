@@ -60,7 +60,12 @@ public class UserSubsidiary extends Model<UserSubsidiary> {
     private Integer age;
 
     @ApiModelProperty(value = "用户生日(农历)")
-    private String birthday;
+    @TableField("birthday_lunar")
+    private String birthdayLunar;
+
+    @ApiModelProperty(value = "用户生日(公历,下一次生日时间)")
+    @TableField("birthday_gregorian")
+    private Date birthdayGregorian;
 
     @ApiModelProperty(value = "创建时间")
     @TableField("create_time")

@@ -1,7 +1,9 @@
 package com.train.authorityservice.api;
 
 import com.train.authorityservice.dto.AddRoleDTO;
+import com.train.authorityservice.dto.EditRoleDTO;
 import com.train.authorityservice.service.ISystemRoleService;
+import com.train.authorityservice.vo.RoleTabulationVO;
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.entityservice.entity.authority.Role;
@@ -43,11 +45,18 @@ public class RoleApiController {
     }
 
     @GetMapping("/queryRoleTabulation")
-    @ApiOperation(value = "获取角色列表")
+    @ApiOperation(value = "获取角色列表", response = RoleTabulationVO.class)
     public RespPageRecurrence queryRoleTabulation(@ApiParam(value = "页码", required = true, example = "1") @RequestParam Integer page,
                                                   @ApiParam(value = "每页条数", required = true, example = "10") @RequestParam Integer limit,
                                                   @ApiParam(value = "角色名称") @RequestParam(required = false) String roleName) {
         return systemRoleService.queryRoleTabulation(page, limit, roleName);
+    }
+
+    @PutMapping("/editRole")
+    @ApiOperation(value = "修改角色")
+    public RespRecurrence editRole(@ApiParam(value = "角色参数", required = true) @RequestBody EditRoleDTO editRoleDTO,
+                                   BindingResult bindingResult) {
+        return systemRoleService.editRole(editRoleDTO, bindingResult);
     }
 
 }

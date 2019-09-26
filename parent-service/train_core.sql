@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 本机mysql数据库
  Source Server Type    : MySQL
- Source Server Version : 50717
+ Source Server Version : 80015
  Source Host           : localhost:3306
  Source Schema         : train_core
 
  Target Server Type    : MySQL
- Target Server Version : 50717
+ Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 26/09/2019 18:27:54
+ Date: 27/09/2019 00:28:23
 */
 
 SET NAMES utf8mb4;
@@ -307,6 +307,7 @@ INSERT INTO `train_login_log` VALUES (1177114364349702146, 1173853273876299777, 
 INSERT INTO `train_login_log` VALUES (1177119288429043713, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 15:14:43', '2019-09-26 15:14:42', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1177130448989642753, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 15:59:04', '2019-09-26 15:59:03', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1177155466746322945, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 17:38:27', '2019-09-26 17:38:28', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177214851299655682, 1173853273876299777, 1, '127.0.0.1', '2019-09-26 21:34:27', '2019-09-26 21:34:26', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role
@@ -389,7 +390,7 @@ CREATE TABLE `train_user`  (
 -- ----------------------------
 -- Records of train_user
 -- ----------------------------
-INSERT INTO `train_user` VALUES (1173853273876299777, '13163775346', 'zhanglei8552', '张磊', 1176742281157488642, NULL, '', '2019-09-25 20:20:34', NULL, 2);
+INSERT INTO `train_user` VALUES (1173853273876299777, '13163775346', 'zhanglei8552', '张磊', 1176742281157488642, '421087199609250015', 'www.123.com', '2019-09-25 20:20:34', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_user_subsidiary
@@ -402,7 +403,8 @@ CREATE TABLE `train_user_subsidiary`  (
   `avatar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '用户头像',
   `gender` int(1) NULL DEFAULT 1 COMMENT '用户性别(1-男 2-女)',
   `age` int(8) NULL DEFAULT NULL COMMENT '用户年龄',
-  `birthday` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户生日(农历)',
+  `birthday_lunar` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户生日(农历)',
+  `birthday_gregorian` date NULL DEFAULT NULL COMMENT '用户生日(公历,下一次生日时间)',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
@@ -412,7 +414,7 @@ CREATE TABLE `train_user_subsidiary`  (
 -- ----------------------------
 -- Records of train_user_subsidiary
 -- ----------------------------
-INSERT INTO `train_user_subsidiary` VALUES (1, 1173853273876299777, '昵称在拽有屌用', NULL, 1, 23, NULL, '2019-09-22 20:32:48', NULL, 2);
+INSERT INTO `train_user_subsidiary` VALUES (1, 1173853273876299777, '昵称在拽有屌用', 'www.123.com', 1, 23, '1996-9-25', '2019-10-23', '2019-09-22 20:32:48', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_user_thirdparty
@@ -432,5 +434,11 @@ CREATE TABLE `train_user_thirdparty`  (
   `is_deleted` int(1) NULL DEFAULT 2 COMMENT '是否删除 1-是 2-否',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户第三方信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of train_user_thirdparty
+-- ----------------------------
+INSERT INTO `train_user_thirdparty` VALUES (123456789, 1173853273876299777, 2, 'aaaaaaaa', 1, '昵称在拽几把用', 23, 'www.baodu.com', '2019-09-26 23:55:45', NULL, 2);
+INSERT INTO `train_user_thirdparty` VALUES (643534534, 1173853273876299777, 2, 'bbbbbb', 1, 'QQ爱', 23, 'www.123.com', '2019-09-27 00:22:30', NULL, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;
