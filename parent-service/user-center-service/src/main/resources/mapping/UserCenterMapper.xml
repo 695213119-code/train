@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.usercenterservice.mapper.UserCenterMapper">
+
+    <!--自定义的用户列表返回数据Map-->
+    <resultMap id="userTabulationVO" type="com.train.usercenterservice.vo.UserTabulationVO">
+        <id property="id" column="id"/>
+        <association property="userCore" javaType="com.train.usercenterservice.vo.UserCoreVO">
+            <result property="roleName" column="roleName"/>
+            <result property="phone" column="phone"/>
+            <result property="userName" column="userName"/>
+            <result property="idCard" column="idCard"/>
+            <result property="cardUrl" column="cardUrl"/>
+            <result property="createTime" column="createTime"/>
+        </association>
+        <association property="userSubsidiary" javaType="com.train.usercenterservice.vo.UserSubsidiaryVO">
+            <result property="nickName" column="nickName"/>
+            <result property="avatar" column="avatar"/>
+            <result property="gender" column="gender"/>
+            <result property="age" column="age"/>
+            <result property="birthdayLunar" column="birthdayLunar"/>
+            <result property="birthdayGregorian" column="birthdayGregorian"/>
+        </association>
+        <collection property="userThirds" ofType="com.train.usercenterservice.vo.UserThirdVO" column="id"
+                    select="findUserThirdVOByUserId"/>
+    </resultMap>
+
+
+    <select id="queryUserTabulation" resultMap="userTabulationVO">
+        SELECT
+        trainUser.id AS id,
+        trainUser.phone AS phone,
+        trainRole.role_name AS roleName,
+        trainUser.user_name AS userName,
+        trainUser.id_card AS idCard,
+        trainUser.card_url AS cardUrl,
+        trainUser.create_time AS createTime,
+        trainUserSubsidiary.nick_name AS nickName ,
+        trainUserSubsidiary.avatar AS avatar,
+        trainUserSubsidiary.age AS age,
+        trainUserSubsidiary.gender AS gender,
+        trainUserSubsidiary.birthday_lunar AS birthdayLunar,
+        trainUserSubsidiary.birthday_gregorian AS birthdayGregorian
+        FROM
+        `train_user` AS trainUser
+        INNER JOIN train_role AS trainRole ON trainRole.id = trainUser.role_id
+        INNER JOIN train_user_subsidiary AS trainUserSubsidiary ON trainUserSubsidiary.user_id = trainUser.id
+        <where>
+
+        </where>
+    </select>
+
+    <select id="findUserThirdVOByUserId" resultType="com.train.usercenterservice.vo.UserThirdVO">
+        SELECT
+        trainUserThirdparty.platform AS platform,
+        trainUserThirdparty.age AS age,
+        trainUserThirdparty.avatar AS avatar,
+        trainUserThirdparty.gender AS gender,
+        trainUserThirdparty.nick_name AS nickName,
+        trainUserThirdparty.union_id AS unionId
+        FROM
+        `train_user_thirdparty` AS trainUserThirdparty
+        INNER JOIN train_user AS trainUser ON trainUser.id = trainUserThirdparty.user_id
+        <where>
+            AND trainUser.id = #{id}
+        </where>
+    </select>
+
+
+</mapper>
