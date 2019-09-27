@@ -144,14 +144,17 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
                 }
                 if (CollUtil.isNotEmpty(authorityClone)) {
                     List<Long> authorityIdArray = classifyMap.get(String.valueOf(x.getId()));
+                    List<String> selectPermissions = new ArrayList<>();
                     if (CollUtil.isNotEmpty(authorityIdArray)) {
                         //确定角色具有的权限
                         authorityClone.forEach(a -> {
                             if (authorityIdArray.contains(a.getId())) {
                                 a.setItExist(2);
+                                selectPermissions.add(String.valueOf(a.getId()));
                             }
                         });
                         x.setRoleAuthority(authorityClone);
+                        x.setSelectPermissions(selectPermissions);
                     } else {
                         x.setRoleAuthority(authorityClone);
                     }

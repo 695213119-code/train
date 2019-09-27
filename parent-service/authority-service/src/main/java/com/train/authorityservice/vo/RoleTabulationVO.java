@@ -39,4 +39,7 @@ public class RoleTabulationVO {
     @ApiModelProperty(value = "角色权限数据")
     private List<AuthorityVO> roleAuthority;
 
+    @ApiModelProperty(value = "角色对应权限中选中的id")
+    private List<String> selectPermissions;
+
 }
