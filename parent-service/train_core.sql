@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 本机mysql数据库
  Source Server Type    : MySQL
- Source Server Version : 50717
+ Source Server Version : 80015
  Source Host           : localhost:3306
  Source Schema         : train_core
 
  Target Server Type    : MySQL
- Target Server Version : 50717
+ Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 27/09/2019 18:27:40
+ Date: 28/09/2019 23:55:00
 */
 
 SET NAMES utf8mb4;
@@ -39,7 +39,7 @@ INSERT INTO `train_dictionary` VALUES (1174155790677913601, 'shortMessageVerific
 INSERT INTO `train_dictionary` VALUES (1176847631038001153, '预留key1', '预留val17', '预留字典字段', '2019-09-25 21:32:22', '2019-09-25 21:32:23', 2);
 INSERT INTO `train_dictionary` VALUES (1176847900555587586, '预留key2', '预留val34', '预留字典字段2', '2019-09-25 21:32:17', '2019-09-25 21:32:17', 2);
 INSERT INTO `train_dictionary` VALUES (1176851084082597889, '预留key4', '预留val4', '预留字段', '2019-09-25 21:28:57', NULL, 2);
-INSERT INTO `train_dictionary` VALUES (1177078533593485314, '预留key5', '预留val5', '预留字典字段5', '2019-09-26 14:33:48', '2019-09-26 14:33:48', 2);
+INSERT INTO `train_dictionary` VALUES (1177078533593485314, '预留key5', '预留val5', '预留字典字段5', '2019-09-26 14:33:48', '2019-09-27 22:20:27', 2);
 INSERT INTO `train_dictionary` VALUES (1177109377750126593, '预留key6', '预留val6', '预留字典字段6', '2019-09-26 14:35:20', '2019-09-26 14:36:16', 2);
 
 -- ----------------------------
@@ -90,6 +90,11 @@ INSERT INTO `train_jurisdiction` VALUES (1177055881940111362, '系统设置', 's
 INSERT INTO `train_jurisdiction` VALUES (1177055962932121602, '数据字典', 'system_setup_data_dictionary', 1177055881940111362, '2019-09-26 11:03:04', NULL, 2);
 INSERT INTO `train_jurisdiction` VALUES (1177056137490665474, '添加数据字典', 'system_setup_data_dictionary_add_a_new_dictionary', 1177055962932121602, '2019-09-26 11:03:46', NULL, 2);
 INSERT INTO `train_jurisdiction` VALUES (1177056412733476865, '操作数据字典', 'system_setup_data_dictionary_operational_data_dictionary', 1177055962932121602, '2019-09-26 11:04:52', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1177880306007826433, '角色权限', 'system_setup_role_permissions', 1177055881940111362, '2019-09-28 17:38:43', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1177880440733065217, '添加角色', 'system_setup_role_permissions_add_role', 1177880306007826433, '2019-09-28 17:39:15', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1177880496102072322, '编辑角色', 'system_setup_role_permissions_update_role', 1177880306007826433, '2019-09-28 17:39:28', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1177880537508241410, '删除角色', 'system_setup_role_permissions_delete_role', 1177880306007826433, '2019-09-28 17:39:38', NULL, 2);
+INSERT INTO `train_jurisdiction` VALUES (1177880627484450818, '角色赋权', 'system_setup_role_permissions_role_empowerment', 1177880306007826433, '2019-09-28 17:40:00', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_login_log
@@ -317,6 +322,8 @@ INSERT INTO `train_login_log` VALUES (1177494736283602945, 1173853273876299777, 
 INSERT INTO `train_login_log` VALUES (1177494747050381314, 1173853273876299777, 1, '127.0.0.1', '2019-09-27 16:06:39', '2019-09-27 16:06:39', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1177495922298458114, 1173853273876299777, 1, '127.0.0.1', '2019-09-27 16:11:19', '2019-09-27 16:11:19', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1177495933044264962, 1173853273876299777, 1, '127.0.0.1', '2019-09-27 16:11:22', '2019-09-27 16:11:21', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177588526431535106, 1173853273876299777, 1, '127.0.0.1', '2019-09-27 22:19:18', '2019-09-27 22:19:17', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1177877133838974977, 1173853273876299777, 1, '127.0.0.1', '2019-09-28 17:26:07', '2019-09-28 17:26:07', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role
@@ -337,11 +344,7 @@ CREATE TABLE `train_role`  (
 -- ----------------------------
 INSERT INTO `train_role` VALUES (1176742281157488642, '超级管理员', '拥有系统级别的操作权限', '2019-09-25 14:16:37', NULL, 2);
 INSERT INTO `train_role` VALUES (1176877299136921601, '系统管理员', '拥有指定操作权限', '2019-09-25 23:13:08', NULL, 2);
-INSERT INTO `train_role` VALUES (1177153074667655169, '游客', '简单角色', '2019-09-26 17:28:58', NULL, 2);
-INSERT INTO `train_role` VALUES (1177154476076896258, '123', '123', '2019-09-26 17:34:32', NULL, 2);
-INSERT INTO `train_role` VALUES (1177155932884504577, '1234', '123', '2019-09-26 17:40:19', NULL, 2);
-INSERT INTO `train_role` VALUES (1177159663080378370, '12345', '12354', '2019-09-26 17:55:08', NULL, 2);
-INSERT INTO `train_role` VALUES (1177394957436203010, '12432314', '5234521', '2019-09-27 09:30:07', NULL, 2);
+INSERT INTO `train_role` VALUES (1177877431768735745, '普通用户', '该角色只拥有普通用户权限', '2019-09-28 17:27:18', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role_jurisdiction
@@ -360,9 +363,14 @@ CREATE TABLE `train_role_jurisdiction`  (
 -- ----------------------------
 -- Records of train_role_jurisdiction
 -- ----------------------------
-INSERT INTO `train_role_jurisdiction` VALUES (123, 1176741547665993730, 1176742281157488642, '2019-09-25 15:32:40', NULL, 2);
-INSERT INTO `train_role_jurisdiction` VALUES (555, 1176741800507027457, 1176742281157488642, '2019-09-25 15:32:40', NULL, 2);
-INSERT INTO `train_role_jurisdiction` VALUES (12321, 1176736926071468033, 1176742281157488642, '2019-09-25 17:13:58', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (1177914980302192641, 1176741547665993730, 1176877299136921601, '2019-09-28 19:56:30', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (1177914980302192642, 1176741800507027457, 1176877299136921601, '2019-09-28 19:56:30', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (1177915406254735361, 1176741547665993730, 1176742281157488642, '2019-09-28 19:58:12', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (1177915406254735362, 1176741800507027457, 1176742281157488642, '2019-09-28 19:58:12', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (1177915406254735363, 1177056137490665474, 1176742281157488642, '2019-09-28 19:58:12', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (1177915406254735364, 1177880440733065217, 1176742281157488642, '2019-09-28 19:58:12', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (1177915406254735365, 1177880627484450818, 1176742281157488642, '2019-09-28 19:58:12', NULL, 2);
+INSERT INTO `train_role_jurisdiction` VALUES (1177927919608397825, 1176741800507027457, 1177877431768735745, '2019-09-28 20:47:55', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_sms_model

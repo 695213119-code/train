@@ -1,5 +1,6 @@
 package com.train.authorityservice.service;
 
+import com.train.authorityservice.dto.AddRoleAuthorityDTO;
 import com.train.authorityservice.dto.AddRoleDTO;
 import com.train.authorityservice.dto.EditRoleDTO;
 import com.train.commonservice.recurrence.RespPageRecurrence;
@@ -51,4 +52,21 @@ public interface ISystemRoleService {
      * @return RespRecurrence
      */
     RespRecurrence editRole(EditRoleDTO editRoleDTO, BindingResult bindingResult);
+
+    /**
+     * 角色赋权
+     *
+     * @param addRoleAuthorityDTO 赋权参数
+     * @param bindingResult       BindingResult
+     * @return RespRecurrence
+     */
+    RespRecurrence roleEmpowerment(AddRoleAuthorityDTO addRoleAuthorityDTO, BindingResult bindingResult);
+
+    /**
+     * 删除角色
+     *
+     * @param roleId 角色id
+     * @return RespRecurrence
+     */
+    RespRecurrence deleteRole(Long roleId);
 }

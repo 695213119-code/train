@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.train.authorityservice.authority.service.IJurisdictionService;
 import com.train.authorityservice.authority.service.IRoleJurisdictionService;
 import com.train.authorityservice.authority.service.IRoleService;
+import com.train.authorityservice.dto.AddRoleAuthorityDTO;
 import com.train.authorityservice.dto.AddRoleDTO;
 import com.train.authorityservice.dto.EditRoleDTO;
 import com.train.authorityservice.mapper.SystemRoleMapper;
@@ -149,7 +150,6 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
                         //确定角色具有的权限
                         authorityClone.forEach(a -> {
                             if (authorityIdArray.contains(a.getId())) {
-                                a.setItExist(2);
                                 selectPermissions.add(String.valueOf(a.getId()));
                             }
                         });
@@ -170,6 +170,11 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
             });
         }
 
+        roleTabulations.forEach(x -> {
+            LOGGER.info("角色[" + x.getRoleName() + "]选中的权限id:" + x.getSelectPermissions());
+        });
+
+
         return new RespPageRecurrence<>().success(roleTabulations, MybatisPageConvertRespPageUtils.convert(pages));
     }
 
@@ -182,7 +187,7 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
 
         Role roleCheck = roleService.selectOne(new EntityWrapper<Role>().eq(SqlConstant.SQL_FIELD_ROLE_NAME, editRoleDTO.getRoleName()).
                 eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
-        if (null != roleCheck && null != roleCheck.getId()) {
+        if ((null != roleCheck) && (null != roleCheck.getId()) && (!roleCheck.getId().equals(editRoleDTO.getId()))) {
             return new RespRecurrence().failure(CommonEnum.BUSINESS_CODE.getCode(), "角色名称不允许重复");
         }
 
@@ -196,6 +201,84 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("修改角色失败,,参数:{}", editRoleDTO);
+        }
+
+        return new RespRecurrence().success();
+    }
+
+    @Override
+    public RespRecurrence roleEmpowerment(AddRoleAuthorityDTO addRoleAuthorityDTO, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        Role role = roleService.selectById(addRoleAuthorityDTO.getRoleId());
+
+        if (null == role) {
+            return new RespRecurrence().failure(CommonEnum.BUSINESS_CODE.getCode(), "非法的角色");
+        }
+
+        //删除角色原有的权限
+        List<RoleJurisdiction> roleJurisdictions = roleJurisdictionService.selectList(new EntityWrapper<RoleJurisdiction>().eq(SqlConstant.SQL_FIELD_ROLE_ID, role.getId()));
+        if (CollUtil.isNotEmpty(roleJurisdictions)) {
+            List<Long> roleJurisdictionIdArray = new ArrayList<>();
+            roleJurisdictions.forEach(x -> {
+                roleJurisdictionIdArray.add(x.getId());
+            });
+            try {
+                roleJurisdictionService.deleteBatchIds(roleJurisdictionIdArray);
+            } catch (Exception e) {
+                e.printStackTrace();
+                LOGGER.error("删除角色原有权限失败,参数:{}", addRoleAuthorityDTO);
+            }
+        }
+
+        Long[] roleAuthority = addRoleAuthorityDTO.getRoleAuthority();
+        //角色重新赋权 只将操作权限赋值到角色下
+        if (null != roleAuthority && roleAuthority.length > 0) {
+            List<Long> authorityEnd = new ArrayList<>();
+            List<Jurisdiction> jurisdictionList = jurisdictionService.selectList(new EntityWrapper<>());
+            for (Long id : roleAuthority) {
+                if (!judgingWhetherThereIsASubset(id, jurisdictionList)) {
+                    authorityEnd.add(id);
+                }
+            }
+            List<RoleJurisdiction> roleJurisdictionsNew = new ArrayList<>();
+            for (Long id : authorityEnd) {
+                RoleJurisdiction roleJurisdiction = new RoleJurisdiction();
+                roleJurisdiction.setRoleId(role.getId());
+                roleJurisdiction.setJurisdictionId(id);
+                roleJurisdictionsNew.add(roleJurisdiction);
+            }
+            try {
+                roleJurisdictionService.insertBatch(roleJurisdictionsNew);
+            } catch (Exception e) {
+                e.printStackTrace();
+                LOGGER.error("角色赋权失败,参数:{} {}", addRoleAuthorityDTO, roleAuthority);
+            }
+        }
+        return new RespRecurrence().success();
+    }
+
+    @Override
+    public RespRecurrence deleteRole(Long roleId) {
+
+        Role role = roleService.selectById(roleId);
+        if (null == role) {
+            return new RespRecurrence().failure(CommonEnum.BUSINESS_CODE.getCode(), "非法的角色");
+        }
+        //该角色下存在权限,不可被删除
+        List<RoleJurisdiction> roleJurisdictions = roleJurisdictionService.selectList(new EntityWrapper<RoleJurisdiction>().eq(SqlConstant.SQL_FIELD_ROLE_ID, role.getId()));
+        if (CollUtil.isNotEmpty(roleJurisdictions)) {
+            return new RespRecurrence().failure(CommonEnum.BUSINESS_CODE.getCode(), "该角色[" + role.getRoleName() + "]下存在权限,不允许删除");
+        }
+
+        try {
+            roleService.deleteById(role.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("删除角色失败,参数:{}", roleId);
         }
 
         return new RespRecurrence().success();
@@ -251,6 +334,27 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
             return null;
         }
         return childrenAuthority;
+    }
+
+
+    /**
+     * 判断权限是否存在子集
+     *
+     * @param id               权限id
+     * @param jurisdictionList 权限集合
+     * @return boolean true 存在 false 不存在
+     */
+    private boolean judgingWhetherThereIsASubset(Long id, List<Jurisdiction> jurisdictionList) {
+        int sign = 1;
+        if (CollUtil.isNotEmpty(jurisdictionList)) {
+            for (Jurisdiction jurisdiction : jurisdictionList) {
+                if (jurisdiction.getParentId().equals(id)) {
+                    sign = 2;
+                    break;
+                }
+            }
+        }
+        return sign != 1;
     }
 
 }

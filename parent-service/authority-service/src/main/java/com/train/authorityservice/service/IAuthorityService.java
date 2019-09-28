@@ -34,4 +34,6 @@ public interface IAuthorityService {
      * @return RespRecurrence
      */
     RespRecurrence addAuthority(AuthorityAddDTO authorityAddDTO, BindingResult bindingResult);
+
+
 }

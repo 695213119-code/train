@@ -33,9 +33,6 @@ public class AuthorityVO implements Cloneable {
     @JsonIgnore
     private Long parentId;
 
-    @ApiModelProperty(value = "角色是否存在该权限(1-不存在 2-存在) 默认1")
-    private Integer itExist = 1;
-
     @ApiModelProperty(value = "子级权限")
     private List<AuthorityVO> roleAuthorityChildren;
 

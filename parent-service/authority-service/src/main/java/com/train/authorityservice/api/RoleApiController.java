@@ -1,5 +1,6 @@
 package com.train.authorityservice.api;
 
+import com.train.authorityservice.dto.AddRoleAuthorityDTO;
 import com.train.authorityservice.dto.AddRoleDTO;
 import com.train.authorityservice.dto.EditRoleDTO;
 import com.train.authorityservice.service.ISystemRoleService;
@@ -58,5 +59,19 @@ public class RoleApiController {
                                    BindingResult bindingResult) {
         return systemRoleService.editRole(editRoleDTO, bindingResult);
     }
+
+    @PostMapping("/roleEmpowerment")
+    @ApiOperation(value = "角色赋权")
+    public RespRecurrence roleEmpowerment(@ApiParam(value = "赋权参数", required = true) @RequestBody AddRoleAuthorityDTO addRoleAuthorityDTO,
+                                          BindingResult bindingResult) {
+        return systemRoleService.roleEmpowerment(addRoleAuthorityDTO, bindingResult);
+    }
+
+    @DeleteMapping("/deleteRole")
+    @ApiOperation("删除角色")
+    public RespRecurrence deleteRole(@ApiParam(value = "角色id", required = true) @RequestParam Long roleId) {
+        return systemRoleService.deleteRole(roleId);
+    }
+
 
 }
