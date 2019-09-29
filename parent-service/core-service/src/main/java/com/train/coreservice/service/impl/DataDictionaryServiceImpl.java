@@ -45,23 +45,23 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
     }
 
     @Override
-    public RespRecurrence addDictionaries(AddDictionariesDTO dictionariesAddDTO, BindingResult bindingResult) {
+    public RespRecurrence addDictionaries(AddDictionariesDTO dictionariesDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
         }
 
-        Dictionary check = dictionaryService.selectOne(new EntityWrapper<Dictionary>().eq(SqlConstant.SQL_FIELD_KEY, dictionariesAddDTO.getDicKey()));
+        Dictionary check = dictionaryService.selectOne(new EntityWrapper<Dictionary>().eq(SqlConstant.SQL_FIELD_KEY, dictionariesDTO.getDicKey()));
         if (null != check) {
             return new RespRecurrence<>().failure(CommonEnum.BUSINESS_CODE.getCode(), "数据字典的key重复啦");
         }
 
         Dictionary dictionary = new Dictionary();
-        BeanUtils.copyProperties(dictionariesAddDTO, dictionary);
+        BeanUtils.copyProperties(dictionariesDTO, dictionary);
         try {
             dictionaryService.insert(dictionary);
         } catch (Exception e) {
-            LOGGER.error("添加字典失败 原因:{} 参数:{}", e.getMessage(), dictionariesAddDTO);
+            LOGGER.error("添加字典失败 原因:{} 参数:{}", e.getMessage(), dictionariesDTO);
             return new RespRecurrence<>().failure();
         }
 
@@ -79,7 +79,7 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
     }
 
     @Override
-    public RespRecurrence editDictionaries(EditDictionariesDTO dictionariesEditDTO, BindingResult bindingResult) {
+    public RespRecurrence editDictionaries(EditDictionariesDTO dictionariesDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
@@ -87,12 +87,12 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
 
         Dictionary dictionary = new Dictionary();
         dictionary.setUpdateTime(new Date());
-        BeanUtils.copyProperties(dictionariesEditDTO, dictionary);
+        BeanUtils.copyProperties(dictionariesDTO, dictionary);
 
         try {
             dictionaryService.updateById(dictionary);
         } catch (Exception e) {
-            LOGGER.error("操作字典失败 原因:{} 参数:{}", e.getMessage(), dictionariesEditDTO);
+            LOGGER.error("操作字典失败 原因:{} 参数:{}", e.getMessage(), dictionariesDTO);
             return new RespRecurrence<>().failure();
         }
 

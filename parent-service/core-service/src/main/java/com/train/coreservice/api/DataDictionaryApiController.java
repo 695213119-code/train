@@ -35,16 +35,16 @@ public class DataDictionaryApiController {
 
     @ApiOperation("添加字典")
     @PostMapping("/addDictionaries")
-    public RespRecurrence addDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody @Valid AddDictionariesDTO dictionariesAddDTO,
+    public RespRecurrence addDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody @Valid AddDictionariesDTO dictionariesDTO,
                                           BindingResult bindingResult) {
-        return dataDictionaryService.addDictionaries(dictionariesAddDTO, bindingResult);
+        return dataDictionaryService.addDictionaries(dictionariesDTO, bindingResult);
     }
 
     @ApiOperation("操作字典")
     @PutMapping("/editDictionaries")
-    public RespRecurrence editDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody @Valid EditDictionariesDTO dictionariesEditDTO,
+    public RespRecurrence editDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody @Valid EditDictionariesDTO dictionariesDTO,
                                            BindingResult bindingResult) {
-        return dataDictionaryService.editDictionaries(dictionariesEditDTO, bindingResult);
+        return dataDictionaryService.editDictionaries(dictionariesDTO, bindingResult);
     }
 
     @ApiOperation(value = "获取字典列表", response = DataDictionariesVO.class)

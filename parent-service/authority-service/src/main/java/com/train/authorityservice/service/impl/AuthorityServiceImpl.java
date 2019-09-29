@@ -48,13 +48,13 @@ public class AuthorityServiceImpl implements IAuthorityService {
     }
 
     @Override
-    public RespRecurrence addAuthority(AddAuthorityDTO authorityAddDTO, BindingResult bindingResult) {
+    public RespRecurrence addAuthority(AddAuthorityDTO authorityDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
         }
 
-        Jurisdiction jurisdictionCheck = jurisdictionService.selectOne(new EntityWrapper<Jurisdiction>().eq(SqlConstant.SQL_FIELD_IDENTIFICATION, authorityAddDTO.getIdentification())
+        Jurisdiction jurisdictionCheck = jurisdictionService.selectOne(new EntityWrapper<Jurisdiction>().eq(SqlConstant.SQL_FIELD_IDENTIFICATION, authorityDTO.getIdentification())
                 .eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
 
         if (null != jurisdictionCheck) {
@@ -62,13 +62,13 @@ public class AuthorityServiceImpl implements IAuthorityService {
         }
 
         Jurisdiction jurisdiction = new Jurisdiction();
-        BeanUtils.copyProperties(authorityAddDTO, jurisdiction);
+        BeanUtils.copyProperties(authorityDTO, jurisdiction);
 
         try {
             jurisdictionService.insert(jurisdiction);
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("添加权限失败,,参数:{}", authorityAddDTO);
+            LOGGER.error("添加权限失败,,参数:{}", authorityDTO);
         }
 
         return new RespRecurrence().success();

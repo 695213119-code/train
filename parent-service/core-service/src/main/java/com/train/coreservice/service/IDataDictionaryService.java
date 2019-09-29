@@ -17,11 +17,11 @@ public interface IDataDictionaryService {
     /**
      * 添加字典
      *
-     * @param dictionariesAddDTO 字典参数类
+     * @param dictionariesDTO 字典参数类
      * @param bindingResult      BindingResult
      * @return RespRecurrence
      */
-    RespRecurrence addDictionaries(AddDictionariesDTO dictionariesAddDTO, BindingResult bindingResult);
+    RespRecurrence addDictionaries(AddDictionariesDTO dictionariesDTO, BindingResult bindingResult);
 
     /**
      * 获取字典列表
@@ -37,9 +37,9 @@ public interface IDataDictionaryService {
     /**
      * 操作字典
      *
-     * @param dictionariesEditDTO 字典参数类
+     * @param dictionariesDTO 字典参数类
      * @param bindingResult       BindingResult
      * @return RespRecurrence
      */
-    RespRecurrence editDictionaries(EditDictionariesDTO dictionariesEditDTO, BindingResult bindingResult);
+    RespRecurrence editDictionaries(EditDictionariesDTO dictionariesDTO, BindingResult bindingResult);
 }

@@ -40,9 +40,9 @@ public class AuthorityApiController {
 
     @PostMapping("/addAuthority")
     @ApiOperation(value = "添加权限")
-    public RespRecurrence addAuthority(@ApiParam(value = "权限DTO", required = true) @RequestBody AddAuthorityDTO authorityAddDTO,
+    public RespRecurrence addAuthority(@ApiParam(value = "权限参数DTO", required = true) @RequestBody AddAuthorityDTO authorityDTO,
                                        BindingResult bindingResult) {
-        return authorityService.addAuthority(authorityAddDTO, bindingResult);
+        return authorityService.addAuthority(authorityDTO, bindingResult);
     }
 
 }

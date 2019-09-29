@@ -27,11 +27,11 @@ public interface IAuthorityService {
     /**
      * 添加权限
      *
-     * @param authorityAddDTO 权限DTO
-     * @param bindingResult   BindingResult
+     * @param authorityDTO  权限参数DTO
+     * @param bindingResult BindingResult
      * @return RespRecurrence
      */
-    RespRecurrence addAuthority(AddAuthorityDTO authorityAddDTO, BindingResult bindingResult);
+    RespRecurrence addAuthority(AddAuthorityDTO authorityDTO, BindingResult bindingResult);
 
 
 }
