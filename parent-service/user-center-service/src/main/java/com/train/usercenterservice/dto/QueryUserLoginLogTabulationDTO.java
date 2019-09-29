@@ -12,15 +12,15 @@ import javax.validation.constraints.Min;
  * @serial 219/09/12
  */
 @Data
-public class UserLoginLogQueryDTO {
+public class QueryUserLoginLogTabulationDTO {
 
     @ApiModelProperty("页码")
     @Min(value = 1,message = "页码必须大于1")
-    private int page;
+    private Integer page;
 
     @ApiModelProperty("每页条数")
     @Min(value = 1,message = "每页条数必须大于1")
-    private int limit;
+    private Integer limit;
 
     @ApiModelProperty("登录时间-开始")
     private String timeStart;
@@ -29,7 +29,7 @@ public class UserLoginLogQueryDTO {
     private String timeEnd;
 
     @ApiModelProperty("登录平台（1-pc 2-app 3-小程序）")
-    private int platform;
+    private Integer platform;
 
     @ApiModelProperty("用户手机号/用户名")
     private String userKey;

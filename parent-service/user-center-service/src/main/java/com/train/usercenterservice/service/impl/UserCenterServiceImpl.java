@@ -17,7 +17,7 @@ import com.train.entityservice.entity.user.User;
 import com.train.entityservice.entity.user.UserSubsidiary;
 import com.train.entityservice.entity.user.UserThirdparty;
 import com.train.usercenterservice.dto.QueryUserTabulationDTO;
-import com.train.usercenterservice.dto.UserManagementLoginDTO;
+import com.train.usercenterservice.dto.QueryUserManagementLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.usercenterservice.mapper.UserCenterMapper;
 import com.train.usercenterservice.remote.authority.RemoteAuthorityService;
@@ -105,12 +105,11 @@ public class UserCenterServiceImpl implements IUserCenterService {
     }
 
     @Override
-    public RespRecurrence userManagementLogin(UserManagementLoginDTO userManagementLoginDTO, BindingResult bindingResult) {
+    public RespRecurrence userManagementLogin(QueryUserManagementLoginDTO userManagementLoginDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
         }
-
 
         User user = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_PHONE, userManagementLoginDTO.getPhone()).
                 eq(CommonConstant.SQL_DELETE_SIGN, CommonConstant.SQL_DELETE_SIGN_NOT));
@@ -126,11 +125,11 @@ public class UserCenterServiceImpl implements IUserCenterService {
 
         //TODO 判断权限
 
-
+        //踢出上一个用户
         clearUserResidualCache(user.getPhone());
         String token = RandomUtils.generateToken();
         redisUtils.set(token, JSONObject.toJSONString(user), 24, TimeUnit.HOURS);
-        redisUtils.set(UserConstant.USER_TOKEN_REDIS_KEY + user.getPhone(), token, 24, TimeUnit.HOURS);
+        redisUtils.set(UserConstant.USER_MANAGEMENT_TOKEN_REDIS_KEY + user.getPhone(), token, 24, TimeUnit.HOURS);
         return new RespRecurrence<>().success(new TokenVO(token));
     }
 
@@ -215,7 +214,7 @@ public class UserCenterServiceImpl implements IUserCenterService {
      * @param phone 用户手机号
      */
     private void clearUserResidualCache(String phone) {
-        String userTokenRedisKey = redisUtils.get(UserConstant.USER_TOKEN_REDIS_KEY + phone);
+        String userTokenRedisKey = redisUtils.get(UserConstant.USER_MANAGEMENT_TOKEN_REDIS_KEY + phone);
         if (StringUtils.isNotEmpty(userTokenRedisKey)) {
             redisUtils.delete(userTokenRedisKey);
         }

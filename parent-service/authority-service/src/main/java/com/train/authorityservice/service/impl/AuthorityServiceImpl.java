@@ -1,9 +1,8 @@
 package com.train.authorityservice.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.train.authorityservice.authority.service.IJurisdictionService;
-import com.train.authorityservice.dto.AuthorityAddDTO;
+import com.train.authorityservice.dto.AddAuthorityDTO;
 import com.train.authorityservice.mapper.AuthorityMapper;
 import com.train.authorityservice.service.IAuthorityService;
 import com.train.commonservice.constant.CommonConstant;
@@ -18,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 权限模块实现类
@@ -52,7 +48,7 @@ public class AuthorityServiceImpl implements IAuthorityService {
     }
 
     @Override
-    public RespRecurrence addAuthority(AuthorityAddDTO authorityAddDTO, BindingResult bindingResult) {
+    public RespRecurrence addAuthority(AddAuthorityDTO authorityAddDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());

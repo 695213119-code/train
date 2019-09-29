@@ -1,17 +1,11 @@
 package com.train.coreservice.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.train.entityservice.entity.core.Dictionary;
 import com.train.entityservice.entity.core.Interface;
-import com.train.commonservice.recurrence.RespRecurrence;
-import com.train.coreservice.core.service.IDictionaryService;
 import com.train.coreservice.core.service.IInterfaceService;
-import com.train.coreservice.dto.DictionariesAddDTO;
-import com.train.coreservice.dto.FiltrateInterfaceDTO;
 import com.train.coreservice.service.ICoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

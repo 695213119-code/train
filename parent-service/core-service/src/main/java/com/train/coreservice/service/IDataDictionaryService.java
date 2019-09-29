@@ -2,8 +2,8 @@ package com.train.coreservice.service;
 
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
-import com.train.coreservice.dto.DictionariesAddDTO;
-import com.train.coreservice.dto.DictionariesEditDTO;
+import com.train.coreservice.dto.AddDictionariesDTO;
+import com.train.coreservice.dto.EditDictionariesDTO;
 import org.springframework.validation.BindingResult;
 
 /**
@@ -21,7 +21,7 @@ public interface IDataDictionaryService {
      * @param bindingResult      BindingResult
      * @return RespRecurrence
      */
-    RespRecurrence addDictionaries(DictionariesAddDTO dictionariesAddDTO, BindingResult bindingResult);
+    RespRecurrence addDictionaries(AddDictionariesDTO dictionariesAddDTO, BindingResult bindingResult);
 
     /**
      * 获取字典列表
@@ -41,5 +41,5 @@ public interface IDataDictionaryService {
      * @param bindingResult       BindingResult
      * @return RespRecurrence
      */
-    RespRecurrence editDictionaries(DictionariesEditDTO dictionariesEditDTO, BindingResult bindingResult);
+    RespRecurrence editDictionaries(EditDictionariesDTO dictionariesEditDTO, BindingResult bindingResult);
 }

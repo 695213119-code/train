@@ -7,7 +7,7 @@ import com.train.commonservice.constant.user.UserConstant;
 import com.train.commonservice.utils.IpUtils;
 import com.train.entityservice.entity.user.LoginLog;
 import com.train.entityservice.entity.user.User;
-import com.train.usercenterservice.dto.UserManagementLoginDTO;
+import com.train.usercenterservice.dto.QueryUserManagementLoginDTO;
 import com.train.usercenterservice.user.service.ILoginLogService;
 import com.train.usercenterservice.user.service.IUserService;
 import org.aspectj.lang.JoinPoint;
@@ -54,7 +54,7 @@ public class UserAspect {
         Object[] args = joinPoint.getArgs();
         //用户管理端登录
         if (UserConstant.USER_MANAGEMANT_LOGIN_METHOD_NAME.equals(methodName)) {
-            UserManagementLoginDTO userManagementLoginDTO = (UserManagementLoginDTO) args[0];
+            QueryUserManagementLoginDTO userManagementLoginDTO = (QueryUserManagementLoginDTO) args[0];
             addUserLoginLog(userManagementLoginDTO.getPhone(), UserConstant.PLATFORM_PC);
         }
     }

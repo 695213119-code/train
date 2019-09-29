@@ -3,7 +3,7 @@ package com.train.usercenterservice.service;
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.QueryUserTabulationDTO;
-import com.train.usercenterservice.dto.UserManagementLoginDTO;
+import com.train.usercenterservice.dto.QueryUserManagementLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import org.springframework.validation.BindingResult;
 
@@ -39,7 +39,7 @@ public interface IUserCenterService {
      * @param bindingResult          校验api
      * @return RespRecurrence
      */
-    RespRecurrence userManagementLogin(UserManagementLoginDTO userManagementLoginDTO, BindingResult bindingResult);
+    RespRecurrence userManagementLogin(QueryUserManagementLoginDTO userManagementLoginDTO, BindingResult bindingResult);
 
     /**
      * 获取用户详情

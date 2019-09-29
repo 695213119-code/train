@@ -2,8 +2,8 @@ package com.train.coreservice.api;
 
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
-import com.train.coreservice.dto.DictionariesAddDTO;
-import com.train.coreservice.dto.DictionariesEditDTO;
+import com.train.coreservice.dto.AddDictionariesDTO;
+import com.train.coreservice.dto.EditDictionariesDTO;
 import com.train.coreservice.service.IDataDictionaryService;
 import com.train.coreservice.vo.DataDictionariesVO;
 import io.swagger.annotations.Api;
@@ -35,14 +35,14 @@ public class DataDictionaryApiController {
 
     @ApiOperation("添加字典")
     @PostMapping("/addDictionaries")
-    public RespRecurrence addDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody @Valid DictionariesAddDTO dictionariesAddDTO,
+    public RespRecurrence addDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody @Valid AddDictionariesDTO dictionariesAddDTO,
                                           BindingResult bindingResult) {
         return dataDictionaryService.addDictionaries(dictionariesAddDTO, bindingResult);
     }
 
     @ApiOperation("操作字典")
     @PutMapping("/editDictionaries")
-    public RespRecurrence editDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody @Valid DictionariesEditDTO dictionariesEditDTO,
+    public RespRecurrence editDictionaries(@ApiParam(value = "字典参数类", required = true) @RequestBody @Valid EditDictionariesDTO dictionariesEditDTO,
                                            BindingResult bindingResult) {
         return dataDictionaryService.editDictionaries(dictionariesEditDTO, bindingResult);
     }

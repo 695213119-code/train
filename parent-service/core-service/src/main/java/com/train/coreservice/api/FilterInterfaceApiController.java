@@ -1,7 +1,7 @@
 package com.train.coreservice.api;
 
 import com.train.commonservice.recurrence.RespRecurrence;
-import com.train.coreservice.dto.FiltrateInterfaceDTO;
+import com.train.coreservice.dto.AddFiltrateInterfaceDTO;
 import com.train.coreservice.service.IFilterInterfaceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +31,7 @@ public class FilterInterfaceApiController {
 
     @ApiOperation("添加过滤接口")
     @PostMapping("/addFiltrateInterface")
-    public RespRecurrence addFiltrateInterface(@ApiParam(value = "过滤接口参数类", required = true) @RequestBody FiltrateInterfaceDTO filtrateInterfaceDTO) {
+    public RespRecurrence addFiltrateInterface(@ApiParam(value = "过滤接口参数类", required = true) @RequestBody AddFiltrateInterfaceDTO filtrateInterfaceDTO) {
         return filterInterfaceService.addFiltrateInterface(filtrateInterfaceDTO);
     }
 }

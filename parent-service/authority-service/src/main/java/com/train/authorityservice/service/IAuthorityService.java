@@ -1,10 +1,8 @@
 package com.train.authorityservice.service;
 
-import com.train.authorityservice.dto.AddRoleDTO;
-import com.train.authorityservice.dto.AuthorityAddDTO;
+import com.train.authorityservice.dto.AddAuthorityDTO;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.entityservice.entity.authority.Jurisdiction;
-import com.train.entityservice.entity.authority.Role;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
@@ -33,7 +31,7 @@ public interface IAuthorityService {
      * @param bindingResult   BindingResult
      * @return RespRecurrence
      */
-    RespRecurrence addAuthority(AuthorityAddDTO authorityAddDTO, BindingResult bindingResult);
+    RespRecurrence addAuthority(AddAuthorityDTO authorityAddDTO, BindingResult bindingResult);
 
 
 }

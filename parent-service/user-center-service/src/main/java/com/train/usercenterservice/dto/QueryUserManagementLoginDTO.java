@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * @serial 2019/09/20
  */
 @Data
-public class UserManagementLoginDTO {
+public class QueryUserManagementLoginDTO {
 
     @ApiModelProperty("手机号")
     @NotNull(message = "用户手机号码不能为空")

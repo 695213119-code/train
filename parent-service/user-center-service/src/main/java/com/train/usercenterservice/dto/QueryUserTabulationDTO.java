@@ -16,9 +16,9 @@ public class QueryUserTabulationDTO {
 
     @ApiModelProperty("页码")
     @Min(value = 1, message = "页码必须大于1")
-    private int page;
+    private Integer page;
 
     @ApiModelProperty("每页条数")
     @Min(value = 1, message = "每页条数必须大于1")
-    private int limit;
+    private Integer limit;
 }

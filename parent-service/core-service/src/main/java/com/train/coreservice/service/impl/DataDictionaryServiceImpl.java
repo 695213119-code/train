@@ -7,8 +7,8 @@ import com.train.commonservice.enumeration.CommonEnum;
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.coreservice.core.service.IDictionaryService;
-import com.train.coreservice.dto.DictionariesAddDTO;
-import com.train.coreservice.dto.DictionariesEditDTO;
+import com.train.coreservice.dto.AddDictionariesDTO;
+import com.train.coreservice.dto.EditDictionariesDTO;
 import com.train.coreservice.mapper.DataDictionaryMapper;
 import com.train.coreservice.service.IDataDictionaryService;
 import com.train.coreservice.utils.MybatisPageConvertRespPageUtils;
@@ -45,7 +45,7 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
     }
 
     @Override
-    public RespRecurrence addDictionaries(DictionariesAddDTO dictionariesAddDTO, BindingResult bindingResult) {
+    public RespRecurrence addDictionaries(AddDictionariesDTO dictionariesAddDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
@@ -79,7 +79,7 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
     }
 
     @Override
-    public RespRecurrence editDictionaries(DictionariesEditDTO dictionariesEditDTO, BindingResult bindingResult) {
+    public RespRecurrence editDictionaries(EditDictionariesDTO dictionariesEditDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());

@@ -2,7 +2,7 @@ package com.train.coreservice.service.impl;
 
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.coreservice.core.service.IInterfaceService;
-import com.train.coreservice.dto.FiltrateInterfaceDTO;
+import com.train.coreservice.dto.AddFiltrateInterfaceDTO;
 import com.train.coreservice.service.IFilterInterfaceService;
 import com.train.entityservice.entity.core.Interface;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class FilterInterfaceServiceImpl implements IFilterInterfaceService {
     }
 
     @Override
-    public RespRecurrence addFiltrateInterface(FiltrateInterfaceDTO filtrateInterfaceDTO) {
+    public RespRecurrence addFiltrateInterface(AddFiltrateInterfaceDTO filtrateInterfaceDTO) {
         Interface inter = new Interface();
         BeanUtils.copyProperties(filtrateInterfaceDTO, inter);
         try {

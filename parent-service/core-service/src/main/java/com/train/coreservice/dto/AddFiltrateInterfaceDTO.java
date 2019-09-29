@@ -10,7 +10,7 @@ import lombok.Data;
  * @serial 2019/09/17
  */
 @Data
-public class FiltrateInterfaceDTO {
+public class AddFiltrateInterfaceDTO {
 
     @ApiModelProperty(value = "接口路径")
     private String url;
@@ -18,11 +18,4 @@ public class FiltrateInterfaceDTO {
     @ApiModelProperty(value = "接口描述")
     private String desc;
 
-    @Override
-    public String toString() {
-        return "FiltrateInterfaceDTO{" +
-                "url='" + url + '\'' +
-                ", desc='" + desc + '\'' +
-                '}';
-    }
 }

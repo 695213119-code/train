@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  * @serial 2019/9/25
  */
 @Data
-public class AuthorityAddDTO {
+public class AddAuthorityDTO {
 
     @ApiModelProperty(value = "权限名称")
     @NotNull(message = "权限名称不能为空")

@@ -10,9 +10,9 @@ public class UserConstant {
 
 
     /**
-     * 用户token保存到redis的key
+     * 用户token保存到redis的key-->管理端
      */
-    public static final String USER_TOKEN_REDIS_KEY = "user_token_redis_key";
+    public static final String USER_MANAGEMENT_TOKEN_REDIS_KEY = "user_management_token_redis_key";
 
     /**
      * 用户管理端登录方法名称

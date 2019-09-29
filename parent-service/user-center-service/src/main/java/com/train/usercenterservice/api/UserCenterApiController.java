@@ -4,7 +4,7 @@ package com.train.usercenterservice.api;
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.usercenterservice.dto.QueryUserTabulationDTO;
-import com.train.usercenterservice.dto.UserManagementLoginDTO;
+import com.train.usercenterservice.dto.QueryUserManagementLoginDTO;
 import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.usercenterservice.inter.Intercept;
 import com.train.usercenterservice.service.IUserCenterService;
@@ -42,7 +42,7 @@ public class UserCenterApiController {
     @PostMapping("/userManagementLogin")
     @ApiOperation(value = "用户管理端登录")
     @Intercept
-    public RespRecurrence userManagementLogin(@ApiParam(value = "用户管理端登录DTO", required = true) @RequestBody @Validated UserManagementLoginDTO userManagementLoginDTO,
+    public RespRecurrence userManagementLogin(@ApiParam(value = "用户管理端登录DTO", required = true) @RequestBody @Validated QueryUserManagementLoginDTO userManagementLoginDTO,
                                               BindingResult bindingResult) {
         return userCenterService.userManagementLogin(userManagementLoginDTO, bindingResult);
     }

@@ -1,7 +1,7 @@
 package com.train.usercenterservice.service;
 
 import com.train.commonservice.recurrence.RespPageRecurrence;
-import com.train.usercenterservice.dto.UserLoginLogQueryDTO;
+import com.train.usercenterservice.dto.QueryUserLoginLogTabulationDTO;
 import org.springframework.validation.BindingResult;
 
 /**
@@ -15,9 +15,9 @@ public interface IUserLoginLogService {
     /**
      * 获取用户登录日志
      *
-     * @param userLoginLogQueryDTO 条件参数
+     * @param userLoginLogTabulationDTO 条件参数
      * @param bindingResult        BindingResult
      * @return RespPageRecurrence
      */
-    RespPageRecurrence queryUserLoginLog(UserLoginLogQueryDTO userLoginLogQueryDTO, BindingResult bindingResult);
+    RespPageRecurrence queryUserLoginLog(QueryUserLoginLogTabulationDTO userLoginLogTabulationDTO, BindingResult bindingResult);
 }
