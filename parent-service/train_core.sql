@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 本机mysql数据库
  Source Server Type    : MySQL
- Source Server Version : 50717
+ Source Server Version : 80015
  Source Host           : localhost:3306
  Source Schema         : train_core
 
  Target Server Type    : MySQL
- Target Server Version : 50717
+ Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 29/09/2019 18:37:27
+ Date: 30/09/2019 00:41:45
 */
 
 SET NAMES utf8mb4;
@@ -327,6 +327,10 @@ INSERT INTO `train_login_log` VALUES (1177877133838974977, 1173853273876299777, 
 INSERT INTO `train_login_log` VALUES (1178125499907641345, 1173853273876299777, 1, '127.0.0.1', '2019-09-29 09:53:02', '2019-09-29 09:53:02', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1178125545004797954, 1173853273876299777, 1, '127.0.0.1', '2019-09-29 09:53:13', '2019-09-29 09:53:13', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1178153144301064193, 1173853273876299777, 1, '127.0.0.1', '2019-09-29 11:42:53', '2019-09-29 11:42:53', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178324765413609473, 1173853273876299777, 1, '127.0.0.1', '2019-09-29 23:04:51', '2019-09-29 23:04:50', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178325031412174849, 1173853273876299777, 1, '127.0.0.1', '2019-09-29 23:05:54', '2019-09-29 23:05:54', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178327470374785025, 1173853273876299777, 1, '127.0.0.1', '2019-09-29 23:15:36', '2019-09-29 23:15:35', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178334907622363137, 1173853273876299777, 1, '127.0.0.1', '2019-09-29 23:45:09', '2019-09-29 23:45:09', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role
