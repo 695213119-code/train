@@ -9,6 +9,7 @@ import com.train.usercenterservice.dto.UserRegisterDTO;
 import com.train.usercenterservice.inter.Intercept;
 import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.vo.UserInfoVO;
+import com.train.usercenterservice.vo.UserTabulationVO;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -63,7 +64,7 @@ public class UserCenterApiController {
 
 
     @PostMapping("/queryUserTabulation")
-    @ApiOperation(value = "获取用户列表")
+    @ApiOperation(value = "获取用户列表", response = UserTabulationVO.class)
     public RespPageRecurrence queryUserTabulation(@ApiParam(value = "列表查询条件DTO", required = true) @RequestBody @Validated QueryUserTabulationDTO queryUserTabulationDTO,
                                                   BindingResult bindingResult) {
         return userCenterService.queryUserTabulation(queryUserTabulationDTO, bindingResult);

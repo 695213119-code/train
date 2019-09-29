@@ -21,4 +21,22 @@ public class QueryUserTabulationDTO {
     @ApiModelProperty("每页条数")
     @Min(value = 1, message = "每页条数必须大于1")
     private Integer limit;
+
+    @ApiModelProperty("手机号/用户名/身份证号码")
+    private String comprehensive;
+
+    @ApiModelProperty("角色id")
+    private String roleId;
+
+    @ApiModelProperty("是否实名 1-是 2-否")
+    private Integer isReal;
+
+    @ApiModelProperty("用户创建时间-开始")
+    private String crateStartTime;
+
+    @ApiModelProperty("用户创建时间-结束")
+    private String crateEndTime;
+
+
+
 }
