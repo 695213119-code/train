@@ -77,9 +77,6 @@ public class UserCenterApiController {
         return userCenterService.addAdministrators(administrators, bindingResult);
     }
 
-
-
-
     @PutMapping("/resetPassword")
     @ApiOperation(value = "重置用户密码")
     public RespRecurrence resetPassword(@ApiParam(value = "用户id", required = true) @RequestParam Long userId) {
