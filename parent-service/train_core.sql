@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本机mysql数据库
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80015
+ Source Server Version : 50717
  Source Host           : localhost:3306
  Source Schema         : train_core
 
  Target Server Type    : MySQL
- Target Server Version : 80015
+ Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 30/09/2019 00:41:45
+ Date: 30/09/2019 18:25:31
 */
 
 SET NAMES utf8mb4;
@@ -331,6 +331,13 @@ INSERT INTO `train_login_log` VALUES (1178324765413609473, 1173853273876299777, 
 INSERT INTO `train_login_log` VALUES (1178325031412174849, 1173853273876299777, 1, '127.0.0.1', '2019-09-29 23:05:54', '2019-09-29 23:05:54', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1178327470374785025, 1173853273876299777, 1, '127.0.0.1', '2019-09-29 23:15:36', '2019-09-29 23:15:35', NULL, 2);
 INSERT INTO `train_login_log` VALUES (1178334907622363137, 1173853273876299777, 1, '127.0.0.1', '2019-09-29 23:45:09', '2019-09-29 23:45:09', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178567124517634050, 1173853273876299777, 1, '127.0.0.1', '2019-09-30 15:07:54', '2019-09-30 15:07:53', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178585462715166722, 1173853273876299777, 1, '127.0.0.1', '2019-09-30 16:20:46', '2019-09-30 16:20:46', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178611667342442497, 1178606527944310785, 1, '127.0.0.1', '2019-09-30 18:04:54', '2019-09-30 18:04:53', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178611682911698946, 1178606527944310785, 1, '127.0.0.1', '2019-09-30 18:04:57', '2019-09-30 18:04:57', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178612006254788610, 1178606527944310785, 1, '127.0.0.1', '2019-09-30 18:06:15', '2019-09-30 18:06:14', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178612297230434306, 1173853273876299777, 1, '127.0.0.1', '2019-09-30 18:07:24', '2019-09-30 18:07:23', NULL, 2);
+INSERT INTO `train_login_log` VALUES (1178612936001961986, 1178606527944310785, 1, '127.0.0.1', '2019-09-30 18:09:56', '2019-09-30 18:09:56', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_role
@@ -418,7 +425,8 @@ CREATE TABLE `train_user`  (
 -- ----------------------------
 -- Records of train_user
 -- ----------------------------
-INSERT INTO `train_user` VALUES (1173853273876299777, '13163775346', 'zhanglei8552', '张磊', 1176742281157488642, '421087199609250015', 'www.123.com', '2019-09-25 20:20:34', NULL, 2);
+INSERT INTO `train_user` VALUES (1173853273876299777, '13163775346', '123456', '张磊', 1176742281157488642, '421087199609250015', 'www.123.com', '2019-09-25 20:20:34', '2019-09-30 18:23:32', 2);
+INSERT INTO `train_user` VALUES (1178606527944310785, '18827529732', '123456', NULL, 1176877299136921601, NULL, NULL, '2019-09-30 17:44:29', '2019-09-30 18:23:08', 2);
 
 -- ----------------------------
 -- Table structure for train_user_subsidiary
@@ -427,7 +435,7 @@ DROP TABLE IF EXISTS `train_user_subsidiary`;
 CREATE TABLE `train_user_subsidiary`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `nick_name` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户昵称',
+  `nick_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户昵称',
   `avatar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '用户头像',
   `gender` int(1) NULL DEFAULT 1 COMMENT '用户性别(1-男 2-女)',
   `age` int(8) NULL DEFAULT NULL COMMENT '用户年龄',
@@ -443,6 +451,7 @@ CREATE TABLE `train_user_subsidiary`  (
 -- Records of train_user_subsidiary
 -- ----------------------------
 INSERT INTO `train_user_subsidiary` VALUES (1, 1173853273876299777, '昵称在拽有屌用', 'www.123.com', 1, 23, '1996-9-25', '2019-10-23', '2019-09-22 20:32:48', NULL, 2);
+INSERT INTO `train_user_subsidiary` VALUES (1178606535594721281, 1178606527944310785, '18827529732', NULL, 1, NULL, NULL, NULL, '2019-09-30 17:44:30', NULL, 2);
 
 -- ----------------------------
 -- Table structure for train_user_thirdparty

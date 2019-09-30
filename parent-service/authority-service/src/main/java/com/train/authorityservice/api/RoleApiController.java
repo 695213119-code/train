@@ -5,6 +5,7 @@ import com.train.authorityservice.dto.AddRoleDTO;
 import com.train.authorityservice.dto.EditRoleDTO;
 import com.train.authorityservice.service.ISystemRoleService;
 import com.train.authorityservice.vo.RoleTabulationVO;
+import com.train.authorityservice.vo.RoleVO;
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
 import com.train.entityservice.entity.authority.Role;
@@ -71,6 +72,12 @@ public class RoleApiController {
     @ApiOperation("删除角色")
     public RespRecurrence deleteRole(@ApiParam(value = "角色id", required = true) @RequestParam Long roleId) {
         return systemRoleService.deleteRole(roleId);
+    }
+
+    @GetMapping("/queryRoleAll")
+    @ApiOperation(value = "获取所有角色(选择框调用)", response = RoleVO.class)
+    public RespRecurrence queryRoleAll() {
+        return systemRoleService.queryRoleAll();
     }
 
 

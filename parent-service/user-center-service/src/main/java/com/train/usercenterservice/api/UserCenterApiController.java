@@ -3,9 +3,9 @@ package com.train.usercenterservice.api;
 
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
-import com.train.usercenterservice.dto.QueryUserTabulationDTO;
+import com.train.usercenterservice.dto.AddAdministratorsDTO;
 import com.train.usercenterservice.dto.QueryUserManagementLoginDTO;
-import com.train.usercenterservice.dto.UserRegisterDTO;
+import com.train.usercenterservice.dto.QueryUserTabulationDTO;
 import com.train.usercenterservice.inter.Intercept;
 import com.train.usercenterservice.service.IUserCenterService;
 import com.train.usercenterservice.vo.UserInfoVO;
@@ -70,11 +70,17 @@ public class UserCenterApiController {
         return userCenterService.queryUserTabulation(queryUserTabulationDTO, bindingResult);
     }
 
+    @PostMapping("/addAdministrators")
+    @ApiOperation(value = "添加管理员")
+    public RespRecurrence addAdministrators(@ApiParam(value = "添加管理员参数类", required = true) @RequestBody AddAdministratorsDTO administrators,
+                                            BindingResult bindingResult) {
+        return userCenterService.addAdministrators(administrators, bindingResult);
+    }
 
-    @PostMapping("/userRegister")
-    @ApiOperation(value = "用户注册-暂时接口")
-    public RespRecurrence userRegister(@ApiParam(value = "用户注册参数类", required = true) @RequestBody UserRegisterDTO userRegisterDTO) {
-        return userCenterService.userRegister(userRegisterDTO);
+    @PutMapping("/resetPassword")
+    @ApiOperation(value = "重置用户密码")
+    public RespRecurrence resetPassword(@ApiParam(value = "用户id", required = true) @RequestParam Long userId) {
+        return userCenterService.resetPassword(userId);
     }
 
 

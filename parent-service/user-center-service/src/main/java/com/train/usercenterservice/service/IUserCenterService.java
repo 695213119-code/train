@@ -2,9 +2,9 @@ package com.train.usercenterservice.service;
 
 import com.train.commonservice.recurrence.RespPageRecurrence;
 import com.train.commonservice.recurrence.RespRecurrence;
-import com.train.usercenterservice.dto.QueryUserTabulationDTO;
+import com.train.usercenterservice.dto.AddAdministratorsDTO;
 import com.train.usercenterservice.dto.QueryUserManagementLoginDTO;
-import com.train.usercenterservice.dto.UserRegisterDTO;
+import com.train.usercenterservice.dto.QueryUserTabulationDTO;
 import org.springframework.validation.BindingResult;
 
 /**
@@ -14,14 +14,6 @@ import org.springframework.validation.BindingResult;
  * @serial 2019/09/13
  */
 public interface IUserCenterService {
-
-    /**
-     * 用户注册
-     *
-     * @param userRegisterDTO 用户注册参数类
-     * @return RespRecurrence
-     */
-    RespRecurrence userRegister(UserRegisterDTO userRegisterDTO);
 
 
     /**
@@ -64,4 +56,22 @@ public interface IUserCenterService {
      * @return RespPageRecurrence
      */
     RespPageRecurrence queryUserTabulation(QueryUserTabulationDTO queryUserTabulationDTO, BindingResult bindingResult);
+
+
+    /**
+     * 添加管理员
+     *
+     * @param administrators 添加管理员参数类
+     * @param bindingResult  BindingResult
+     * @return RespRecurrence
+     */
+    RespRecurrence addAdministrators(AddAdministratorsDTO administrators, BindingResult bindingResult);
+
+    /**
+     * 重置用户密码
+     *
+     * @param userId 用户id
+     * @return RespRecurrence
+     */
+    RespRecurrence resetPassword(Long userId);
 }

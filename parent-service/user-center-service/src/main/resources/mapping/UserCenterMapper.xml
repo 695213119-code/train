@@ -46,7 +46,33 @@
         INNER JOIN train_role AS trainRole ON trainRole.id = trainUser.role_id
         INNER JOIN train_user_subsidiary AS trainUserSubsidiary ON trainUserSubsidiary.user_id = trainUser.id
         <where>
-
+            AND trainUser.is_deleted=2
+            <if test="queryUserTabulationDTO.comprehensive!= null and queryUserTabulationDTO.comprehensive!= ''">
+                AND
+                (
+                trainUser.phone LIKE CONCAT('%',#{queryUserTabulationDTO.comprehensive},'%')
+                OR
+                trainUser.user_name LIKE CONCAT('%',#{queryUserTabulationDTO.comprehensive},'%')
+                OR
+                trainUser.id_card LIKE CONCAT('%',#{queryUserTabulationDTO.comprehensive},'%')
+                )
+            </if>
+            <if test="queryUserTabulationDTO.roleId!= null and queryUserTabulationDTO.roleId!=''">
+                AND trainUser.role_id=#{queryUserTabulationDTO.roleId}
+            </if>
+            <if test="queryUserTabulationDTO.isReal!= null and queryUserTabulationDTO.isReal!=''">
+                <if test="queryUserTabulationDTO.isReal==1">
+                    AND NOT ISNULL(trainUser.id_card)
+                </if>
+                <if test="queryUserTabulationDTO.isReal==2">
+                    AND ISNULL(trainUser.id_card)
+                </if>
+            </if>
+            <if test="queryUserTabulationDTO.crateStartTime!= null and queryUserTabulationDTO.crateStartTime!= ''
+             and queryUserTabulationDTO.crateEndTime!=null and queryUserTabulationDTO.crateEndTime!=''">
+                AND date_format(trainUser.create_time,'%Y-%m-%d %H:%i:%S')
+                between #{queryUserTabulationDTO.crateStartTime} and #{queryUserTabulationDTO.crateEndTime}
+            </if>
         </where>
     </select>
 

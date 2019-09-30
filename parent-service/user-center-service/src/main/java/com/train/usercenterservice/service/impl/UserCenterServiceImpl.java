@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.train.commonservice.constant.CommonConstant;
 import com.train.commonservice.constant.SqlConstant;
 import com.train.commonservice.constant.user.UserConstant;
@@ -16,9 +17,9 @@ import com.train.entityservice.entity.authority.Role;
 import com.train.entityservice.entity.user.User;
 import com.train.entityservice.entity.user.UserSubsidiary;
 import com.train.entityservice.entity.user.UserThirdparty;
-import com.train.usercenterservice.dto.QueryUserTabulationDTO;
+import com.train.usercenterservice.dto.AddAdministratorsDTO;
 import com.train.usercenterservice.dto.QueryUserManagementLoginDTO;
-import com.train.usercenterservice.dto.UserRegisterDTO;
+import com.train.usercenterservice.dto.QueryUserTabulationDTO;
 import com.train.usercenterservice.mapper.UserCenterMapper;
 import com.train.usercenterservice.remote.authority.RemoteAuthorityService;
 import com.train.usercenterservice.service.IUserCenterService;
@@ -33,12 +34,15 @@ import com.train.usercenterservice.vo.UserAuthorityVO;
 import com.train.usercenterservice.vo.UserInfoVO;
 import com.train.usercenterservice.vo.UserTabulationVO;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -50,6 +54,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class UserCenterServiceImpl implements IUserCenterService {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserCenterServiceImpl.class);
 
     private final IUserService userService;
     private final RedisUtils redisUtils;
@@ -69,24 +75,6 @@ public class UserCenterServiceImpl implements IUserCenterService {
         this.userSubsidiaryService = userSubsidiaryService;
         this.userThirdpartyService = userThirdpartyService;
         this.userCenterMapper = userCenterMapper;
-    }
-
-    @Override
-    public RespRecurrence userRegister(UserRegisterDTO userRegisterDTO) {
-
-        //TODO 校验手机验证码
-
-
-        User user = new User();
-        BeanUtils.copyProperties(userRegisterDTO, user);
-
-        try {
-            userService.insert(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return new RespRecurrence<String>().success("用户注册成功");
     }
 
 
@@ -205,6 +193,65 @@ public class UserCenterServiceImpl implements IUserCenterService {
         Page<UserTabulationVO> page = new Page<>(queryUserTabulationDTO.getPage(), queryUserTabulationDTO.getLimit());
         List<UserTabulationVO> userTabulations = userCenterMapper.queryUserTabulation(page, queryUserTabulationDTO);
         return new RespPageRecurrence<>().success(userTabulations, MybatisPageConvertRespPageUtils.convert(page));
+    }
+
+    @Override
+    public RespRecurrence addAdministrators(AddAdministratorsDTO administrators, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return new RespRecurrence().failure(CommonEnum.INVALID_PARAMETER.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        User userCheck = userService.selectOne(new EntityWrapper<User>().eq(SqlConstant.SQL_FIELD_PHONE, administrators.getPhone()));
+        if (null != userCheck) {
+            return new RespRecurrence().failure(CommonEnum.BUSINESS_CODE.getCode(), "此用户已经存在,请勿重复添加");
+        }
+
+        Long userId = IdWorker.getId();
+        User user = new User();
+        user.setId(userId);
+        user.setPhone(administrators.getPhone());
+        user.setRoleId(Long.parseLong(administrators.getRoleId()));
+        //TODO 密码待加密
+        user.setPassword(administrators.getPassword());
+
+        UserSubsidiary userSubsidiary = new UserSubsidiary();
+        userSubsidiary.setUserId(userId);
+        //用户昵称默认为手机号码
+        userSubsidiary.setNickName(administrators.getPhone());
+
+        try {
+            userService.insert(user);
+            userSubsidiaryService.insert(userSubsidiary);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("添加管理员失败,参数:{}", administrators);
+        }
+
+        return new RespRecurrence().success();
+    }
+
+    @Override
+    public RespRecurrence resetPassword(Long userId) {
+
+        User user = userService.selectById(userId);
+
+        if (null == user) {
+            return new RespRecurrence().failure(CommonEnum.BUSINESS_CODE.getCode(), "非法的用户");
+        }
+
+        //TODO 待完善
+        user.setPassword("123456");
+        user.setUpdateTime(new Date());
+
+        try {
+            userService.updateById(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("用户重置密码失败");
+        }
+
+        return new RespRecurrence().success();
     }
 
 

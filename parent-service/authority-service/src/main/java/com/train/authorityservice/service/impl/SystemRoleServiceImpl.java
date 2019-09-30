@@ -14,6 +14,7 @@ import com.train.authorityservice.service.ISystemRoleService;
 import com.train.authorityservice.utils.MybatisPageConvertRespPageUtils;
 import com.train.authorityservice.vo.AuthorityVO;
 import com.train.authorityservice.vo.RoleTabulationVO;
+import com.train.authorityservice.vo.RoleVO;
 import com.train.commonservice.constant.CommonConstant;
 import com.train.commonservice.constant.SqlConstant;
 import com.train.commonservice.enumeration.CommonEnum;
@@ -282,6 +283,20 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
         }
 
         return new RespRecurrence().success();
+    }
+
+    @Override
+    public RespRecurrence queryRoleAll() {
+        List<Role> roleList = roleService.selectList(new EntityWrapper<>());
+        List<RoleVO> list = new ArrayList<>();
+        if (CollUtil.isNotEmpty(roleList)) {
+            roleList.forEach(x -> {
+                RoleVO roleVO = new RoleVO();
+                BeanUtils.copyProperties(x, roleVO);
+                list.add(roleVO);
+            });
+        }
+        return new RespRecurrence<>().success(list);
     }
 
 

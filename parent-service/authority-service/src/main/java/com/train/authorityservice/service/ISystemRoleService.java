@@ -69,4 +69,11 @@ public interface ISystemRoleService {
      * @return RespRecurrence
      */
     RespRecurrence deleteRole(Long roleId);
+
+    /**
+     * 获取所有角色(选择框调用)
+     *
+     * @return RespRecurrence
+     */
+    RespRecurrence queryRoleAll();
 }
